@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Portal Help Page: Step-by-step guide for customers -->
+    <template id="portal_help_page" name="Helpdesk - How to Submit and Track Tickets">
+        <t t-call="portal.portal_layout">
+            <div class="container mt-4">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="mb-3">
+                            <a href="/my/tickets" class="btn btn-sm btn-outline-secondary">
+                                <i class="fa fa-arrow-left"/> Back to Tickets
+                            </a>
+                        </div>
+
+                        <div class="card">
+                            <div class="card-header bg-primary text-white">
+                                <h3 class="mb-0"><i class="fa fa-info-circle"/> How to submit and track a support ticket</h3>
+                            </div>
+                            <div class="card-body">
+                                <p class="lead">Follow these steps to create a ticket, provide details, and follow up until it's resolved.</p>
+
+                                <ol class="list-group list-group-numbered mb-4">
+                                    <li class="list-group-item">
+                                        <strong>Prepare your details:</strong> Collect a clear subject, description of the issue, any screenshots or attachments, and your contact details (`Ticket Email` / `Ticket Phone`).
+                                    </li>
+                                    <li class="list-group-item">
+                                        <strong>Create a ticket:</strong> Click <em>Create New Ticket</em> on the Tickets page or use the portal form. Choose the relevant <em>Category</em> and optionally the <em>Type</em>.
+                                    </li>
+                                    <li class="list-group-item">
+                                        <strong>Email submissions:</strong> If you send the ticket via email, the system decodes the inbound message and displays it in the <em>Email</em> tab (read-only). The message is cleaned of special formatting for better readability.
+                                    </li>
+                                    <li class="list-group-item">
+                                        <strong>What happens next:</strong> Agents will review and assign the ticket. If a ticket is moved to a <em>Rejected</em> stage, it is automatically reassigned to the team owner for review.
+                                    </li>
+                                    <li class="list-group-item">
+                                        <strong>Follow up & resolution:</strong> Use the Messages area on the ticket to reply; you will receive updates in the portal. For escalation, request supervisor review in your reply or via the provided contact details.
+                                    </li>
+                                </ol>
+
+                                <h5>Tips</h5>
+                                <ul>
+                                    <li>Attach files (screenshots, logs) to help engineers reproduce the issue faster.</li>
+                                    <li>Use `Ticket Email` and `Ticket Phone` so agents can contact you directly if needed.</li>
+                                    <li>Check the ticket <strong>Status</strong> on the Tickets page for progress updates.</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </t>
+    </template>
+</odoo>

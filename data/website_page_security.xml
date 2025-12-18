@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo noupdate="1">
+    <!-- Restrict customer care page to logged-in users only (portal and internal users) -->
+    <!-- This uses Python code to find and update the page -->
+    <function model="website.page" name="_fix_page_security_osool">
+        <value eval="'customer-care-1'"/>
+    </function>
+</odoo>

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Add Osool Custom Items to Existing Helpdesk Configuration Menu -->
+    
+    <menuitem id="menu_helpdesk_categories" 
+              name="Categories" 
+              parent="helpdesk.helpdesk_menu_config" 
+              action="helpdesk_category_action" 
+              sequence="50"/>
+
+    <menuitem id="menu_helpdesk_subcategories" 
+              name="Subcategories" 
+              parent="helpdesk.helpdesk_menu_config" 
+              action="helpdesk_subcategory_action" 
+              sequence="51"/>
+
+    <menuitem id="menu_helpdesk_audit" 
+              name="Audit Trail" 
+              parent="helpdesk.helpdesk_menu_config" 
+              action="helpdesk_audit_action" 
+              sequence="52"/>
+
+    <!-- Override Helpdesk Overview to Show Departments -->
+    <record id="helpdesk.helpdesk_team_dashboard_action_main" model="ir.actions.act_window">
+        <field name="res_model">helpdesk.team.department</field>
+        <field name="view_id" ref="helpdesk_team_department_dashboard_kanban"/>
+    </record>
+
+</odoo>

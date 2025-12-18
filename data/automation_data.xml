@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- TODO: Create automated actions for ticket routing and notifications -->
+    
+    <!-- Automated Action: Send Acknowledgment on Ticket Creation -->
+    <record id="action_send_acknowledgment" model="base.automation">
+        <field name="name">Send Ticket Acknowledgment</field>
+        <field name="model_id" ref="helpdesk.model_helpdesk_ticket"/>
+        <field name="trigger">on_create</field>
+        <field name="state">code</field>
+        <field name="code">
+# Send acknowledgment email
+template = env.ref('osool_helpdesk.email_template_ticket_acknowledgment', raise_if_not_found=False)
+if template and record.partner_email:
+    template.send_mail(record.id, force_send=True)
+        </field>
+    </record>
+
+    <!-- Automated Action: Apply SLA on Category Change -->
+    <record id="action_apply_sla" model="base.automation">
+        <field name="name">Apply SLA Policy</field>
+        <field name="model_id" ref="helpdesk.model_helpdesk_ticket"/>
+        <field name="trigger">on_create_or_write</field>
+        <field name="filter_domain">[['request_subcategory_id', '!=', False]]</field>
+        <field name="state">code</field>
+        <field name="code">
+# Apply SLA policy
+if record.request_subcategory_id and record.request_subcategory_id.sla_policy_id:
+    record._apply_sla_policy(record.request_subcategory_id.sla_policy_id)
+        </field>
+    </record>
+
+    <!-- TODO: Add more automated actions:
+         - Auto-assign to team based on subcategory
+         - Send notification when ticket status changes
+         - Escalate if response SLA breached
+         - Escalate if resolution SLA breached
+         - Send survey when ticket resolved
+         - Auto-close ticket after survey completion
+         - Send reminder for pending tickets (scheduled action)
+         - Update ticket status based on stage change
+    -->
+
+</odoo>

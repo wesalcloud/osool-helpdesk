@@ -1,0 +1,477 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        
+        <!-- Complaint Tickets (10 tickets) -->
+        <record id="ticket_complaint_001" model="helpdesk.ticket">
+            <field name="name">AC not working in apartment 3A</field>
+            <field name="description">The air conditioning unit has stopped working completely. It's very hot.</field>
+            <field name="request_category_id" ref="osool_helpdesk.category_complaint"/>
+            <field name="form_type">complaint</field>
+            <field name="caller_source">voice</field>
+            <field name="complaint_type">service</field>
+            <field name="complaint_severity">major</field>
+            <field name="priority">2</field>
+            <field name="team_id" ref="osool_helpdesk.team_technical"/>
+        </record>
+
+        <record id="ticket_complaint_002" model="helpdesk.ticket">
+            <field name="name">Noise complaint from neighbors</field>
+            <field name="description">Excessive noise from apartment 5B during late hours (after 11 PM)</field>
+            <field name="request_category_id" ref="osool_helpdesk.category_complaint"/>
+            <field name="form_type">complaint</field>
+            <field name="caller_source">email</field>
+            <field name="complaint_type">other</field>
+            <field name="complaint_severity">moderate</field>
+            <field name="priority">1</field>
+            <field name="team_id" ref="osool_helpdesk.team_technical"/>
+        </record>
+
+        <record id="ticket_complaint_003" model="helpdesk.ticket">
+            <field name="name">Incorrect billing amount</field>
+            <field name="description">Charged for 2 parking spots but only have 1 registered</field>
+            <field name="request_category_id" ref="osool_helpdesk.category_complaint"/>
+            <field name="form_type">complaint</field>
+            <field name="caller_source">selfservice</field>
+            <field name="complaint_type">billing</field>
+            <field name="complaint_severity">moderate</field>
+            <field name="priority">1</field>
+            <field name="team_id" ref="osool_helpdesk.team_customer_service"/>
+        </record>
+
+        <record id="ticket_complaint_004" model="helpdesk.ticket">
+            <field name="name">Rude behavior from security staff</field>
+            <field name="description">Security guard was unprofessional and rude at main entrance</field>
+            <field name="request_category_id" ref="osool_helpdesk.category_complaint"/>
+            <field name="form_type">complaint</field>
+            <field name="caller_source">walkin</field>
+            <field name="complaint_type">staff</field>
+            <field name="complaint_severity">major</field>
+            <field name="priority">2</field>
+            <field name="team_id" ref="osool_helpdesk.team_customer_service"/>
+        </record>
+
+        <record id="ticket_complaint_005" model="helpdesk.ticket">
+            <field name="name">Water leakage from ceiling</field>
+            <field name="description">Water leaking from bathroom ceiling in unit 7C, seems to come from unit above</field>
+            <field name="request_category_id" ref="osool_helpdesk.category_complaint"/>
+            <field name="form_type">complaint</field>
+            <field name="caller_source">voice</field>
+            <field name="complaint_type">service</field>
+            <field name="complaint_severity">critical</field>
+            <field name="priority">3</field>
+            <field name="team_id" ref="osool_helpdesk.team_technical"/>
+        </record>
+
+        <record id="ticket_complaint_006" model="helpdesk.ticket">
+            <field name="name">Parking spot occupied by unknown car</field>
+            <field name="description">My assigned parking spot #234 has been occupied by an unknown vehicle for 3 days</field>
+            <field name="request_category_id" ref="osool_helpdesk.category_complaint"/>
+            <field name="form_type">complaint</field>
+            <field name="caller_source">email</field>
+            <field name="complaint_type">other</field>
+            <field name="complaint_severity">moderate</field>
+            <field name="priority">1</field>
+            <field name="team_id" ref="osool_helpdesk.team_technical"/>
+        </record>
+
+        <record id="ticket_complaint_007" model="helpdesk.ticket">
+            <field name="name">Elevator frequently breaks down</field>
+            <field name="description">Building A elevator breaks down at least twice a week, causing inconvenience</field>
+            <field name="request_category_id" ref="osool_helpdesk.category_complaint"/>
+            <field name="form_type">complaint</field>
+            <field name="caller_source">selfservice</field>
+            <field name="complaint_type">service</field>
+            <field name="complaint_severity">major</field>
+            <field name="priority">2</field>
+            <field name="team_id" ref="osool_helpdesk.team_technical"/>
+        </record>
+
+        <record id="ticket_complaint_008" model="helpdesk.ticket">
+            <field name="name">Gym equipment not maintained</field>
+            <field name="description">Treadmill #3 has been broken for over a month, no repairs done</field>
+            <field name="request_category_id" ref="osool_helpdesk.category_complaint"/>
+            <field name="form_type">complaint</field>
+            <field name="caller_source">chat</field>
+            <field name="complaint_type">service</field>
+            <field name="complaint_severity">minor</field>
+            <field name="priority">0</field>
+            <field name="team_id" ref="osool_helpdesk.team_technical"/>
+        </record>
+
+        <record id="ticket_complaint_009" model="helpdesk.ticket">
+            <field name="name">Late delivery of maintenance service</field>
+            <field name="description">Scheduled maintenance was supposed to be on Monday but no one showed up</field>
+            <field name="request_category_id" ref="osool_helpdesk.category_complaint"/>
+            <field name="form_type">complaint</field>
+            <field name="caller_source">voice</field>
+            <field name="complaint_type">service</field>
+            <field name="complaint_severity">moderate</field>
+            <field name="priority">1</field>
+            <field name="team_id" ref="osool_helpdesk.team_technical"/>
+        </record>
+
+        <record id="ticket_complaint_010" model="helpdesk.ticket">
+            <field name="name">Overcharged for utilities</field>
+            <field name="description">Electricity bill is 3x higher than usual despite same usage pattern</field>
+            <field name="request_category_id" ref="osool_helpdesk.category_complaint"/>
+            <field name="form_type">complaint</field>
+            <field name="caller_source">email</field>
+            <field name="complaint_type">billing</field>
+            <field name="complaint_severity">major</field>
+            <field name="priority">2</field>
+            <field name="team_id" ref="osool_helpdesk.team_customer_service"/>
+        </record>
+
+        <!-- Marketing Tickets (5 tickets) -->
+        <record id="ticket_marketing_001" model="helpdesk.ticket">
+            <field name="name">Summer Festival 2025 Campaign</field>
+            <field name="description">Plan and execute summer festival marketing campaign for community engagement</field>
+            <field name="request_category_id" ref="osool_helpdesk.category_marketing"/>
+            <field name="form_type">marketing</field>
+            <field name="caller_source">selfservice</field>
+            <field name="marketing_campaign">Summer Festival 2025</field>
+            <field name="marketing_budget">15000.00</field>
+            <field name="marketing_start_date">2025-12-01</field>
+            <field name="marketing_end_date">2025-12-31</field>
+            <field name="priority">1</field>
+            <field name="team_id" ref="osool_helpdesk.team_customer_service"/>
+        </record>
+
+        <record id="ticket_marketing_002" model="helpdesk.ticket">
+            <field name="name">Social Media Campaign - New Amenities</field>
+            <field name="description">Launch social media campaign to promote newly renovated swimming pool and gym</field>
+            <field name="request_category_id" ref="osool_helpdesk.category_marketing"/>
+            <field name="form_type">marketing</field>
+            <field name="caller_source">email</field>
+            <field name="marketing_campaign">Amenities Renovation 2025</field>
+            <field name="marketing_budget">8500.00</field>
+            <field name="marketing_start_date">2025-11-15</field>
+            <field name="marketing_end_date">2025-12-15</field>
+            <field name="priority">1</field>
+            <field name="team_id" ref="osool_helpdesk.team_customer_service"/>
+        </record>
+
+        <record id="ticket_marketing_003" model="helpdesk.ticket">
+            <field name="name">Referral Program Launch</field>
+            <field name="description">Create marketing materials for tenant referral program with incentives</field>
+            <field name="request_category_id" ref="osool_helpdesk.category_marketing"/>
+            <field name="form_type">marketing</field>
+            <field name="caller_source">selfservice</field>
+            <field name="marketing_campaign">Referral Program Q3</field>
+            <field name="marketing_budget">5000.00</field>
+            <field name="marketing_start_date">2025-11-20</field>
+            <field name="marketing_end_date">2026-02-20</field>
+            <field name="priority">0</field>
+            <field name="team_id" ref="osool_helpdesk.team_customer_service"/>
+        </record>
+
+        <record id="ticket_marketing_004" model="helpdesk.ticket">
+            <field name="name">Email Newsletter - November Edition</field>
+            <field name="description">Design and send monthly newsletter featuring community events and updates</field>
+            <field name="request_category_id" ref="osool_helpdesk.category_marketing"/>
+            <field name="form_type">marketing</field>
+            <field name="caller_source">selfservice</field>
+            <field name="marketing_campaign">Monthly Newsletter Nov 2025</field>
+            <field name="marketing_budget">1200.00</field>
+            <field name="marketing_start_date">2025-11-05</field>
+            <field name="marketing_end_date">2025-11-10</field>
+            <field name="priority">1</field>
+            <field name="team_id" ref="osool_helpdesk.team_customer_service"/>
+        </record>
+
+        <record id="ticket_marketing_005" model="helpdesk.ticket">
+            <field name="name">Year-End Appreciation Event</field>
+            <field name="description">Organize tenant appreciation event marketing for December</field>
+            <field name="request_category_id" ref="osool_helpdesk.category_marketing"/>
+            <field name="form_type">marketing</field>
+            <field name="caller_source">email</field>
+            <field name="marketing_campaign">Year End Appreciation 2025</field>
+            <field name="marketing_budget">12000.00</field>
+            <field name="marketing_start_date">2025-11-30</field>
+            <field name="marketing_end_date">2025-12-30</field>
+            <field name="priority">1</field>
+            <field name="team_id" ref="osool_helpdesk.team_customer_service"/>
+        </record>
+
+        <!-- Security Tickets (5 tickets) -->
+        <record id="ticket_security_001" model="helpdesk.ticket">
+            <field name="name">Suspicious person in parking lot</field>
+            <field name="description">Unknown person loitering in basement parking for over an hour</field>
+            <field name="request_category_id" ref="osool_helpdesk.category_security"/>
+            <field name="form_type">security</field>
+            <field name="caller_source">voice</field>
+            <field name="security_incident_type">threat</field>
+            <field name="security_location">Basement Parking Level B2</field>
+            <field name="security_witness">John Smith - Unit 4C</field>
+            <field name="priority">3</field>
+            <field name="team_id" ref="osool_helpdesk.team_customer_service"/>
+        </record>
+
+        <record id="ticket_security_002" model="helpdesk.ticket">
+            <field name="name">Vandalism in lobby area</field>
+            <field name="description">Glass panel broken and graffiti on wall in main lobby</field>
+            <field name="request_category_id" ref="osool_helpdesk.category_security"/>
+            <field name="form_type">security</field>
+            <field name="caller_source">walkin</field>
+            <field name="security_incident_type">vandalism</field>
+            <field name="security_location">Main Lobby Building A</field>
+            <field name="priority">2</field>
+            <field name="team_id" ref="osool_helpdesk.team_technical"/>
+        </record>
+
+        <record id="ticket_security_003" model="helpdesk.ticket">
+            <field name="name">Unauthorized access to roof</field>
+            <field name="description">Roof door was found open, possible unauthorized access</field>
+            <field name="request_category_id" ref="osool_helpdesk.category_security"/>
+            <field name="form_type">security</field>
+            <field name="caller_source">selfservice</field>
+            <field name="security_incident_type">access</field>
+            <field name="security_location">Roof Access Building B</field>
+            <field name="priority">2</field>
+            <field name="team_id" ref="osool_helpdesk.team_customer_service"/>
+        </record>
+
+        <record id="ticket_security_004" model="helpdesk.ticket">
+            <field name="name">Bicycle theft from storage</field>
+            <field name="description">Bicycle stolen from locked storage room, lock was broken</field>
+            <field name="request_category_id" ref="osool_helpdesk.category_security"/>
+            <field name="form_type">security</field>
+            <field name="caller_source">voice</field>
+            <field name="security_incident_type">theft</field>
+            <field name="security_location">Bicycle Storage Room B1</field>
+            <field name="security_witness">Sarah Johnson - Unit 8D</field>
+            <field name="priority">2</field>
+            <field name="team_id" ref="osool_helpdesk.team_customer_service"/>
+        </record>
+
+        <record id="ticket_security_005" model="helpdesk.ticket">
+            <field name="name">CCTV camera not working</field>
+            <field name="description">Security camera at east entrance has been offline for 2 days</field>
+            <field name="request_category_id" ref="osool_helpdesk.category_security"/>
+            <field name="form_type">security</field>
+            <field name="caller_source">email</field>
+            <field name="security_incident_type">other</field>
+            <field name="security_location">East Entrance</field>
+            <field name="priority">2</field>
+            <field name="team_id" ref="osool_helpdesk.team_technical"/>
+        </record>
+
+        <!-- Lift Booking Tickets (4 tickets) -->
+        <record id="ticket_lift_001" model="helpdesk.ticket">
+            <field name="name">Moving furniture to 12th floor</field>
+            <field name="description">Need to move large furniture items from ground floor to apartment</field>
+            <field name="request_category_id" ref="osool_helpdesk.category_lift_booking"/>
+            <field name="form_type">regular_lift</field>
+            <field name="caller_source">selfservice</field>
+            <field name="lift_booking_date">2025-12-01 09:00:00</field>
+            <field name="lift_size">large</field>
+            <field name="lift_floor_from">Ground Floor</field>
+            <field name="lift_floor_to">12th Floor</field>
+            <field name="lift_items_description">3-seater sofa, dining table, 4 chairs, mattress</field>
+            <field name="priority">1</field>
+            <field name="team_id" ref="osool_helpdesk.team_technical"/>
+        </record>
+
+        <record id="ticket_lift_002" model="helpdesk.ticket">
+            <field name="name">Delivery of appliances</field>
+            <field name="description">Refrigerator and washing machine delivery scheduled</field>
+            <field name="request_category_id" ref="osool_helpdesk.category_lift_booking"/>
+            <field name="form_type">regular_lift</field>
+            <field name="caller_source">voice</field>
+            <field name="lift_booking_date">2025-12-05 14:00:00</field>
+            <field name="lift_size">large</field>
+            <field name="lift_floor_from">Loading Dock</field>
+            <field name="lift_floor_to">8th Floor</field>
+            <field name="lift_items_description">1 Refrigerator (double door), 1 Washing machine (front load)</field>
+            <field name="priority">1</field>
+            <field name="team_id" ref="osool_helpdesk.team_technical"/>
+        </record>
+
+        <record id="ticket_lift_003" model="helpdesk.ticket">
+            <field name="name">Office relocation - boxes</field>
+            <field name="description">Moving office equipment and files in multiple boxes</field>
+            <field name="request_category_id" ref="osool_helpdesk.category_lift_booking"/>
+            <field name="form_type">regular_lift</field>
+            <field name="caller_source">email</field>
+            <field name="lift_booking_date">2025-12-07 10:00:00</field>
+            <field name="lift_size">medium</field>
+            <field name="lift_floor_from">5th Floor</field>
+            <field name="lift_floor_to">9th Floor</field>
+            <field name="lift_items_description">Approximately 30 boxes of files, 2 printers, 1 desk</field>
+            <field name="priority">0</field>
+            <field name="team_id" ref="osool_helpdesk.team_technical"/>
+        </record>
+
+        <record id="ticket_lift_004" model="helpdesk.ticket">
+            <field name="name">Move out - complete apartment</field>
+            <field name="description">Complete move out, need lift for entire day</field>
+            <field name="request_category_id" ref="osool_helpdesk.category_lift_booking"/>
+            <field name="form_type">regular_lift</field>
+            <field name="caller_source">selfservice</field>
+            <field name="lift_booking_date">2025-12-10 08:00:00</field>
+            <field name="lift_size">large</field>
+            <field name="lift_floor_from">15th Floor</field>
+            <field name="lift_floor_to">Ground Floor</field>
+            <field name="lift_items_description">Full apartment furniture - bedroom set, living room, kitchen items, approximately 50 boxes</field>
+            <field name="priority">2</field>
+            <field name="team_id" ref="osool_helpdesk.team_technical"/>
+        </record>
+
+        <!-- Procurement Tickets (3 tickets) -->
+        <record id="ticket_procurement_001" model="helpdesk.ticket">
+            <field name="name">Purchase new cleaning equipment</field>
+            <field name="description">Need to purchase industrial vacuum cleaners and floor polishers for maintenance team</field>
+            <field name="request_category_id" ref="osool_helpdesk.category_procurement"/>
+            <field name="form_type">procurement</field>
+            <field name="caller_source">email</field>
+            <field name="procurement_item">Industrial Vacuum Cleaners &amp; Floor Polishers</field>
+            <field name="procurement_quantity">5</field>
+            <field name="procurement_budget">8500.00</field>
+            <field name="procurement_required_date">2025-12-01</field>
+            <field name="priority">1</field>
+            <field name="team_id" ref="osool_helpdesk.team_technical"/>
+        </record>
+
+        <record id="ticket_procurement_002" model="helpdesk.ticket">
+            <field name="name">Office supplies bulk order</field>
+            <field name="description">Quarterly order of office supplies for admin department</field>
+            <field name="request_category_id" ref="osool_helpdesk.category_procurement"/>
+            <field name="form_type">procurement</field>
+            <field name="caller_source">selfservice</field>
+            <field name="procurement_item">Office Supplies (paper, pens, folders, etc.)</field>
+            <field name="procurement_quantity">1</field>
+            <field name="procurement_budget">3500.00</field>
+            <field name="procurement_required_date">2025-11-15</field>
+            <field name="priority">0</field>
+            <field name="team_id" ref="osool_helpdesk.team_customer_service"/>
+        </record>
+
+        <record id="ticket_procurement_003" model="helpdesk.ticket">
+            <field name="name">Replace HVAC filters</field>
+            <field name="description">Purchase replacement HVAC filters for all buildings</field>
+            <field name="request_category_id" ref="osool_helpdesk.category_procurement"/>
+            <field name="form_type">procurement</field>
+            <field name="caller_source">email</field>
+            <field name="procurement_item">HVAC Air Filters</field>
+            <field name="procurement_quantity">120</field>
+            <field name="procurement_budget">12000.00</field>
+            <field name="procurement_required_date">2025-12-01</field>
+            <field name="priority">1</field>
+            <field name="team_id" ref="osool_helpdesk.team_technical"/>
+        </record>
+
+        <!-- HR Tickets (3 tickets) -->
+        <record id="ticket_hr_001" model="helpdesk.ticket">
+            <field name="name">Request for annual leave</field>
+            <field name="description">Request 10 days annual leave for family vacation</field>
+            <field name="request_category_id" ref="osool_helpdesk.category_hr"/>
+            <field name="form_type">hr</field>
+            <field name="caller_source">selfservice</field>
+            <field name="hr_request_type">leave</field>
+            <field name="hr_department">Facilities Management</field>
+            <field name="priority">0</field>
+            <field name="team_id" ref="osool_helpdesk.team_hr"/>
+        </record>
+
+        <record id="ticket_hr_002" model="helpdesk.ticket">
+            <field name="name">New employee onboarding - IT Tech</field>
+            <field name="description">Complete onboarding process for new IT technician joining next week</field>
+            <field name="request_category_id" ref="osool_helpdesk.category_hr"/>
+            <field name="form_type">hr</field>
+            <field name="caller_source">email</field>
+            <field name="hr_request_type">recruitment</field>
+            <field name="hr_department">IT Department</field>
+            <field name="priority">2</field>
+            <field name="team_id" ref="osool_helpdesk.team_hr"/>
+        </record>
+
+        <record id="ticket_hr_003" model="helpdesk.ticket">
+            <field name="name">Training request - Safety procedures</field>
+            <field name="description">Request safety training for all maintenance staff</field>
+            <field name="request_category_id" ref="osool_helpdesk.category_hr"/>
+            <field name="form_type">hr</field>
+            <field name="caller_source">email</field>
+            <field name="hr_request_type">training</field>
+            <field name="hr_department">Facilities Management</field>
+            <field name="priority">1</field>
+            <field name="team_id" ref="osool_helpdesk.team_hr"/>
+        </record>
+
+        <!-- Announcement Tickets (3 tickets) -->
+        <record id="ticket_announcement_001" model="helpdesk.ticket">
+            <field name="name">Pool closure for maintenance</field>
+            <field name="description">Notify all residents about swimming pool closure for annual maintenance</field>
+            <field name="request_category_id" ref="osool_helpdesk.category_announcement"/>
+            <field name="form_type">announcement</field>
+            <field name="caller_source">selfservice</field>
+            <field name="announcement_title">Swimming Pool Maintenance Closure</field>
+            <field name="announcement_target_audience">all</field>
+            <field name="announcement_publish_date">2025-11-01</field>
+            <field name="announcement_expiry_date">2025-11-14</field>
+            <field name="announcement_content">&lt;p&gt;Dear Residents,&lt;/p&gt;&lt;p&gt;The swimming pool will be closed from November 1-7 for annual maintenance.&lt;/p&gt;</field>
+            <field name="priority">1</field>
+            <field name="team_id" ref="osool_helpdesk.team_customer_service"/>
+        </record>
+
+        <record id="ticket_announcement_002" model="helpdesk.ticket">
+            <field name="name">Fire drill scheduled</field>
+            <field name="description">Announce mandatory fire drill for all buildings</field>
+            <field name="request_category_id" ref="osool_helpdesk.category_announcement"/>
+            <field name="form_type">announcement</field>
+            <field name="caller_source">email</field>
+            <field name="announcement_title">Mandatory Fire Drill - November 15</field>
+            <field name="announcement_target_audience">all</field>
+            <field name="announcement_publish_date">2025-11-05</field>
+            <field name="announcement_expiry_date">2025-11-16</field>
+            <field name="announcement_content">&lt;p&gt;A fire drill will be conducted on November 15 at 10:00 AM.&lt;/p&gt;</field>
+            <field name="priority">2</field>
+            <field name="team_id" ref="osool_helpdesk.team_customer_service"/>
+        </record>
+
+        <record id="ticket_announcement_003" model="helpdesk.ticket">
+            <field name="name">New parking policy</field>
+            <field name="description">Announce updated parking policies and visitor parking procedures</field>
+            <field name="request_category_id" ref="osool_helpdesk.category_announcement"/>
+            <field name="form_type">announcement</field>
+            <field name="caller_source">selfservice</field>
+            <field name="announcement_title">Updated Parking Policy - Effective December 1</field>
+            <field name="announcement_target_audience">tenants</field>
+            <field name="announcement_publish_date">2025-11-10</field>
+            <field name="announcement_expiry_date">2026-01-10</field>
+            <field name="announcement_content">&lt;p&gt;New parking regulations will take effect December 1.&lt;/p&gt;</field>
+            <field name="priority">1</field>
+            <field name="team_id" ref="osool_helpdesk.team_customer_service"/>
+        </record>
+
+        <!-- Maximo Tickets (2 tickets) -->
+        <record id="ticket_maximo_001" model="helpdesk.ticket">
+            <field name="name">Chiller maintenance work order</field>
+            <field name="description">Scheduled chiller maintenance for Building A</field>
+            <field name="request_category_id" ref="osool_helpdesk.category_maximo"/>
+            <field name="form_type">maximo</field>
+            <field name="caller_source">selfservice</field>
+            <field name="maximo_work_order">WO-2025-1045</field>
+            <field name="maximo_asset_id">CHILLER-A-01</field>
+            <field name="maximo_location">Building A - Mechanical Room</field>
+            <field name="maximo_priority">high</field>
+            <field name="priority">2</field>
+            <field name="team_id" ref="osool_helpdesk.team_technical"/>
+        </record>
+
+        <record id="ticket_maximo_002" model="helpdesk.ticket">
+            <field name="name">Generator inspection</field>
+            <field name="description">Quarterly inspection of backup generator system</field>
+            <field name="request_category_id" ref="osool_helpdesk.category_maximo"/>
+            <field name="form_type">maximo</field>
+            <field name="caller_source">email</field>
+            <field name="maximo_work_order">WO-2025-1067</field>
+            <field name="maximo_asset_id">GEN-B-02</field>
+            <field name="maximo_location">Building B - Basement</field>
+            <field name="maximo_priority">medium</field>
+            <field name="priority">1</field>
+            <field name="team_id" ref="osool_helpdesk.team_technical"/>
+        </record>
+
+    </data>
+</odoo>

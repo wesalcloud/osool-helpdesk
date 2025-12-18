@@ -1,0 +1,232 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Add Tickets to Portal Menu -->
+    <template id="portal_my_home_menu_tickets" name="Portal My Home: Tickets" inherit_id="portal.portal_my_home" priority="30">
+        <xpath expr="//div[hasclass('o_portal_docs')]" position="inside">
+            <t t-call="portal.portal_docs_entry">
+                <t t-set="title">Support Tickets</t>
+                <t t-set="url" t-value="'/my/tickets'"/>
+                <t t-set="placeholder_count" t-value="'ticket_count'"/>
+            </t>
+            <t t-call="portal.portal_docs_entry">
+                <t t-set="title">Help - Submit &amp; Track</t>
+                <t t-set="url" t-value="'/helpdesk/help'"/>
+                <t t-set="placeholder_count" t-value="False"/>
+            </t>
+        </xpath>
+    </template>
+
+    <!-- Portal My Tickets Template -->
+    <template id="portal_my_tickets" name="My Tickets">
+        <t t-call="portal.portal_layout">
+            <t t-set="breadcrumbs_searchbar" t-value="True"/>
+            
+            <t t-call="portal.portal_searchbar">
+                <t t-set="title">Support Tickets</t>
+            </t>
+            
+            <div class="container mt-3">
+                <div class="d-flex justify-content-between align-items-center mb-4">
+                    <h3>
+                        <i class="fa fa-ticket"/> My Support Tickets
+                        <span class="badge bg-secondary" t-esc="pager['page_count']"/> Tickets
+                    </h3>
+                    <a href="/helpdesk/ticket/create" class="btn btn-primary">
+                        <i class="fa fa-plus"/> Create New Ticket
+                    </a>
+                </div>
+                
+                <t t-if="not tickets">
+                    <div class="alert alert-info text-center p-5">
+                        <i class="fa fa-inbox fa-3x mb-3 text-muted"/>
+                        <h4>No Tickets Yet</h4>
+                        <p class="text-muted">You haven't created any support tickets.</p>
+                        <a href="/helpdesk/ticket/create" class="btn btn-primary mt-3">
+                            <i class="fa fa-plus"/> Create Your First Ticket
+                        </a>
+                    </div>
+                </t>
+                
+                <t t-if="tickets">
+                    <div class="table-responsive">
+                        <table class="table table-hover">
+                            <thead class="table-light">
+                                <tr>
+                                    <th>Ticket #</th>
+                                    <th>Subject</th>
+                                    <th>Category</th>
+                                    <th>Type</th>
+                                    <th>Status</th>
+                                    <th>Created</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr t-foreach="tickets" t-as="ticket">
+                                    <td>
+                                        <strong t-esc="ticket.id"/>
+                                    </td>
+                                    <td>
+                                        <a t-attf-href="/my/ticket/#{ticket.id}" t-esc="ticket.name"/>
+                                    </td>
+                                    <td>
+                                        <span t-esc="ticket.request_category_id.name or '-'"/>
+                                    </td>
+                                    <td>
+                                        <span class="badge bg-info" t-esc="ticket.form_type"/>
+                                    </td>
+                                    <td>
+                                        <t t-if="ticket.status == 'new'">
+                                            <span class="badge bg-primary">New</span>
+                                        </t>
+                                        <t t-elif="ticket.status == 'in_progress'">
+                                            <span class="badge bg-warning">In Progress</span>
+                                        </t>
+                                        <t t-elif="ticket.status == 'resolved'">
+                                            <span class="badge bg-success">Resolved</span>
+                                        </t>
+                                        <t t-elif="ticket.status == 'closed'">
+                                            <span class="badge bg-secondary">Closed</span>
+                                        </t>
+                                        <t t-else="">
+                                            <span class="badge bg-light text-dark" t-esc="ticket.status"/>
+                                        </t>
+                                    </td>
+                                    <td>
+                                        <span t-field="ticket.create_date" t-options="{'widget': 'date'}"/>
+                                    </td>
+                                    <td>
+                                        <a t-attf-href="/my/ticket/#{ticket.id}" class="btn btn-sm btn-outline-primary">
+                                            <i class="fa fa-eye"/> View
+                                        </a>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    
+                    <div t-if="pager" class="mt-4">
+                        <t t-call="portal.pager"/>
+                    </div>
+                </t>
+            </div>
+        </t>
+    </template>
+
+    <!-- Hide "Powered by Odoo" footer in portal sidebar -->
+    <template id="portal_sidebar_footer_hide" name="Hide Portal Powered By" inherit_id="portal.portal_record_sidebar" priority="99">
+        <xpath expr="//div[hasclass('text-center') and hasclass('text-muted') and contains(text(), 'Powered by')]" position="replace">
+            <!-- Remove "Powered by Odoo" text -->
+        </xpath>
+    </template>
+
+    <!-- Allow Message Posting in Portal (Keep Chatter Active for Customer Messages) -->
+    <template id="portal_chatter_customer_messages" name="Portal Customer Messages" inherit_id="portal.message_thread" priority="99">
+        <!-- Keep the message thread active so customers can send messages -->
+    </template>
+
+    <!-- Hide Communication history section from portal ticket page -->
+    <template id="hide_communication_history" name="Hide Communication History Section" inherit_id="helpdesk.tickets_followup" priority="99">
+        <xpath expr="//div[@id='ticket_chat']" position="replace">
+            <!-- Communication history section removed -->
+        </xpath>
+    </template>
+
+    <!-- Portal Ticket Detail Template -->
+    <template id="portal_ticket_detail" name="Ticket Detail">
+        <t t-call="portal.portal_layout">
+            <div class="container mt-3">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="mb-3">
+                            <a href="/my/tickets" class="btn btn-sm btn-outline-secondary">
+                                <i class="fa fa-arrow-left"/> Back to Tickets
+                            </a>
+                        </div>
+                        
+                        <div class="card">
+                            <div class="card-header bg-primary text-white">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <h4 class="mb-0">
+                                        <i class="fa fa-ticket"/> Ticket #<t t-esc="ticket.id"/>
+                                    </h4>
+                                    <span class="badge bg-light text-dark" t-esc="ticket.status"/>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <h3 class="mb-4" t-esc="ticket.name"/>
+                                
+                                <div class="row mb-4">
+                                    <div class="col-md-6">
+                                        <dl class="row">
+                                            <dt class="col-sm-4">Created:</dt>
+                                            <dd class="col-sm-8">
+                                                <span t-field="ticket.create_date"/>
+                                            </dd>
+                                            
+                                            <dt class="col-sm-4">Category:</dt>
+                                            <dd class="col-sm-8">
+                                                <span t-esc="ticket.request_category_id.name or '-'"/>
+                                            </dd>
+                                            
+                                            <dt class="col-sm-4">Type:</dt>
+                                            <dd class="col-sm-8">
+                                                <span class="badge bg-info" t-esc="ticket.form_type"/>
+                                            </dd>
+                                        </dl>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <dl class="row">
+                                            <dt class="col-sm-4">Status:</dt>
+                                            <dd class="col-sm-8">
+                                                <span class="badge bg-primary" t-esc="ticket.status"/>
+                                            </dd>
+                                            
+                                            <dt class="col-sm-4">Assigned To:</dt>
+                                            <dd class="col-sm-8">
+                                                <span t-esc="ticket.user_id.name or 'Not Assigned'"/>
+                                            </dd>
+                                            
+                                            <dt class="col-sm-4">Team:</dt>
+                                            <dd class="col-sm-8">
+                                                <span t-esc="ticket.team_id.name or '-'"/>
+                                            </dd>
+                                        </dl>
+                                    </div>
+                                </div>
+                                
+                                <div class="mb-4">
+                                    <h5>Description</h5>
+                                    <div class="bg-light p-3 rounded">
+                                        <p t-field="ticket.description" class="mb-0"/>
+                                    </div>
+                                </div>
+                                
+                                <t t-if="ticket.resolution_notes">
+                                    <div class="mb-4">
+                                        <h5>Resolution</h5>
+                                        <div class="alert alert-success">
+                                            <p t-field="ticket.resolution_notes" class="mb-0"/>
+                                        </div>
+                                    </div>
+                                </t>
+                            </div>
+                        </div>
+                        
+                        <!-- Communication section - Allow customers to send messages -->
+                        <div class="mt-4">
+                            <h5><i class="fa fa-comments"/> Messages</h5>
+                            <t t-call="portal.message_thread">
+                                <t t-set="object" t-value="ticket"/>
+                                <t t-set="token" t-value="ticket.access_token"/>
+                                <t t-set="pid" t-value="ticket.partner_id.id"/>
+                                <t t-set="hash" t-value="ticket._portal_ensure_token()"/>
+                            </t>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </t>
+    </template>
+
+</odoo>

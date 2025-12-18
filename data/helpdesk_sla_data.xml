@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- TODO: Create SLA policies matching your requirements -->
+    
+    <!-- SLA: Procurement (15m response, 5d resolution) -->
+    <record id="sla_procurement" model="helpdesk.sla">
+        <field name="name">Procurement SLA</field>
+        <field name="sla_type">both</field>
+        <field name="response_time">15</field>  <!-- minutes -->
+        <field name="resolution_time">7200</field>  <!-- 5 days = 5*24*60 minutes -->
+        <field name="use_working_hours" eval="False"/>
+    </record>
+
+    <!-- SLA: Marketing (15m response, 5d resolution) -->
+    <record id="sla_marketing" model="helpdesk.sla">
+        <field name="name">Marketing SLA</field>
+        <field name="sla_type">both</field>
+        <field name="response_time">15</field>
+        <field name="resolution_time">7200</field>
+    </record>
+
+    <!-- SLA: Security (15m response, 5d resolution) -->
+    <record id="sla_security" model="helpdesk.sla">
+        <field name="name">Security SLA</field>
+        <field name="sla_type">both</field>
+        <field name="response_time">15</field>
+        <field name="resolution_time">7200</field>
+    </record>
+
+    <!-- SLA: Announcement (15m response, 3d resolution) -->
+    <record id="sla_announcement" model="helpdesk.sla">
+        <field name="name">Announcement SLA</field>
+        <field name="sla_type">both</field>
+        <field name="response_time">15</field>
+        <field name="resolution_time">4320</field>  <!-- 3 days = 3*24*60 minutes -->
+    </record>
+
+    <!-- SLA: VVIP Lift Booking (15m response, 1h resolution) -->
+    <record id="sla_vvip_lift" model="helpdesk.sla">
+        <field name="name">VVIP Lift Booking SLA</field>
+        <field name="sla_type">both</field>
+        <field name="response_time">15</field>
+        <field name="resolution_time">60</field>  <!-- 1 hour -->
+    </record>
+
+    <!-- SLA: Regular Lift Booking (15m response, 24h resolution) -->
+    <record id="sla_regular_lift" model="helpdesk.sla">
+        <field name="name">Regular Lift Booking SLA</field>
+        <field name="sla_type">both</field>
+        <field name="response_time">15</field>
+        <field name="resolution_time">1440</field>  <!-- 24 hours -->
+    </record>
+
+    <!-- TODO: Link SLA policies to respective categories in helpdesk_category_data.xml -->
+
+</odoo>

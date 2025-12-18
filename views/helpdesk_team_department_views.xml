@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Team Department Form View -->
+    <record id="helpdesk_team_department_view_form" model="ir.ui.view">
+        <field name="name">helpdesk.team.department.form</field>
+        <field name="model">helpdesk.team.department</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button name="%(helpdesk.helpdesk_team_action)d" 
+                                type="action" 
+                                class="oe_stat_button" 
+                                icon="fa-users"
+                                context="{'default_team_department_id': id}">
+                            <field name="team_count" widget="statinfo" string="Teams"/>
+                        </button>
+                    </div>
+                    <widget name="web_ribbon" title="Archived" bg_color="bg-danger" invisible="active"/>
+                    <group>
+                        <group>
+                            <field name="name"/>
+                            <field name="code"/>
+                            <field name="active" invisible="1"/>
+                        </group>
+                        <group>
+                            <field name="description"/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- Team Department List View -->
+    <record id="helpdesk_team_department_view_list" model="ir.ui.view">
+        <field name="name">helpdesk.team.department.list</field>
+        <field name="model">helpdesk.team.department</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="name"/>
+                <field name="code"/>
+                <field name="team_count"/>
+                <field name="active" invisible="1"/>
+            </list>
+        </field>
+    </record>
+
+    <!-- Team Department Search View -->
+    <record id="helpdesk_team_department_view_search" model="ir.ui.view">
+        <field name="name">helpdesk.team.department.search</field>
+        <field name="model">helpdesk.team.department</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name"/>
+                <field name="code"/>
+                <filter string="Archived" name="inactive" domain="[('active', '=', False)]"/>
+            </search>
+        </field>
+    </record>
+
+    <!-- Team Department Kanban View -->
+    <record id="helpdesk_team_department_view_kanban" model="ir.ui.view">
+        <field name="name">helpdesk.team.department.kanban</field>
+        <field name="model">helpdesk.team.department</field>
+        <field name="arch" type="xml">
+            <kanban class="o_kanban_mobile">
+                <field name="name"/>
+                <field name="ticket_count"/>
+                <field name="team_count"/>
+                <templates>
+                    <t t-name="card">
+                        <div class="oe_kanban_global_click o_kanban_record">
+                            <div class="o_kanban_record_top">
+                                <div class="o_kanban_record_headings">
+                                    <strong class="o_kanban_record_title">
+                                        <field name="name"/>
+                                    </strong>
+                                </div>
+                            </div>
+                            <div class="o_kanban_record_body">
+                                <div class="row">
+                                    <div class="col-6">
+                                        <button class="btn btn-primary" name="action_view_tickets" type="object">
+                                            <field name="ticket_count"/> Tickets
+                                        </button>
+                                    </div>
+                                    <div class="col-6 text-end">
+                                        <span class="badge bg-secondary">
+                                            <field name="team_count"/> Teams
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+
+    <!-- Team Department Action -->
+    <record id="helpdesk_team_department_action" model="ir.actions.act_window">
+        <field name="name">Team Departments</field>
+        <field name="res_model">helpdesk.team.department</field>
+        <field name="view_mode">kanban,list,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create a new Team Department
+            </p>
+            <p>
+                Team Departments help organize your helpdesk teams into logical groups.
+            </p>
+        </field>
+    </record>
+
+    <!-- Department Dashboard Action -->
+    <record id="helpdesk_department_dashboard_action" model="ir.actions.act_window">
+        <field name="name">Helpdesk Overview</field>
+        <field name="res_model">helpdesk.team.department</field>
+        <field name="view_mode">kanban</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create a new Department
+            </p>
+            <p>
+                Departments organize your helpdesk teams and track ticket counts.
+            </p>
+        </field>
+    </record>
+
+    <!-- Menu Item -->
+    <menuitem id="helpdesk_team_department_menu"
+              name="Team Departments"
+              parent="helpdesk.helpdesk_menu_config"
+              action="helpdesk_team_department_action"
+              sequence="15"/>
+
+</odoo>

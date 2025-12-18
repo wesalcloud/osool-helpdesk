@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- TODO: Create customer satisfaction survey -->
+    
+    <!-- Customer Satisfaction Survey -->
+    <record id="survey_customer_satisfaction" model="survey.survey">
+        <field name="title">Service Quality Evaluation Survey</field>
+        <field name="description">Help us improve our service by providing your feedback</field>
+        <field name="access_mode">public</field>
+        <field name="users_can_go_back" eval="True"/>
+        <field name="is_attempts_limited" eval="False"/>
+        <field name="scoring_type">no_scoring</field>
+    </record>
+
+    <!-- TODO: Add survey questions:
+         1. Overall satisfaction rating (1-5 stars)
+         2. How would you rate the response time? (1-5 stars)
+         3. How would you rate the quality of solution? (1-5 stars)
+         4. How would you rate the professionalism of our agent? (1-5 stars)
+         5. Would you recommend our service? (Yes/No)
+         6. Additional comments (Text)
+    -->
+
+</odoo>

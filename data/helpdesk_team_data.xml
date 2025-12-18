@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Helpdesk Teams -->
+    
+    <record id="team_security" model="helpdesk.team">
+        <field name="name">Security Department</field>
+        <field name="department_type">security</field>
+        <field name="team_email">security@osool.com</field>
+        <field name="use_sla" eval="True"/>
+    </record>
+
+    <record id="team_technical" model="helpdesk.team">
+        <field name="name">Technical Support</field>
+        <field name="department_type">technical</field>
+        <field name="team_email">technical@osool.com</field>
+        <field name="use_sla" eval="True"/>
+    </record>
+
+    <record id="team_customer_service" model="helpdesk.team">
+        <field name="name">Customer Service</field>
+        <field name="department_type">customer_service</field>
+        <field name="team_email">support@osool.com</field>
+        <field name="use_sla" eval="True"/>
+    </record>
+
+    <record id="team_hr" model="helpdesk.team">
+        <field name="name">Human Resources</field>
+        <field name="department_type">hr</field>
+        <field name="team_email">hr@osool.com</field>
+        <field name="use_sla" eval="True"/>
+    </record>
+
+    <record id="team_procurement" model="helpdesk.team">
+        <field name="name">Procurement</field>
+        <field name="department_type">procurement</field>
+        <field name="team_email">procurement@osool.com</field>
+        <field name="use_sla" eval="True"/>
+    </record>
+
+</odoo>

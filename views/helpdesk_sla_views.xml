@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Extended SLA Form View -->
+    <record id="helpdesk_sla_view_form_inherit" model="ir.ui.view">
+        <field name="name">helpdesk.sla.form.inherit</field>
+        <field name="model">helpdesk.sla</field>
+        <field name="inherit_id" ref="helpdesk.helpdesk_sla_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//group[@name='time']" position="after">
+                <group string="Response &amp; Resolution Times">
+                    <field name="sla_type"/>
+                    <field name="response_time"/>
+                    <field name="resolution_time"/>
+                    <field name="use_working_hours"/>
+                </group>
+            </xpath>
+        </field>
+    </record>
+</odoo>

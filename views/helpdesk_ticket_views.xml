@@ -1,0 +1,378 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Extended Ticket Form View -->
+    <record id="helpdesk_ticket_view_form_inherit" model="ir.ui.view">
+        <field name="name">helpdesk.ticket.form.inherit</field>
+        <field name="model">helpdesk.ticket</field>
+        <field name="inherit_id" ref="helpdesk.helpdesk_ticket_view_form"/>
+        <field name="arch" type="xml">
+            
+            <!-- Add statusbar buttons for Assigned stage -->
+            <xpath expr="//header" position="inside">
+                <button name="action_start_work" 
+                        string="Start Work" 
+                        type="object" 
+                        class="oe_highlight" 
+                        invisible="1"/>
+                <button name="action_request_info" 
+                        string="Request Info" 
+                        type="object" 
+                        invisible="1"/>
+                <button name="action_send_team_department_notification" 
+                        string="Notify Department" 
+                        type="object" 
+                        class="btn-primary"
+                        invisible="not team_department_id or department_notified"
+                        confirm="Are you sure you want to send email notification to this department?"/>
+            </xpath>
+            
+            <!-- Add CSS class to form -->
+            <xpath expr="//form" position="attributes">
+                <attribute name="class">o_helpdesk_ticket_form</attribute>
+            </xpath>
+            
+            <!-- Override name field to make it single line - readonly after creation -->
+            <field name="name" position="attributes">
+                <attribute name="widget">char</attribute>
+                <attribute name="placeholder">Ticket Subject / Title</attribute>
+                <attribute name="readonly">id</attribute>
+            </field>
+            
+            <!-- Make description readonly after ticket is created -->
+            <field name="description" position="attributes">
+                <attribute name="readonly">id</attribute>
+            </field>
+            
+            <!-- Hide Helpdesk Team -->
+            <field name="team_id" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </field>
+            
+            <!-- Change label to 'Ticket Owner' and make it readonly -->
+            <field name="user_id" position="attributes">
+                <attribute name="string">Ticket Owner</attribute>
+                <attribute name="readonly">1</attribute>
+            </field>
+            
+            <!-- Add hidden fields and department after user_id -->
+            <field name="user_id" position="after">
+                <!-- Hidden fields for stage conditions -->
+                <field name="is_stage_new" invisible="1"/>
+                <field name="is_stage_assigned" invisible="1"/>
+                <field name="is_stage_in_progress" invisible="1"/>
+                <field name="ticket_owner_id" invisible="1"/>
+                <field name="reject_by" invisible="1"/>
+                <field name="conversation_id" invisible="1"/>
+                <field name="department_notified" invisible="1"/>
+                
+                <!-- Team Department -->
+                <field name="team_department_id" readonly="is_stage_assigned"/>                
+                <!-- Department Assignment - editable in New or In Progress -->
+                <field name="conversation_type" readonly="1"/>
+                <label for="conversation_type" string="Conversation Detail" invisible="not conversation_id"/>
+                <div class="o_row" invisible="not conversation_id">
+                    <button name="action_open_genesys_conversation" 
+                            type="object" 
+                            string="View Conversation Detail" 
+                            icon="fa-external-link"
+                            class="btn-link"/>
+                </div>
+                <field name="queue_name" readonly="1"/>
+                <field name="agent_email" readonly="1"/>
+                <field name="agent_name" readonly="1"/>
+                <field name="created_via" readonly="1"/>
+            </field>
+
+            <!-- Hide standard partner_phone field and its label -->
+            <xpath expr="//label[@for='partner_phone']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+            <field name="partner_phone" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </field>
+            
+            <!-- Hide email_cc field to reposition it -->
+            <field name="email_cc" position="replace"/>
+            
+            <!-- Make partner_id readonly after creation -->
+            <field name="partner_id" position="attributes">
+                <attribute name="readonly">id</attribute>
+            </field>
+            
+            <!-- Make priority readonly after creation -->
+            <field name="priority" position="attributes">
+                <attribute name="readonly">id</attribute>
+            </field>
+            
+            <!-- Make tag_ids readonly after creation -->
+            <field name="tag_ids" position="attributes">
+                <attribute name="readonly">id</attribute>
+            </field>
+            
+            <!-- Reorder fields after partner_id -->
+            <field name="partner_id" position="after">
+                <field name="partner_phone" widget="phone" readonly="id"/>
+                <field name="partner_email" readonly="id"/>
+                <field name="ticket_phone" widget="phone" readonly="id"/>
+                <field name="ticket_email" widget="email" readonly="id"/>
+                <label for="request_category_id" string="Classification"/>
+                <div class="o_row">
+                    <field name="request_category_id" options="{'no_create': True}" required="1" class="oe_inline" readonly="id"/>
+                    <field name="request_subcategory_id" 
+                           domain="[('category_id', '=', request_category_id)]"
+                           options="{'no_create': True}" 
+                           class="oe_inline"
+                           placeholder="Subcategory"/>
+                </div>
+                <field name="form_type" readonly="1"/>
+                <field name="interaction_mode" readonly="id"/>
+                <field name="caller_source" readonly="id"/>
+            </field>
+            
+            <!-- Hide description tab/page when channel is email -->
+            <xpath expr="//page[field[@name='description']]" position="attributes">
+                <attribute name="invisible">caller_source == 'email'</attribute>
+            </xpath>
+            
+            <!-- Add custom fields in a new notebook page -->
+            <xpath expr="//notebook" position="inside">
+                
+                <!-- Email Content Tab (visible only when channel is email) -->
+                <page string="Email" invisible="caller_source != 'email'">
+                    <group>
+                        <field name="email_content" nolabel="1" readonly="1" options="{'collaborative': false, 'resizable': true, 'codeview': false}"/>
+                    </group>
+                </page>
+                
+                <!-- Complaint Fields -->
+                <page string="Complaint Details" invisible="form_type != 'complaint'">
+                    <group>
+                        <group string="Complaint Information">
+                            <field name="complaint_type" readonly="id"/>
+                            <field name="complaint_severity" readonly="id"/>
+                        </group>
+                    </group>
+                </page>
+                
+                <!-- Marketing Fields -->
+                <page string="Marketing Details" invisible="form_type != 'marketing'">
+                    <group>
+                        <group string="Campaign Information">
+                            <field name="marketing_campaign" readonly="id"/>
+                            <field name="marketing_budget" widget="monetary" readonly="id"/>
+                        </group>
+                        <group string="Campaign Timeline">
+                            <field name="marketing_start_date" readonly="id"/>
+                            <field name="marketing_end_date" readonly="id"/>
+                        </group>
+                    </group>
+                </page>
+                
+                <!-- Security Fields -->
+                <page string="Security Details" invisible="form_type != 'security'">
+                    <group>
+                        <group string="Incident Information">
+                            <field name="security_incident_type" readonly="id"/>
+                            <field name="security_location" readonly="id"/>
+                            <field name="security_witness" readonly="id"/>
+                        </group>
+                    </group>
+                </page>
+                
+                <!-- Lift Booking Fields -->
+                <page string="Lift Booking Details" invisible="form_type not in ['vvip_lift', 'regular_lift']">
+                    <group>
+                        <group string="Booking Information">
+                            <field name="lift_booking_date" widget="datetime" readonly="id"/>
+                            <field name="lift_size" readonly="id"/>
+                        </group>
+                        <group string="Location Details">
+                            <field name="lift_floor_from" readonly="id"/>
+                            <field name="lift_floor_to" readonly="id"/>
+                        </group>
+                    </group>
+                    <group string="Items Description">
+                        <field name="lift_items_description" nolabel="1" readonly="id"/>
+                    </group>
+                </page>
+                
+                <!-- Procurement Fields -->
+                <page string="Procurement Details" invisible="form_type != 'procurement'">
+                    <group>
+                        <group string="Item Information">
+                            <field name="procurement_item" readonly="id"/>
+                            <field name="procurement_quantity" readonly="id"/>
+                            <field name="procurement_vendor" readonly="id"/>
+                        </group>
+                        <group string="Budget &amp; Timeline">
+                            <field name="procurement_budget" widget="monetary" readonly="id"/>
+                            <field name="procurement_required_date" readonly="id"/>
+                        </group>
+                    </group>
+                </page>
+                
+                <!-- HR Fields -->
+                <page string="HR Details" invisible="form_type != 'hr'">
+                    <group>
+                        <group string="Request Information">
+                            <field name="hr_request_type" readonly="id"/>
+                            <field name="hr_employee_id" readonly="id"/>
+                            <field name="hr_department" readonly="id"/>
+                        </group>
+                    </group>
+                </page>
+                
+                <!-- Announcement Fields -->
+                <page string="Announcement Details" invisible="form_type != 'announcement'">
+                    <group>
+                        <group string="Announcement Information">
+                            <field name="announcement_title" readonly="id"/>
+                            <field name="announcement_target_audience" readonly="id"/>
+                        </group>
+                        <group string="Publication Period">
+                            <field name="announcement_publish_date" readonly="id"/>
+                            <field name="announcement_expiry_date" readonly="id"/>
+                        </group>
+                    </group>
+                    <group string="Content">
+                        <field name="announcement_content" nolabel="1" widget="html" readonly="id"/>
+                    </group>
+                </page>
+                
+                <!-- Maximo Fields -->
+                <page string="Maximo Details" invisible="form_type != 'maximo'">
+                    <group>
+                        <group string="Work Order Information">
+                            <field name="maximo_work_order" readonly="id"/>
+                            <field name="maximo_asset_id" readonly="id"/>
+                        </group>
+                        <group string="Location &amp; Priority">
+                            <field name="maximo_location" readonly="id"/>
+                            <field name="maximo_priority" readonly="id"/>
+                        </group>
+                    </group>
+                </page>
+                
+                <!-- SLA & Status Info -->
+                <page string="SLA &amp; Status">
+                    <group>
+                        <group string="Status Information">
+                            <field name="status" readonly="id"/>
+                            <field name="date_last_stage_update" readonly="1"/>
+                            <field name="days_open" readonly="1"/>
+                        </group>
+                        <group string="SLA Tracking">
+                            <field name="sla_id" readonly="id"/>
+                            <field name="response_deadline" readonly="1"/>
+                            <field name="resolution_deadline" readonly="1"/>
+                            <field name="sla_failed" readonly="1"/>
+                        </group>
+                    </group>
+                    <group>
+                        <group string="Escalation Details">
+                            <field name="escalated" readonly="1"/>
+                            <field name="escalation_date" readonly="1"/>
+                            <field name="escalated_to_id" readonly="id"/>
+                        </group>
+                        <group string="Customer Survey">
+                            <field name="survey_id" readonly="id"/>
+                            <field name="survey_sent" readonly="1"/>
+                            <field name="survey_completed" readonly="1"/>
+                        </group>
+                    </group>
+                </page>
+                
+                <!-- Audit Trail -->
+                <page string="Audit Trail">
+                    <field name="audit_log_ids" readonly="1" nolabel="1">
+                        <list create="0" edit="0" delete="0">
+                            <field name="timestamp" widget="datetime"/>
+                            <field name="user_id"/>
+                            <field name="action"/>
+                            <field name="description"/>
+                        </list>
+                    </field>
+                </page>
+                
+                <!-- Tenant Details Tab (visible only when partner is a tenant) -->
+                <page string="Tenant Details" invisible="not is_partner_tenant">
+                    <field name="is_partner_tenant" invisible="1"/>
+                    <group>
+                        <group string="Tenant Information">
+                            <field name="partner_id" readonly="1" force_save="1"/>
+                            <field name="tenant_brand_name"/>
+                        </group>
+                        <group string="Classification">
+                            <field name="tenant_vip_status" widget="badge" decoration-danger="tenant_vip_status == 'vvip'" decoration-info="tenant_vip_status == 'vip'"/>
+                            <field name="tenant_status" widget="badge"/>
+                            <field name="tenant_type"/>
+                            <field name="tenant_business_category"/>
+                        </group>
+                    </group>
+                    
+                    <group>
+                        <group string="Location Details">
+                            <field name="tenant_site_code"/>
+                            <field name="tenant_building_name"/>
+                            <field name="tenant_unit_number"/>
+                            <field name="tenant_floor_number"/>
+                        </group>
+                        
+                        <group string="Contact Information">
+                            <field name="tenant_phone_primary" widget="phone"/>
+                            <field name="tenant_phone_secondary" widget="phone"/>
+                            <field name="tenant_email_primary" widget="email"/>
+                            <field name="tenant_email_secondary" widget="email"/>
+                        </group>
+                    </group>
+                    
+                    <group string="Contract Information">
+                        <group>
+                            <field name="tenant_contract_number"/>
+                            <field name="tenant_contract_start_date"/>
+                            <field name="tenant_contract_end_date"/>
+                        </group>
+                        <group>
+                            <field name="tenant_contract_active" widget="boolean_toggle"/>
+                        </group>
+                    </group>
+                    
+                    <div class="oe_button_box">
+                        <button name="action_open_tenant_profile"
+                                type="object"
+                                string="View Full Tenant Profile"
+                                class="btn-primary"/>
+                    </div>
+                </page>
+                
+            </xpath>
+            
+        </field>
+    </record>
+
+    <!-- Extended Ticket List View -->
+    <record id="helpdesk_ticket_view_list_inherit" model="ir.ui.view">
+        <field name="name">helpdesk.ticket.list.inherit</field>
+        <field name="model">helpdesk.ticket</field>
+        <field name="inherit_id" ref="helpdesk.helpdesk_tickets_view_tree"/>
+        <field name="arch" type="xml">
+            <!-- Change user_id label to 'Ticket Owner' -->
+            <field name="user_id" position="attributes">
+                <attribute name="string">Ticket Owner</attribute>
+            </field>
+            
+            <!-- Add team_department_id after user_id -->
+            <field name="user_id" position="after">
+                <field name="team_department_id" string="Assigned To" optional="show"/>
+            </field>
+            
+            <field name="name" position="after">
+                <field name="form_type" optional="show"/>
+                <field name="request_category_id" optional="show"/>
+                <field name="caller_source" optional="hide"/>
+                <field name="status" optional="hide"/>
+            </field>
+        </field>
+    </record>
+
+</odoo>

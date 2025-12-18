@@ -1,0 +1,256 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo noupdate="1">
+    <!-- Subcategories for ticket routing -->
+    <!-- noupdate="1" means these records are created once on install, then managed from database -->
+    
+    <!-- Complaint Subcategories -->
+    <record id="subcategory_asset_safety" model="helpdesk.subcategory">
+        <field name="name">Safety &amp; Security</field>
+        <field name="code">ASSET_SAFETY</field>
+        <field name="category_id" ref="category_complaint"/>
+        <field name="description">Issues related to safety, security, and asset protection</field>
+        <field name="sequence">10</field>
+        <field name="team_id" ref="team_technical"/>
+        <field name="escalation_enabled">True</field>
+        <field name="escalation_time">30</field>
+        <field name="escalation_user_id" ref="base.user_admin"/>
+        <field name="work_instructions"><![CDATA[
+            <h3>Safety &amp; Security Handling Steps:</h3>
+            <ol>
+                <li>Assess the severity and immediate risk</li>
+                <li>If urgent, notify security team immediately</li>
+                <li>Document the incident with photos if applicable</li>
+                <li>Coordinate with relevant departments</li>
+                <li>Follow up within 24 hours</li>
+            </ol>
+        ]]></field>
+    </record>
+
+    <record id="subcategory_service_quality" model="helpdesk.subcategory">
+        <field name="name">Service Quality</field>
+        <field name="code">SERVICE_QUALITY</field>
+        <field name="category_id" ref="category_complaint"/>
+        <field name="description">Complaints about service quality, delays, or performance issues</field>
+        <field name="sequence">20</field>
+        <field name="team_id" ref="team_customer_service"/>
+        <field name="escalation_enabled">True</field>
+        <field name="escalation_time">60</field>
+        <field name="escalation_user_id" ref="base.user_admin"/>
+        <field name="work_instructions"><![CDATA[
+            <h3>Service Quality Complaint Steps:</h3>
+            <ol>
+                <li>Listen to customer concerns carefully</li>
+                <li>Identify the root cause of the issue</li>
+                <li>Offer immediate solution or timeline</li>
+                <li>Escalate to supervisor if needed</li>
+                <li>Follow up to ensure satisfaction</li>
+            </ol>
+        ]]></field>
+    </record>
+    
+    <record id="subcategory_maintenance" model="helpdesk.subcategory">
+        <field name="name">Maintenance Issue</field>
+        <field name="code">MAINTENANCE</field>
+        <field name="category_id" ref="category_complaint"/>
+        <field name="description">Building maintenance, repairs, and facility issues</field>
+        <field name="sequence">30</field>
+        <field name="team_id" ref="team_technical"/>
+        <field name="escalation_enabled">True</field>
+        <field name="escalation_time">120</field>
+        <field name="escalation_user_id" ref="base.user_admin"/>
+    </record>
+
+    <!-- Marketing Subcategories -->
+    <record id="subcategory_campaign" model="helpdesk.subcategory">
+        <field name="name">Campaign Request</field>
+        <field name="code">CAMPAIGN</field>
+        <field name="category_id" ref="category_marketing"/>
+        <field name="description">Marketing campaign planning and execution requests</field>
+        <field name="sequence">10</field>
+        <field name="team_id" ref="team_customer_service"/>
+        <field name="work_instructions"><![CDATA[
+            <h3>Campaign Request Process:</h3>
+            <ol>
+                <li>Review campaign objectives and budget</li>
+                <li>Prepare marketing materials and timeline</li>
+                <li>Get approval from marketing manager</li>
+                <li>Execute campaign according to schedule</li>
+                <li>Monitor results and report metrics</li>
+            </ol>
+        ]]></field>
+    </record>
+    
+    <record id="subcategory_event" model="helpdesk.subcategory">
+        <field name="name">Event Management</field>
+        <field name="code">EVENT</field>
+        <field name="category_id" ref="category_marketing"/>
+        <field name="description">Community events, workshops, and promotional activities</field>
+        <field name="sequence">20</field>
+        <field name="team_id" ref="team_customer_service"/>
+    </record>
+
+    <!-- Security Subcategories -->
+    <record id="subcategory_incident" model="helpdesk.subcategory">
+        <field name="name">Security Incident</field>
+        <field name="code">INCIDENT</field>
+        <field name="category_id" ref="category_security"/>
+        <field name="description">Security breaches, theft, vandalism, and unauthorized access</field>
+        <field name="sequence">10</field>
+        <field name="team_id" ref="team_customer_service"/>
+        <field name="escalation_enabled">True</field>
+        <field name="escalation_time">15</field>
+        <field name="escalation_user_id" ref="base.user_admin"/>
+        <field name="work_instructions"><![CDATA[
+            <h3>Security Incident Protocol:</h3>
+            <ol>
+                <li><strong>URGENT:</strong> Assess immediate threat level</li>
+                <li>Contact security personnel immediately</li>
+                <li>Secure the area if safe to do so</li>
+                <li>Document with photos/videos if possible</li>
+                <li>File incident report within 2 hours</li>
+                <li>Review security footage</li>
+                <li>Follow up with authorities if needed</li>
+            </ol>
+        ]]></field>
+    </record>
+    
+    <record id="subcategory_access_control" model="helpdesk.subcategory">
+        <field name="name">Access Control</field>
+        <field name="code">ACCESS</field>
+        <field name="category_id" ref="category_security"/>
+        <field name="description">Key cards, access permissions, and entry management</field>
+        <field name="sequence">20</field>
+        <field name="team_id" ref="team_customer_service"/>
+    </record>
+
+    <!-- Procurement Subcategories -->
+    <record id="subcategory_purchase" model="helpdesk.subcategory">
+        <field name="name">Purchase Request</field>
+        <field name="code">PURCHASE</field>
+        <field name="category_id" ref="category_procurement"/>
+        <field name="description">Equipment, supplies, and service purchase requests</field>
+        <field name="sequence">10</field>
+        <field name="team_id" ref="team_technical"/>
+        <field name="work_instructions"><![CDATA[
+            <h3>Purchase Request Steps:</h3>
+            <ol>
+                <li>Review purchase justification and budget</li>
+                <li>Get quotes from at least 3 vendors</li>
+                <li>Submit for approval if over threshold</li>
+                <li>Process purchase order</li>
+                <li>Track delivery and confirm receipt</li>
+            </ol>
+        ]]></field>
+    </record>
+    
+    <record id="subcategory_vendor" model="helpdesk.subcategory">
+        <field name="name">Vendor Management</field>
+        <field name="code">VENDOR</field>
+        <field name="category_id" ref="category_procurement"/>
+        <field name="description">Vendor registration, evaluation, and contract management</field>
+        <field name="sequence">20</field>
+        <field name="team_id" ref="team_technical"/>
+    </record>
+
+    <!-- HR Subcategories -->
+    <record id="subcategory_leave" model="helpdesk.subcategory">
+        <field name="name">Leave Request</field>
+        <field name="code">LEAVE</field>
+        <field name="category_id" ref="category_hr"/>
+        <field name="description">Annual leave, sick leave, and time-off requests</field>
+        <field name="sequence">10</field>
+        <field name="team_id" ref="team_hr"/>
+        <field name="work_instructions"><![CDATA[
+            <h3>Leave Request Processing:</h3>
+            <ol>
+                <li>Check employee leave balance</li>
+                <li>Verify no team conflicts for requested dates</li>
+                <li>Get manager approval</li>
+                <li>Update leave management system</li>
+                <li>Send confirmation to employee</li>
+            </ol>
+        ]]></field>
+    </record>
+    
+    <record id="subcategory_training" model="helpdesk.subcategory">
+        <field name="name">Training &amp; Development</field>
+        <field name="code">TRAINING</field>
+        <field name="category_id" ref="category_hr"/>
+        <field name="description">Employee training requests and development programs</field>
+        <field name="sequence">20</field>
+        <field name="team_id" ref="team_hr"/>
+    </record>
+    
+    <record id="subcategory_payroll" model="helpdesk.subcategory">
+        <field name="name">Payroll Issue</field>
+        <field name="code">PAYROLL</field>
+        <field name="category_id" ref="category_hr"/>
+        <field name="description">Salary, benefits, and payroll-related inquiries</field>
+        <field name="sequence">30</field>
+        <field name="team_id" ref="team_hr"/>
+        <field name="escalation_enabled">True</field>
+        <field name="escalation_time">24</field>
+        <field name="escalation_user_id" ref="base.user_admin"/>
+    </record>
+    
+    <!-- Lift Booking Subcategories -->
+    <record id="subcategory_move_in" model="helpdesk.subcategory">
+        <field name="name">Move In/Out</field>
+        <field name="code">MOVE</field>
+        <field name="category_id" ref="category_lift_booking"/>
+        <field name="description">Tenant move-in and move-out lift reservations</field>
+        <field name="sequence">10</field>
+        <field name="team_id" ref="team_technical"/>
+    </record>
+    
+    <record id="subcategory_delivery" model="helpdesk.subcategory">
+        <field name="name">Delivery &amp; Furniture</field>
+        <field name="code">DELIVERY</field>
+        <field name="category_id" ref="category_lift_booking"/>
+        <field name="description">Furniture delivery and large item transport</field>
+        <field name="sequence">20</field>
+        <field name="team_id" ref="team_technical"/>
+    </record>
+    
+    <!-- Announcement Subcategories -->
+    <record id="subcategory_facility" model="helpdesk.subcategory">
+        <field name="name">Facility Announcement</field>
+        <field name="code">FACILITY</field>
+        <field name="category_id" ref="category_announcement"/>
+        <field name="description">Building and facility-related announcements</field>
+        <field name="sequence">10</field>
+        <field name="team_id" ref="team_customer_service"/>
+    </record>
+    
+    <record id="subcategory_community" model="helpdesk.subcategory">
+        <field name="name">Community Update</field>
+        <field name="code">COMMUNITY</field>
+        <field name="category_id" ref="category_announcement"/>
+        <field name="description">Community events and tenant communications</field>
+        <field name="sequence">20</field>
+        <field name="team_id" ref="team_customer_service"/>
+    </record>
+    
+    <!-- Maximo Subcategories -->
+    <record id="subcategory_preventive" model="helpdesk.subcategory">
+        <field name="name">Preventive Maintenance</field>
+        <field name="code">PM</field>
+        <field name="category_id" ref="category_maximo"/>
+        <field name="description">Scheduled preventive maintenance work orders</field>
+        <field name="sequence">10</field>
+        <field name="team_id" ref="team_technical"/>
+    </record>
+    
+    <record id="subcategory_corrective" model="helpdesk.subcategory">
+        <field name="name">Corrective Maintenance</field>
+        <field name="code">CM</field>
+        <field name="category_id" ref="category_maximo"/>
+        <field name="description">Reactive maintenance and repair work orders</field>
+        <field name="sequence">20</field>
+        <field name="team_id" ref="team_technical"/>
+        <field name="escalation_enabled">True</field>
+        <field name="escalation_time">180</field>
+        <field name="escalation_user_id" ref="base.user_admin"/>
+    </record>
+
+</odoo>

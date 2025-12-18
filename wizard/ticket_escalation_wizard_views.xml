@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Escalation Wizard View -->
+    <record id="view_ticket_escalation_wizard_form" model="ir.ui.view">
+        <field name="name">helpdesk.ticket.escalation.wizard.form</field>
+        <field name="model">helpdesk.ticket.escalation.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Escalate Ticket">
+                <group>
+                    <field name="ticket_id" readonly="1"/>
+                    <field name="escalation_reason" required="1"/>
+                    <field name="escalate_to_team"/>
+                    <field name="escalate_to_user"/>
+                    <field name="priority"/>
+                    <field name="notify_customer"/>
+                </group>
+                <footer>
+                    <button string="Escalate" name="action_escalate" type="object" class="btn-primary"/>
+                    <button string="Cancel" class="btn-secondary" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+</odoo>

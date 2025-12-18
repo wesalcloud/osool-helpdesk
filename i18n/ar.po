@@ -1,0 +1,610 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+#   * osool_helpdesk
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 19.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2025-10-29 08:00:00+00:00\n"
+"PO-Revision-Date: 2025-10-29 08:00:00+00:00\n"
+"Language: ar\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=6; plural=(n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 && n%100<=10 ? 3 : n%100>=11 ? 4 : 5);\n"
+
+#. module: osool_helpdesk
+#: model:ir.model.fields,field_description:osool_helpdesk.field_helpdesk_ticket__caller_source
+msgid "Caller Source"
+msgstr "مصدر الاتصال"
+
+#. module: osool_helpdesk
+#: selection:helpdesk.ticket,caller_source:0
+msgid "Voice Call"
+msgstr "مكالمة هاتفية"
+
+#. module: osool_helpdesk
+#: selection:helpdesk.ticket,caller_source:0
+msgid "Email"
+msgstr "بريد إلكتروني"
+
+#. module: osool_helpdesk
+#: selection:helpdesk.ticket,caller_source:0
+msgid "WhatsApp"
+msgstr "واتساب"
+
+#. module: osool_helpdesk
+#: selection:helpdesk.ticket,caller_source:0
+msgid "Chat"
+msgstr "محادثة"
+
+#. module: osool_helpdesk
+#: selection:helpdesk.ticket,caller_source:0
+msgid "Walk-in"
+msgstr "زيارة مباشرة"
+
+#. module: osool_helpdesk
+#: selection:helpdesk.ticket,caller_source:0
+msgid "Self-service"
+msgstr "خدمة ذاتية"
+
+#. module: osool_helpdesk
+#: model:ir.model.fields,field_description:osool_helpdesk.field_helpdesk_ticket__request_category_id
+msgid "Category"
+msgstr "الفئة"
+
+#. module: osool_helpdesk
+#: model:ir.model.fields,field_description:osool_helpdesk.field_helpdesk_ticket__request_subcategory_id
+msgid "Subcategory"
+msgstr "الفئة الفرعية"
+
+#. module: osool_helpdesk
+#: model:ir.model.fields,field_description:osool_helpdesk.field_helpdesk_ticket__form_type
+msgid "Form Type"
+msgstr "نوع النموذج"
+
+#. module: osool_helpdesk
+#: selection:helpdesk.ticket,form_type:0
+msgid "Complaint"
+msgstr "شكوى"
+
+#. module: osool_helpdesk
+#: selection:helpdesk.ticket,form_type:0
+msgid "Marketing"
+msgstr "تسويق"
+
+#. module: osool_helpdesk
+#: selection:helpdesk.ticket,form_type:0
+msgid "Security"
+msgstr "أمن"
+
+#. module: osool_helpdesk
+#: selection:helpdesk.ticket,form_type:0
+msgid "VVIP Lift Booking"
+msgstr "حجز مصعد كبار الشخصيات"
+
+#. module: osool_helpdesk
+#: selection:helpdesk.ticket,form_type:0
+msgid "Regular Lift Booking"
+msgstr "حجز مصعد عادي"
+
+#. module: osool_helpdesk
+#: selection:helpdesk.ticket,form_type:0
+msgid "Procurement"
+msgstr "مشتريات"
+
+#. module: osool_helpdesk
+#: selection:helpdesk.ticket,form_type:0
+msgid "HR"
+msgstr "الموارد البشرية"
+
+#. module: osool_helpdesk
+#: selection:helpdesk.ticket,form_type:0
+msgid "Announcement"
+msgstr "إعلان"
+
+#. module: osool_helpdesk
+#: selection:helpdesk.ticket,form_type:0
+msgid "Maximo"
+msgstr "ماكسيمو"
+
+#. module: osool_helpdesk
+#: model:ir.model.fields,field_description:osool_helpdesk.field_helpdesk_ticket__complaint_type
+msgid "Complaint Type"
+msgstr "نوع الشكوى"
+
+#. module: osool_helpdesk
+#: selection:helpdesk.ticket,complaint_type:0
+msgid "Service Issue"
+msgstr "مشكلة خدمة"
+
+#. module: osool_helpdesk
+#: selection:helpdesk.ticket,complaint_type:0
+msgid "Product Issue"
+msgstr "مشكلة منتج"
+
+#. module: osool_helpdesk
+#: selection:helpdesk.ticket,complaint_type:0
+msgid "Billing Issue"
+msgstr "مشكلة فواتير"
+
+#. module: osool_helpdesk
+#: selection:helpdesk.ticket,complaint_type:0
+msgid "Staff Behavior"
+msgstr "سلوك الموظفين"
+
+#. module: osool_helpdesk
+#: selection:helpdesk.ticket,complaint_type:0
+msgid "Other"
+msgstr "أخرى"
+
+#. module: osool_helpdesk
+#: model:ir.model.fields,field_description:osool_helpdesk.field_helpdesk_ticket__complaint_severity
+msgid "Severity"
+msgstr "الخطورة"
+
+#. module: osool_helpdesk
+#: selection:helpdesk.ticket,complaint_severity:0
+msgid "Minor"
+msgstr "بسيطة"
+
+#. module: osool_helpdesk
+#: selection:helpdesk.ticket,complaint_severity:0
+msgid "Moderate"
+msgstr "متوسطة"
+
+#. module: osool_helpdesk
+#: selection:helpdesk.ticket,complaint_severity:0
+msgid "Major"
+msgstr "كبيرة"
+
+#. module: osool_helpdesk
+#: selection:helpdesk.ticket,complaint_severity:0
+msgid "Critical"
+msgstr "حرجة"
+
+#. module: osool_helpdesk
+#: model:ir.ui.view,arch_db:osool_helpdesk.helpdesk_ticket_view_form_inherit
+msgid "Complaint Details"
+msgstr "تفاصيل الشكوى"
+
+#. module: osool_helpdesk
+#: model:ir.ui.view,arch_db:osool_helpdesk.helpdesk_ticket_view_form_inherit
+msgid "Marketing Details"
+msgstr "تفاصيل التسويق"
+
+#. module: osool_helpdesk
+#: model:ir.ui.view,arch_db:osool_helpdesk.helpdesk_ticket_view_form_inherit
+msgid "Security Details"
+msgstr "تفاصيل الأمن"
+
+#. module: osool_helpdesk
+#: model:ir.ui.view,arch_db:osool_helpdesk.helpdesk_ticket_view_form_inherit
+msgid "Lift Booking Details"
+msgstr "تفاصيل حجز المصعد"
+
+#. module: osool_helpdesk
+#: model:ir.ui.view,arch_db:osool_helpdesk.helpdesk_ticket_view_form_inherit
+msgid "Procurement Details"
+msgstr "تفاصيل المشتريات"
+
+#. module: osool_helpdesk
+#: model:ir.ui.view,arch_db:osool_helpdesk.helpdesk_ticket_view_form_inherit
+msgid "HR Details"
+msgstr "تفاصيل الموارد البشرية"
+
+#. module: osool_helpdesk
+#: model:ir.ui.view,arch_db:osool_helpdesk.helpdesk_ticket_view_form_inherit
+msgid "Announcement Details"
+msgstr "تفاصيل الإعلان"
+
+#. module: osool_helpdesk
+#: model:ir.ui.view,arch_db:osool_helpdesk.helpdesk_ticket_view_form_inherit
+msgid "Maximo Details"
+msgstr "تفاصيل ماكسيمو"
+
+#. module: osool_helpdesk
+#: model:ir.ui.view,arch_db:osool_helpdesk.helpdesk_ticket_view_form_inherit
+msgid "SLA & Status"
+msgstr "اتفاقية مستوى الخدمة والحالة"
+
+#. module: osool_helpdesk
+#: model:ir.ui.view,arch_db:osool_helpdesk.helpdesk_ticket_view_form_inherit
+msgid "Audit Trail"
+msgstr "سجل المراجعة"
+
+#. module: osool_helpdesk
+#: model:ir.model.fields,field_description:osool_helpdesk.field_helpdesk_ticket__marketing_campaign
+msgid "Campaign Name"
+msgstr "اسم الحملة"
+
+#. module: osool_helpdesk
+#: model:ir.model.fields,field_description:osool_helpdesk.field_helpdesk_ticket__marketing_budget
+msgid "Budget"
+msgstr "الميزانية"
+
+#. module: osool_helpdesk
+#: model:ir.model.fields,field_description:osool_helpdesk.field_helpdesk_ticket__security_incident_type
+msgid "Incident Type"
+msgstr "نوع الحادثة"
+
+#. module: osool_helpdesk
+#: model:ir.model.fields,field_description:osool_helpdesk.field_helpdesk_ticket__security_location
+msgid "Incident Location"
+msgstr "موقع الحادثة"
+
+#. module: osool_helpdesk
+#: model:ir.model.fields,field_description:osool_helpdesk.field_helpdesk_ticket__lift_booking_date
+msgid "Booking Date/Time"
+msgstr "تاريخ/وقت الحجز"
+
+#. module: osool_helpdesk
+#: model:ir.model.fields,field_description:osool_helpdesk.field_helpdesk_ticket__lift_size
+msgid "Lift Size"
+msgstr "حجم المصعد"
+
+#. module: osool_helpdesk
+#: selection:helpdesk.ticket,lift_size:0
+msgid "Small"
+msgstr "صغير"
+
+#. module: osool_helpdesk
+#: selection:helpdesk.ticket,lift_size:0
+msgid "Medium"
+msgstr "متوسط"
+
+#. module: osool_helpdesk
+#: selection:helpdesk.ticket,lift_size:0
+msgid "Large"
+msgstr "كبير"
+
+#. module: osool_helpdesk
+#: model:ir.model.fields,field_description:osool_helpdesk.field_helpdesk_ticket__procurement_item
+msgid "Item/Service"
+msgstr "صنف/خدمة"
+
+#. module: osool_helpdesk
+#: model:ir.model.fields,field_description:osool_helpdesk.field_helpdesk_ticket__procurement_quantity
+msgid "Quantity"
+msgstr "الكمية"
+
+#. module: osool_helpdesk
+#: model:ir.model.fields,field_description:osool_helpdesk.field_helpdesk_ticket__hr_request_type
+msgid "HR Request Type"
+msgstr "نوع طلب الموارد البشرية"
+
+#. module: osool_helpdesk
+#: selection:helpdesk.ticket,hr_request_type:0
+msgid "Leave Request"
+msgstr "طلب إجازة"
+
+#. module: osool_helpdesk
+#: selection:helpdesk.ticket,hr_request_type:0
+msgid "Recruitment"
+msgstr "توظيف"
+
+#. module: osool_helpdesk
+#: selection:helpdesk.ticket,hr_request_type:0
+msgid "Training"
+msgstr "تدريب"
+
+#. module: osool_helpdesk
+#: model:ir.model.fields,field_description:osool_helpdesk.field_helpdesk_ticket__announcement_title
+msgid "Announcement Title"
+msgstr "عنوان الإعلان"
+
+#. module: osool_helpdesk
+#: model:ir.model.fields,field_description:osool_helpdesk.field_helpdesk_ticket__announcement_target_audience
+msgid "Target Audience"
+msgstr "الجمهور المستهدف"
+
+#. module: osool_helpdesk
+#: selection:helpdesk.ticket,announcement_target_audience:0
+msgid "All"
+msgstr "الجميع"
+
+#. module: osool_helpdesk
+#: selection:helpdesk.ticket,announcement_target_audience:0
+msgid "Employees Only"
+msgstr "الموظفين فقط"
+
+#. module: osool_helpdesk
+#: selection:helpdesk.ticket,announcement_target_audience:0
+msgid "Tenants Only"
+msgstr "المستأجرين فقط"
+
+#. module: osool_helpdesk
+#: selection:helpdesk.ticket,announcement_target_audience:0
+msgid "VVIP Only"
+msgstr "كبار الشخصيات فقط"
+
+#. module: osool_helpdesk
+#: model:helpdesk.category,name:osool_helpdesk.category_complaint
+msgid "Complaint"
+msgstr "شكوى"
+
+#. module: osool_helpdesk
+#: model:helpdesk.category,name:osool_helpdesk.category_marketing
+msgid "Marketing"
+msgstr "تسويق"
+
+#. module: osool_helpdesk
+#: model:helpdesk.category,name:osool_helpdesk.category_security
+msgid "Security"
+msgstr "أمن"
+
+#. module: osool_helpdesk
+#: model:helpdesk.category,name:osool_helpdesk.category_lift_booking
+msgid "Lift Booking"
+msgstr "حجز مصعد"
+
+#. module: osool_helpdesk
+#: model:helpdesk.category,name:osool_helpdesk.category_procurement
+msgid "Procurement"
+msgstr "مشتريات"
+
+#. module: osool_helpdesk
+#: model:helpdesk.category,name:osool_helpdesk.category_hr
+msgid "Human Resources"
+msgstr "الموارد البشرية"
+
+#. module: osool_helpdesk
+#: model:helpdesk.category,name:osool_helpdesk.category_announcement
+msgid "Announcement"
+msgstr "إعلان"
+
+#. module: osool_helpdesk
+#: model:helpdesk.category,name:osool_helpdesk.category_maximo
+msgid "Maximo"
+msgstr "ماكسيمو"
+
+#. module: osool_helpdesk
+#: model:ir.ui.menu,name:osool_helpdesk.menu_helpdesk_categories
+msgid "Categories"
+msgstr "الفئات"
+
+#. module: osool_helpdesk
+#: model:ir.ui.menu,name:osool_helpdesk.menu_helpdesk_subcategories
+msgid "Subcategories"
+msgstr "الفئات الفرعية"
+
+#. module: osool_helpdesk
+#: model:ir.ui.menu,name:osool_helpdesk.menu_helpdesk_audit
+msgid "Audit Trail"
+msgstr "سجل المراجعة"
+
+#. module: osool_helpdesk
+#: model:ir.model,name:osool_helpdesk.model_helpdesk_ticket
+msgid "Helpdesk Ticket"
+msgstr "تذكرة الدعم الفني"
+
+#. module: osool_helpdesk
+#: model:ir.model,name:osool_helpdesk.model_helpdesk_category
+msgid "Helpdesk Ticket Category"
+msgstr "فئة تذكرة الدعم الفني"
+
+#. module: osool_helpdesk
+#: model:ir.model,name:osool_helpdesk.model_helpdesk_subcategory
+msgid "Helpdesk Ticket Subcategory"
+msgstr "الفئة الفرعية لتذكرة الدعم الفني"
+
+#. module: osool_helpdesk
+#: model:ir.model,name:osool_helpdesk.model_helpdesk_audit
+msgid "Helpdesk Ticket Audit Log"
+msgstr "سجل مراجعة تذكرة الدعم الفني"
+
+#. module: osool_helpdesk
+#: model:ir.model,name:osool_helpdesk.model_helpdesk_team
+msgid "Helpdesk Team"
+msgstr "فريق الدعم الفني"
+
+#. module: osool_helpdesk
+#: model:ir.ui.menu,name:osool_helpdesk.helpdesk_team_menu
+msgid "Teams"
+msgstr "الفرق"
+
+#. module: osool_helpdesk
+#: model:ir.model,name:osool_helpdesk.model_helpdesk_stage
+msgid "Helpdesk Stage"
+msgstr "مرحلة الدعم الفني"
+
+#. module: osool_helpdesk
+#: model:ir.ui.menu,name:osool_helpdesk.helpdesk_stage_menu
+msgid "Stages"
+msgstr "المراحل"
+
+#. module: osool_helpdesk
+#: model:helpdesk.stage,name:osool_helpdesk.stage_new
+msgid "New"
+msgstr "جديد"
+
+#. module: osool_helpdesk
+#: model:helpdesk.stage,name:osool_helpdesk.stage_in_progress
+msgid "In Progress"
+msgstr "قيد التنفيذ"
+
+#. module: osool_helpdesk
+#: model:helpdesk.stage,name:osool_helpdesk.stage_pending
+msgid "Pending"
+msgstr "معلق"
+
+#. module: osool_helpdesk
+#: model:helpdesk.stage,name:osool_helpdesk.stage_waiting_customer
+msgid "Waiting for Customer"
+msgstr "في انتظار العميل"
+
+#. module: osool_helpdesk
+#: model:helpdesk.stage,name:osool_helpdesk.stage_resolved
+msgid "Resolved"
+msgstr "تم الحل"
+
+#. module: osool_helpdesk
+#: model:helpdesk.stage,name:osool_helpdesk.stage_closed
+msgid "Closed"
+msgstr "مغلق"
+
+#. module: osool_helpdesk
+#: model:helpdesk.stage,name:osool_helpdesk.stage_cancelled
+msgid "Cancelled"
+msgstr "ملغي"
+
+#. module: osool_helpdesk
+#: model:ir.ui.view,arch_db:osool_helpdesk.helpdesk_ticket_view_form_inherit
+msgid "Case Type"
+msgstr "نوع الحالة"
+
+#. module: osool_helpdesk
+#: model:ir.ui.view,arch_db:osool_helpdesk.helpdesk_ticket_view_form_inherit
+msgid "Classification"
+msgstr "التصنيف"
+
+#. module: osool_helpdesk
+#: model:ir.ui.view,arch_db:osool_helpdesk.helpdesk_ticket_view_form_inherit
+msgid "Complaint Information"
+msgstr "معلومات الشكوى"
+
+#. module: osool_helpdesk
+#: model:ir.ui.view,arch_db:osool_helpdesk.helpdesk_ticket_view_form_inherit
+msgid "Campaign Information"
+msgstr "معلومات الحملة"
+
+#. module: osool_helpdesk
+#: model:ir.ui.view,arch_db:osool_helpdesk.helpdesk_ticket_view_form_inherit
+msgid "Campaign Details"
+msgstr "تفاصيل الحملة"
+
+#. module: osool_helpdesk
+#: model:ir.ui.view,arch_db:osool_helpdesk.helpdesk_ticket_view_form_inherit
+msgid "Security Incident Information"
+msgstr "معلومات حادثة الأمن"
+
+#. module: osool_helpdesk
+#: model:ir.ui.view,arch_db:osool_helpdesk.helpdesk_ticket_view_form_inherit
+msgid "Incident Details"
+msgstr "تفاصيل الحادثة"
+
+#. module: osool_helpdesk
+#: model:ir.ui.view,arch_db:osool_helpdesk.helpdesk_ticket_view_form_inherit
+msgid "Booking Information"
+msgstr "معلومات الحجز"
+
+#. module: osool_helpdesk
+#: model:ir.ui.view,arch_db:osool_helpdesk.helpdesk_ticket_view_form_inherit
+msgid "Booking Details"
+msgstr "تفاصيل الحجز"
+
+#. module: osool_helpdesk
+#: model:ir.ui.view,arch_db:osool_helpdesk.helpdesk_ticket_view_form_inherit
+msgid "Procurement Information"
+msgstr "معلومات المشتريات"
+
+#. module: osool_helpdesk
+#: model:ir.ui.view,arch_db:osool_helpdesk.helpdesk_ticket_view_form_inherit
+msgid "Item Details"
+msgstr "تفاصيل الصنف"
+
+#. module: osool_helpdesk
+#: model:ir.ui.view,arch_db:osool_helpdesk.helpdesk_ticket_view_form_inherit
+msgid "HR Request Information"
+msgstr "معلومات طلب الموارد البشرية"
+
+#. module: osool_helpdesk
+#: model:ir.ui.view,arch_db:osool_helpdesk.helpdesk_ticket_view_form_inherit
+msgid "Request Details"
+msgstr "تفاصيل الطلب"
+
+#. module: osool_helpdesk
+#: model:ir.ui.view,arch_db:osool_helpdesk.helpdesk_ticket_view_form_inherit
+msgid "Announcement Information"
+msgstr "معلومات الإعلان"
+
+#. module: osool_helpdesk
+#: model:ir.ui.view,arch_db:osool_helpdesk.helpdesk_ticket_view_form_inherit
+msgid "Announcement Content"
+msgstr "محتوى الإعلان"
+
+#. module: osool_helpdesk
+#: model:ir.ui.view,arch_db:osool_helpdesk.helpdesk_ticket_view_form_inherit
+msgid "Maximo Information"
+msgstr "معلومات ماكسيمو"
+
+#. module: osool_helpdesk
+#: model:ir.ui.view,arch_db:osool_helpdesk.helpdesk_ticket_view_form_inherit
+msgid "Work Order Details"
+msgstr "تفاصيل أمر العمل"
+
+#. module: osool_helpdesk
+#: model:ir.ui.view,arch_db:osool_helpdesk.helpdesk_ticket_view_form_inherit
+msgid "SLA Information"
+msgstr "معلومات اتفاقية مستوى الخدمة"
+
+#. module: osool_helpdesk
+#: model:ir.ui.view,arch_db:osool_helpdesk.helpdesk_ticket_view_form_inherit
+msgid "Status Information"
+msgstr "معلومات الحالة"
+
+#. module: osool_helpdesk
+#: model:ir.model.fields,field_description:osool_helpdesk.field_helpdesk_ticket__description
+msgid "Description"
+msgstr "الوصف"
+
+#. module: osool_helpdesk
+#: model:ir.model.fields,field_description:osool_helpdesk.field_helpdesk_ticket__partner_name
+msgid "Customer Name"
+msgstr "اسم العميل"
+
+#. module: osool_helpdesk
+#: model:ir.model.fields,field_description:osool_helpdesk.field_helpdesk_ticket__partner_email
+msgid "Email"
+msgstr "البريد الإلكتروني"
+
+#. module: osool_helpdesk
+#: model:ir.model.fields,field_description:osool_helpdesk.field_helpdesk_ticket__partner_phone
+msgid "Phone"
+msgstr "الهاتف"
+
+#. module: osool_helpdesk
+#: model:ir.model.fields,field_description:osool_helpdesk.field_helpdesk_ticket__priority
+msgid "Priority"
+msgstr "الأولوية"
+
+#. module: osool_helpdesk
+#: model:ir.model.fields,field_description:osool_helpdesk.field_helpdesk_ticket__user_id
+msgid "Assigned to"
+msgstr "مسند إلى"
+
+#. module: osool_helpdesk
+#: model:ir.model.fields,field_description:osool_helpdesk.field_helpdesk_ticket__team_id
+msgid "Team"
+msgstr "الفريق"
+
+#. module: osool_helpdesk
+#: model:ir.model.fields,field_description:osool_helpdesk.field_helpdesk_ticket__stage_id
+msgid "Stage"
+msgstr "المرحلة"
+
+#. module: osool_helpdesk
+#: model:ir.model.fields,field_description:osool_helpdesk.field_helpdesk_ticket__create_date
+msgid "Created on"
+msgstr "تاريخ الإنشاء"
+
+#. module: osool_helpdesk
+#: model:ir.model.fields,field_description:osool_helpdesk.field_helpdesk_ticket__write_date
+msgid "Last Updated on"
+msgstr "آخر تحديث"
+
+#. module: osool_helpdesk
+#: model:ir.model.fields,field_description:osool_helpdesk.field_helpdesk_ticket__close_date
+msgid "Close Date"
+msgstr "تاريخ الإغلاق"
+
+#. module: osool_helpdesk
+#: model:ir.actions.act_window,name:osool_helpdesk.action_helpdesk_ticket
+msgid "Tickets"
+msgstr "التذاكر"
+
+#. module: osool_helpdesk
+#: model:ir.ui.menu,name:osool_helpdesk.menu_helpdesk_ticket
+msgid "All Tickets"
+msgstr "جميع التذاكر"

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Audit Log Views -->
+    <record id="helpdesk_audit_view_tree" model="ir.ui.view">
+        <field name="name">helpdesk.audit.list</field>
+        <field name="model">helpdesk.audit</field>
+        <field name="arch" type="xml">
+            <list string="Audit Trail" create="false" edit="false" delete="false">
+                <field name="timestamp"/>
+                <field name="ticket_id"/>
+                <field name="user_id"/>
+                <field name="action"/>
+                <field name="description"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="helpdesk_audit_action" model="ir.actions.act_window">
+        <field name="name">Audit Trail</field>
+        <field name="res_model">helpdesk.audit</field>
+        <field name="view_mode">list</field>
+    </record>
+
+</odoo>

@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Subcategory Views -->
+    <record id="helpdesk_subcategory_view_tree" model="ir.ui.view">
+        <field name="name">helpdesk.subcategory.list</field>
+        <field name="model">helpdesk.subcategory</field>
+        <field name="arch" type="xml">
+            <list string="Ticket Subcategories">
+                <field name="sequence" widget="handle"/>
+                <field name="name"/>
+                <field name="code"/>
+                <field name="category_id"/>
+                <field name="team_id"/>
+                <field name="active"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="helpdesk_subcategory_view_form" model="ir.ui.view">
+        <field name="name">helpdesk.subcategory.form</field>
+        <field name="model">helpdesk.subcategory</field>
+        <field name="arch" type="xml">
+            <form string="Ticket Subcategory">
+                <header>
+                    <button name="action_view_tickets" 
+                            type="object" 
+                            string="View Tickets" 
+                            class="oe_highlight"
+                            invisible="ticket_count == 0"/>
+                </header>
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button name="action_view_tickets" 
+                                type="object" 
+                                class="oe_stat_button" 
+                                icon="fa-ticket">
+                            <field name="ticket_count" widget="statinfo" string="Tickets"/>
+                        </button>
+                    </div>
+                    
+                    <widget name="web_ribbon" title="Archived" bg_color="text-bg-danger" invisible="active"/>
+                    
+                    <group>
+                        <group string="Basic Information">
+                            <field name="name"/>
+                            <field name="code"/>
+                            <field name="category_id"/>
+                            <field name="sequence"/>
+                            <field name="active" widget="boolean_toggle"/>
+                        </group>
+                        <group string="Assignment">
+                            <field name="team_id"/>
+                            <field name="auto_assign_user_id"/>
+                            <field name="ticket_owner_id"/>
+                            <field name="sla_id"/>
+                        </group>
+                    </group>
+                    
+                    <group string="Additional Recipients">
+                        <field name="cc_team_ids" widget="many2many_tags"/>
+                        <field name="cc_user_ids" widget="many2many_tags"/>
+                    </group>
+                    
+                    <group string="Escalation Settings">
+                        <group>
+                            <field name="escalation_enabled" widget="boolean_toggle"/>
+                            <field name="escalation_time" invisible="not escalation_enabled"/>
+                            <field name="escalation_user_id" invisible="not escalation_enabled"/>
+                        </group>
+                    </group>
+                    
+                    <notebook>
+                        <page string="Description">
+                            <field name="description" placeholder="Enter a detailed description of this subcategory..."/>
+                        </page>
+                        <page string="Work Instructions">
+                            <field name="work_instructions" 
+                                   widget="html" 
+                                   placeholder="Enter step-by-step instructions for handling tickets of this subcategory..."/>
+                        </page>
+                    </notebook>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <record id="helpdesk_subcategory_action" model="ir.actions.act_window">
+        <field name="name">Subcategories</field>
+        <field name="res_model">helpdesk.subcategory</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+</odoo>

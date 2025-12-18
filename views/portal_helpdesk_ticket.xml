@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Portal Create Ticket Template -->
+    <template id="portal_create_ticket" name="Create Support Ticket">
+        <t t-call="portal.portal_layout">
+            <div class="container mt-4">
+                <div class="row">
+                    <div class="col-lg-8 offset-lg-2">
+                        <div class="card">
+                            <div class="card-header bg-primary text-white">
+                                <h3 class="mb-0">
+                                    <i class="fa fa-ticket"/> Create Support Ticket
+                                </h3>
+                            </div>
+                            <div class="card-body">
+                                <form action="/helpdesk/ticket/submit" method="POST" enctype="multipart/form-data">
+                                    <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+                                    
+                                    <t t-if="errors">
+                                        <div class="alert alert-danger">
+                                            <ul class="mb-0">
+                                                <li t-foreach="errors" t-as="err" t-esc="err"/>
+                                            </ul>
+                                        </div>
+                                    </t>
+                                    
+                                    <div class="alert alert-info">
+                                        <i class="fa fa-info-circle"/> You are logged in as <strong t-esc="user.name"/>
+                                    </div>
+                                    
+                                    <div class="form-group mb-3">
+                                        <label for="subject" class="form-label required">Subject *</label>
+                         <input type="text" class="form-control" id="subject" name="subject" 
+                             placeholder="Brief description of your issue" required="required"
+                             t-att-value="post.get('subject') if post else ''"/>
+                                    </div>
+                                    
+                                    <div class="form-group mb-3">
+                                        <label for="category_id" class="form-label">Category</label>
+                                        <select class="form-control" id="category_id" name="category_id">
+                                            <option value="">Select Category...</option>
+                                            <t t-foreach="categories" t-as="category">
+                                                <option t-att-value="category.id" t-esc="category.name"
+                                                    t-att-selected="str(category.id) == (post.get('category_id') if post else '')"/>
+                                            </t>
+                                        </select>
+                                    </div>
+                                    
+                                    
+                                    
+                                    <div class="form-group mb-3">
+                                        <label for="description" class="form-label required">Description *</label>
+                                        <textarea class="form-control" id="description" name="description" rows="6" 
+                                                  placeholder="Please describe your issue in detail..." required="required"><t t-esc="post.get('description') if post else ''"/></textarea>
+                                    </div>
+                                    
+                                    <div class="form-group mb-3">
+                                        <label class="form-label">Your Contact Information</label>
+                                        <div class="card bg-light p-3">
+                                            <p class="mb-1"><strong>Name:</strong> <t t-esc="user.partner_id.name or user.name"/></p>
+                                            <p class="mb-1"><strong>Email:</strong> <t t-esc="user.partner_id.email or user.email"/></p>
+                                            <p class="mb-0"><strong>Phone:</strong> <t t-esc="user.partner_id.phone or 'Not provided'"/></p>
+                                        </div>
+                                        <small class="text-muted">We'll use this information to contact you about your ticket.</small>
+                                    </div>
+                                    
+                                    <div class="d-grid gap-2 d-md-flex justify-content-md-end mt-4">
+                                        <a href="/my/tickets" class="btn btn-secondary">
+                                            <i class="fa fa-times"/> Cancel
+                                        </a>
+                                        <button type="submit" class="btn btn-primary">
+                                            <i class="fa fa-paper-plane"/> Submit Ticket
+                                        </button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </t>
+    </template>
+    
+    <!-- Portal Login Required Message -->
+    <template id="portal_ticket_login_required" name="Login Required">
+        <t t-call="portal.portal_layout">
+            <div class="container mt-5">
+                <div class="row">
+                    <div class="col-lg-6 offset-lg-3">
+                        <div class="card text-center">
+                            <div class="card-body p-5">
+                                <i class="fa fa-lock fa-4x text-warning mb-4"/>
+                                <h2 class="card-title mb-4">Login Required</h2>
+                                <p class="card-text lead mb-4">
+                                    You must be logged in to create or view support tickets.
+                                </p>
+                                <p class="text-muted mb-4">
+                                    Please log in with your account to access the helpdesk portal.
+                                </p>
+                                <a href="/web/login?redirect=/helpdesk/ticket/create" class="btn btn-primary btn-lg">
+                                    <i class="fa fa-sign-in"/> Login Now
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </t>
+    </template>
+    
+</odoo>

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+        
+        <!-- Test Tickets -->
+        <record id="ticket_test_001" model="helpdesk.ticket">
+            <field name="name">AC not working in apartment 3A</field>
+            <field name="description">The air conditioning unit has stopped working</field>
+            <field name="request_category_id" ref="osool_helpdesk.category_complaint"/>
+            <field name="team_id" ref="osool_helpdesk.team_technical"/>
+        </record>
+
+        <record id="ticket_test_002" model="helpdesk.ticket">
+            <field name="name">Noise complaint from neighbors</field>
+            <field name="description">Excessive noise from apartment 5B</field>
+            <field name="request_category_id" ref="osool_helpdesk.category_complaint"/>
+            <field name="team_id" ref="osool_helpdesk.team_customer_service"/>
+        </record>
+
+    </data>
+</odoo>

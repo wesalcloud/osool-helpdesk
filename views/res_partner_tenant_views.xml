@@ -1,0 +1,246 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Tenant Form View -->
+    <record id="view_partner_tenant_form" model="ir.ui.view">
+        <field name="name">res.partner.tenant.form</field>
+        <field name="model">res.partner</field>
+        <field name="priority">20</field>
+        <field name="arch" type="xml">
+            <form string="Tenant" class="o_helpdesk_tenant_form">
+                <header>
+                    <button name="action_create_ticket" string="Create Ticket" type="object" class="btn-primary"/>
+                    <field name="tenant_status" widget="statusbar" options="{'clickable': '1'}"/>
+                </header>
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button name="action_view_helpdesk_tickets" type="object" class="oe_stat_button" icon="fa-ticket">
+                            <field name="helpdesk_ticket_count" widget="statinfo" string="Tickets"/>
+                        </button>
+                    </div>
+                    
+                    <field name="image_1920" widget="image" class="oe_avatar"/>
+                    
+                    <div class="oe_title">
+                        <h1>
+                            <field name="name" placeholder="Tenant Name" required="1"/>
+                        </h1>
+                        <h3>
+                            <field name="brand_name" placeholder="Brand / Trade Name"/>
+                        </h3>
+                    </div>
+
+                    <group>
+                        <group string="Classification">
+                            <field name="is_tenant" invisible="1"/>
+                            <field name="tenant_type" widget="radio"/>
+                            <field name="vip_status" widget="badge" decoration-success="vip_status == 'vvip'" decoration-info="vip_status == 'vip'"/>
+                            <field name="site_code" widget="selection"/>
+                            <field name="business_category"/>
+                        </group>
+                        <group string="Location">
+                            <field name="building_name"/>
+                            <field name="unit_number"/>
+                            <field name="floor_number"/>
+                        </group>
+                    </group>
+
+                    <notebook>
+                        <page string="Contact Information" name="contact_info">
+                            <group>
+                                <group string="Primary Contact">
+                                    <field name="phone_primary" widget="phone"/>
+                                    <field name="phone_secondary" widget="phone"/>
+                                    <field name="email_primary" widget="email"/>
+                                </group>
+                                <group string="Additional Contacts">
+                                    <field name="email_secondary" widget="email"/>
+                                    <field name="email_tertiary" widget="email"/>
+                                    <field name="email_quaternary" widget="email"/>
+                                    <field name="email_quinary" widget="email"/>
+                                </group>
+                            </group>
+                            
+                            <group>
+                                <group string="Address">
+                                    <field name="street" placeholder="Street..."/>
+                                    <field name="street2" placeholder="Street 2..."/>
+                                    <field name="city"/>
+                                    <field name="state_id"/>
+                                    <field name="zip"/>
+                                    <field name="country_id"/>
+                                </group>
+                                <group string="Additional Info">
+                                    <field name="website" widget="url" placeholder="e.g. https://www.example.com"/>
+                                    <field name="function"/>
+                                    <field name="phone" widget="phone"/>
+                                </group>
+                            </group>
+                        </page>
+
+                        <page string="Identity &amp; Names" name="identity">
+                            <group>
+                                <group string="Legal Information">
+                                    <field name="company_registered_name"/>
+                                    <field name="vat" placeholder="Tax ID"/>
+                                    <field name="company_registry" placeholder="Company Registry Number"/>
+                                </group>
+                                <group string="Localization">
+                                    <field name="arabic_full_name" placeholder="الاسم الكامل بالعربية"/>
+                                    <field name="lang"/>
+                                </group>
+                            </group>
+                        </page>
+
+                        <page string="Contract Details" name="contract">
+                            <group>
+                                <group string="Contract Information">
+                                    <field name="contract_number"/>
+                                    <field name="contract_start_date"/>
+                                    <field name="contract_end_date"/>
+                                    <field name="contract_active" widget="boolean_toggle"/>
+                                </group>
+                                
+                            </group>
+                        </page>
+
+                        <page string="Notes" name="notes">
+                            <field name="tenant_notes" placeholder="Additional notes about this tenant..."/>
+                            <field name="comment" placeholder="Internal notes..."/>
+                        </page>
+
+                        
+                    </notebook>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <!-- Tenant List View -->
+    <record id="view_partner_tenant_list" model="ir.ui.view">
+        <field name="name">res.partner.tenant.list</field>
+        <field name="model">res.partner</field>
+        <field name="priority">20</field>
+        <field name="arch" type="xml">
+            <list string="Tenants" sample="1">
+                <field name="name" string="Tenant Name"/>
+                <field name="brand_name"/>
+                <field name="site_code"/>
+                <field name="unit_number"/>
+                <field name="tenant_type"/>
+                <field name="vip_status" widget="badge" decoration-success="vip_status == 'vvip'" decoration-info="vip_status == 'vip'"/>
+                <field name="tenant_status" widget="badge" decoration-success="tenant_status == 'active'" decoration-danger="tenant_status == 'suspended'" decoration-warning="tenant_status == 'pending'"/>
+                <field name="phone_primary"/>
+                <field name="email_primary"/>
+                <field name="contract_active" widget="boolean_toggle"/>
+                <field name="helpdesk_ticket_count"/>
+            </list>
+        </field>
+    </record>
+
+    <!-- Tenant Kanban View -->
+    <record id="view_partner_tenant_kanban" model="ir.ui.view">
+        <field name="name">res.partner.tenant.kanban</field>
+        <field name="model">res.partner</field>
+        <field name="priority">20</field>
+        <field name="arch" type="xml">
+            <kanban string="Tenants" sample="1">
+                <field name="id"/>
+                <field name="name"/>
+                <field name="brand_name"/>
+                <field name="site_code"/>
+                <field name="unit_number"/>
+                <field name="vip_status"/>
+                <field name="tenant_status"/>
+                <field name="phone_primary"/>
+                <field name="email_primary"/>
+                <field name="helpdesk_ticket_count"/>
+                <field name="image_128"/>
+                <templates>
+                    <t t-name="card">
+                        <div class="oe_kanban_global_click">
+                            <div class="o_kanban_image">
+                                <img t-att-src="record.image_128.value ? 'data:image/png;base64,' + record.image_128.value : '/web/static/img/placeholder.png'" alt="Tenant" class="o_image_64_cover"/>
+                            </div>
+                            <div class="oe_kanban_details">
+                                <strong class="o_kanban_record_title">
+                                    <field name="name"/>
+                                </strong>
+                                <div t-if="record.brand_name.raw_value" class="text-muted">
+                                    <i class="fa fa-tag"/> <field name="brand_name"/>
+                                </div>
+                                <div t-if="record.unit_number.raw_value">
+                                    <i class="fa fa-building"/> Unit: <field name="unit_number"/>
+                                    <t t-if="record.site_code.raw_value"> - <field name="site_code"/></t>
+                                </div>
+                                <div t-if="record.phone_primary.raw_value">
+                                    <i class="fa fa-phone"/> <field name="phone_primary"/>
+                                </div>
+                                <div class="mt-2">
+                                    <span t-if="record.vip_status.raw_value == 'vvip'" class="badge bg-danger">VVIP</span>
+                                    <span t-if="record.vip_status.raw_value == 'vip'" class="badge bg-info">VIP</span>
+                                    <span t-if="record.tenant_status.raw_value == 'active'" class="badge bg-success">Active</span>
+                                    <span t-if="record.tenant_status.raw_value == 'suspended'" class="badge bg-danger">Suspended</span>
+                                    <span t-if="record.helpdesk_ticket_count.raw_value" class="badge bg-warning">
+                                        <i class="fa fa-ticket"/> <field name="helpdesk_ticket_count"/>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+
+    <!-- Tenant Search View -->
+    <record id="view_partner_tenant_search" model="ir.ui.view">
+        <field name="name">res.partner.tenant.search</field>
+        <field name="model">res.partner</field>
+        <field name="arch" type="xml">
+            <search string="Tenants">
+                <field name="name"/>
+                <field name="brand_name"/>
+                <field name="unit_number"/>
+                
+                <filter string="Active Tenants" name="active_tenants" domain="[('tenant_status', '=', 'active')]"/>
+                <filter string="VIP" name="vip" domain="[('vip_status', '=', 'vip')]"/>
+                <filter string="VVIP" name="vvip" domain="[('vip_status', '=', 'vvip')]"/>
+            </search>
+        </field>
+    </record>
+
+    <!-- Tenant Action -->
+    <record id="action_tenant_management" model="ir.actions.act_window">
+        <field name="name">Tenants</field>
+        <field name="res_model">res.partner</field>
+        <field name="view_mode">kanban,list,form</field>
+        <field name="domain">[('is_tenant', '=', True)]</field>
+        <field name="context">{
+            'default_is_tenant': True,
+            'search_default_active_tenants': 1
+        }</field>
+        <field name="search_view_id" ref="view_partner_tenant_search"/>
+        <field name="view_ids" eval="[(5, 0, 0),
+            (0, 0, {'view_mode': 'kanban', 'view_id': ref('view_partner_tenant_kanban')}),
+            (0, 0, {'view_mode': 'list', 'view_id': ref('view_partner_tenant_list')}),
+            (0, 0, {'view_mode': 'form', 'view_id': ref('view_partner_tenant_form')})]"/>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create your first Tenant
+            </p>
+            <p>
+                Manage tenants with comprehensive contact information, contract details, and helpdesk ticket tracking.
+            </p>
+        </field>
+    </record>
+
+    <!-- Menu Item -->
+    <menuitem
+        id="menu_tenant_management"
+        name="Tenants"
+        parent="helpdesk.helpdesk_menu_config"
+        action="action_tenant_management"
+        sequence="15"/>
+
+</odoo>
