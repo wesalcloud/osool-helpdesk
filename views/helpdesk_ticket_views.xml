@@ -31,16 +31,14 @@
                 <attribute name="class">o_helpdesk_ticket_form</attribute>
             </xpath>
             
-            <!-- Override name field to make it single line - readonly after creation -->
+            <!-- Override name field to make it single line -->
             <field name="name" position="attributes">
                 <attribute name="widget">char</attribute>
                 <attribute name="placeholder">Ticket Subject / Title</attribute>
-                <attribute name="readonly">id</attribute>
             </field>
             
-            <!-- Make description readonly after ticket is created -->
+            <!-- Description field -->
             <field name="description" position="attributes">
-                <attribute name="readonly">id</attribute>
             </field>
             
             <!-- Hide Helpdesk Team -->
@@ -95,30 +93,27 @@
             <!-- Hide email_cc field to reposition it -->
             <field name="email_cc" position="replace"/>
             
-            <!-- Make partner_id readonly after creation -->
+            <!-- Partner field -->
             <field name="partner_id" position="attributes">
-                <attribute name="readonly">id</attribute>
             </field>
             
-            <!-- Make priority readonly after creation -->
+            <!-- Priority field -->
             <field name="priority" position="attributes">
-                <attribute name="readonly">id</attribute>
             </field>
             
-            <!-- Make tag_ids readonly after creation -->
+            <!-- Tag field -->
             <field name="tag_ids" position="attributes">
-                <attribute name="readonly">id</attribute>
             </field>
             
             <!-- Reorder fields after partner_id -->
             <field name="partner_id" position="after">
-                <field name="partner_phone" widget="phone" readonly="id"/>
-                <field name="partner_email" readonly="id"/>
-                <field name="ticket_phone" widget="phone" readonly="id"/>
-                <field name="ticket_email" widget="email" readonly="id"/>
+                <field name="partner_phone" widget="phone"/>
+                <field name="partner_email"/>
+                <field name="ticket_phone" widget="phone"/>
+                <field name="ticket_email" widget="email"/>
                 <label for="request_category_id" string="Category"/>
                 <div class="o_row">
-                    <field name="request_category_id" options="{'no_create': True}" required="1" class="oe_inline" readonly="id"/>
+                    <field name="request_category_id" options="{'no_create': True}" required="1" class="oe_inline"/>
                     <field name="request_subcategory_id" 
                            domain="[('category_id', '=', request_category_id)]"
                            options="{'no_create': True}" 
@@ -126,8 +121,8 @@
                            placeholder="Subcategory"/>
                 </div>
                 <field name="form_type" readonly="1"/>
-                <field name="interaction_mode" readonly="id"/>
-                <field name="caller_source" readonly="id"/>
+                <field name="interaction_mode"/>
+                <field name="caller_source"/>
             </field>
             
             <!-- Hide description tab/page when channel is email -->
@@ -149,8 +144,8 @@
                 <page string="Complaint Details" invisible="form_type != 'complaint'">
                     <group>
                         <group string="Complaint Information">
-                            <field name="complaint_type" readonly="id"/>
-                            <field name="complaint_severity" readonly="id"/>
+                            <field name="complaint_type"/>
+                            <field name="complaint_severity"/>
                         </group>
                     </group>
                 </page>
@@ -159,12 +154,12 @@
                 <page string="Marketing Details" invisible="form_type != 'marketing'">
                     <group>
                         <group string="Campaign Information">
-                            <field name="marketing_campaign" readonly="id"/>
-                            <field name="marketing_budget" widget="monetary" readonly="id"/>
+                            <field name="marketing_campaign"/>
+                            <field name="marketing_budget" widget="monetary"/>
                         </group>
                         <group string="Campaign Timeline">
-                            <field name="marketing_start_date" readonly="id"/>
-                            <field name="marketing_end_date" readonly="id"/>
+                            <field name="marketing_start_date"/>
+                            <field name="marketing_end_date"/>
                         </group>
                     </group>
                 </page>
@@ -173,9 +168,9 @@
                 <page string="Security Details" invisible="form_type != 'security'">
                     <group>
                         <group string="Incident Information">
-                            <field name="security_incident_type" readonly="id"/>
-                            <field name="security_location" readonly="id"/>
-                            <field name="security_witness" readonly="id"/>
+                            <field name="security_incident_type"/>
+                            <field name="security_location"/>
+                            <field name="security_witness"/>
                         </group>
                     </group>
                 </page>
@@ -184,16 +179,16 @@
                 <page string="Lift Booking Details" invisible="form_type not in ['vvip_lift', 'regular_lift']">
                     <group>
                         <group string="Booking Information">
-                            <field name="lift_booking_date" widget="datetime" readonly="id"/>
-                            <field name="lift_size" readonly="id"/>
+                            <field name="lift_booking_date" widget="datetime"/>
+                            <field name="lift_size"/>
                         </group>
                         <group string="Location Details">
-                            <field name="lift_floor_from" readonly="id"/>
-                            <field name="lift_floor_to" readonly="id"/>
+                            <field name="lift_floor_from"/>
+                            <field name="lift_floor_to"/>
                         </group>
                     </group>
                     <group string="Items Description">
-                        <field name="lift_items_description" nolabel="1" readonly="id"/>
+                        <field name="lift_items_description" nolabel="1"/>
                     </group>
                 </page>
                 
@@ -201,13 +196,13 @@
                 <page string="Procurement Details" invisible="form_type != 'procurement'">
                     <group>
                         <group string="Item Information">
-                            <field name="procurement_item" readonly="id"/>
-                            <field name="procurement_quantity" readonly="id"/>
-                            <field name="procurement_vendor" readonly="id"/>
+                            <field name="procurement_item"/>
+                            <field name="procurement_quantity"/>
+                            <field name="procurement_vendor"/>
                         </group>
                         <group string="Budget &amp; Timeline">
-                            <field name="procurement_budget" widget="monetary" readonly="id"/>
-                            <field name="procurement_required_date" readonly="id"/>
+                            <field name="procurement_budget" widget="monetary"/>
+                            <field name="procurement_required_date"/>
                         </group>
                     </group>
                 </page>
@@ -216,9 +211,9 @@
                 <page string="HR Details" invisible="form_type != 'hr'">
                     <group>
                         <group string="Request Information">
-                            <field name="hr_request_type" readonly="id"/>
-                            <field name="hr_employee_id" readonly="id"/>
-                            <field name="hr_department" readonly="id"/>
+                            <field name="hr_request_type"/>
+                            <field name="hr_employee_id"/>
+                            <field name="hr_department"/>
                         </group>
                     </group>
                 </page>
@@ -227,16 +222,16 @@
                 <page string="Announcement Details" invisible="form_type != 'announcement'">
                     <group>
                         <group string="Announcement Information">
-                            <field name="announcement_title" readonly="id"/>
-                            <field name="announcement_target_audience" readonly="id"/>
+                            <field name="announcement_title"/>
+                            <field name="announcement_target_audience"/>
                         </group>
                         <group string="Publication Period">
-                            <field name="announcement_publish_date" readonly="id"/>
-                            <field name="announcement_expiry_date" readonly="id"/>
+                            <field name="announcement_publish_date"/>
+                            <field name="announcement_expiry_date"/>
                         </group>
                     </group>
                     <group string="Content">
-                        <field name="announcement_content" nolabel="1" widget="html" readonly="id"/>
+                        <field name="announcement_content" nolabel="1" widget="html"/>
                     </group>
                 </page>
                 
@@ -244,12 +239,12 @@
                 <page string="Maximo Details" invisible="form_type != 'maximo'">
                     <group>
                         <group string="Work Order Information">
-                            <field name="maximo_work_order" readonly="id"/>
-                            <field name="maximo_asset_id" readonly="id"/>
+                            <field name="maximo_work_order"/>
+                            <field name="maximo_asset_id"/>
                         </group>
                         <group string="Location &amp; Priority">
-                            <field name="maximo_location" readonly="id"/>
-                            <field name="maximo_priority" readonly="id"/>
+                            <field name="maximo_location"/>
+                            <field name="maximo_priority"/>
                         </group>
                     </group>
                 </page>
@@ -258,12 +253,12 @@
                 <page string="SLA &amp; Status">
                     <group>
                         <group string="Status Information">
-                            <field name="status" readonly="id"/>
+                            <field name="status"/>
                             <field name="date_last_stage_update" readonly="1"/>
                             <field name="days_open" readonly="1"/>
                         </group>
                         <group string="SLA Tracking">
-                            <field name="sla_id" readonly="id"/>
+                            <field name="sla_id"/>
                             <field name="response_deadline" readonly="1"/>
                             <field name="resolution_deadline" readonly="1"/>
                             <field name="sla_failed" readonly="1"/>
@@ -273,10 +268,10 @@
                         <group string="Escalation Details">
                             <field name="escalated" readonly="1"/>
                             <field name="escalation_date" readonly="1"/>
-                            <field name="escalated_to_id" readonly="id"/>
+                            <field name="escalated_to_id"/>
                         </group>
                         <group string="Customer Survey">
-                            <field name="survey_id" readonly="id"/>
+                            <field name="survey_id"/>
                             <field name="survey_sent" readonly="1"/>
                             <field name="survey_completed" readonly="1"/>
                         </group>
@@ -348,6 +343,36 @@
                 
             </xpath>
             
+        </field>
+    </record>
+
+    <!-- Extended Search View for Analysis -->
+    <record id="helpdesk_ticket_view_search_inherit" model="ir.ui.view">
+        <field name="name">helpdesk.ticket.search.inherit</field>
+        <field name="model">helpdesk.ticket</field>
+        <field name="inherit_id" ref="helpdesk.helpdesk_tickets_view_search"/>
+        <field name="arch" type="xml">
+            <!-- Add searchable fields -->
+            <xpath expr="//field[@name='stage_id']" position="after">
+                <field name="team_department_id" string="Department"/>
+                <field name="site_id" string="Site"/>
+                <field name="request_category_id" string="Category"/>
+            </xpath>
+            
+            <!-- Add filters -->
+            <xpath expr="//filter[@name='is_close']" position="after">
+                <separator/>
+                <filter string="Has Department" name="filter_department" domain="[('team_department_id', '!=', False)]"/>
+                <filter string="Has Site" name="filter_site" domain="[('site_id', '!=', False)]"/>
+                <filter string="Has Category" name="filter_category" domain="[('request_category_id', '!=', False)]"/>
+            </xpath>
+            
+            <!-- Add group by options -->
+            <xpath expr="//filter[@name='stage']" position="after">
+                <filter string="Department" name="group_department" context="{'group_by': 'team_department_id'}"/>
+                <filter string="Site" name="group_site" context="{'group_by': 'site_id'}"/>
+                <filter string="Category" name="group_category" context="{'group_by': 'request_category_id'}"/>
+            </xpath>
         </field>
     </record>
 

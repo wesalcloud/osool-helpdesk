@@ -76,9 +76,6 @@
         'web.assets_backend': [
             'osool_helpdesk/static/src/js/helpdesk_dashboard.js',
             'osool_helpdesk/static/src/js/ticket_form_tabs.js',
-            'osool_helpdesk/static/src/js/helpdesk_analytics_dashboard.js',
-            'osool_helpdesk/static/src/css/helpdesk_analytics_dashboard.css',
-            'osool_helpdesk/static/src/xml/helpdesk_analytics_dashboard.xml',
         ],
         'web.assets_frontend': [
         ],
