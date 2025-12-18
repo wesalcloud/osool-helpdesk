@@ -39,6 +39,12 @@ class HelpdeskTicket(models.Model):
     # Site
     site_id = fields.Many2one('helpdesk.site', string='Site', tracking=True)
     
+    # Dashboard Analytics Fields
+    assign_date = fields.Datetime(string='First Assignment Date', tracking=True, help='Date when ticket was first assigned')
+    close_date = fields.Datetime(string='Auto Close Date', compute='_compute_close_date', store=True, help='Date when ticket was closed (computed)')
+    response_time_hours = fields.Float(string='Response Time (Hours)', compute='_compute_response_time', store=True, help='Time from creation to assignment in hours')
+    resolution_time_hours = fields.Float(string='Resolution Time (Hours)', compute='_compute_resolution_time', store=True, help='Time from creation to closure in hours')
+    
     # Rejection tracking
     reject_by = fields.Many2one('res.users', string='Rejected By', tracking=True)
     
@@ -67,6 +73,13 @@ class HelpdeskTicket(models.Model):
             self.form_type = self.request_category_id.form_type
         # Clear subcategory when category changes
         self.request_subcategory_id = False
+    
+    @api.onchange('site_id')
+    def _onchange_site_id(self):
+        """Clear department if site changes and department doesn't belong to new site"""
+        if self.site_id and self.team_department_id:
+            if self.team_department_id.site_id != self.site_id:
+                self.team_department_id = False
     
     # Caller Information
     
@@ -283,6 +296,36 @@ class HelpdeskTicket(models.Model):
             ticket.is_stage_assigned = ticket.stage_id.is_assigned if ticket.stage_id else False
             ticket.is_stage_in_progress = ticket.stage_id.is_in_progress if ticket.stage_id else False
     
+    @api.depends('stage_id', 'stage_id.fold')
+    def _compute_close_date(self):
+        """Compute close date when ticket reaches a closed/folded stage"""
+        for ticket in self:
+            if ticket.stage_id and ticket.stage_id.fold:
+                if not ticket.close_date:
+                    ticket.close_date = fields.Datetime.now()
+            else:
+                ticket.close_date = False
+    
+    @api.depends('create_date', 'assign_date')
+    def _compute_response_time(self):
+        """Compute response time in hours (create to assign)"""
+        for ticket in self:
+            if ticket.create_date and ticket.assign_date:
+                delta = ticket.assign_date - ticket.create_date
+                ticket.response_time_hours = delta.total_seconds() / 3600.0
+            else:
+                ticket.response_time_hours = 0.0
+    
+    @api.depends('create_date', 'close_date')
+    def _compute_resolution_time(self):
+        """Compute resolution time in hours (create to close)"""
+        for ticket in self:
+            if ticket.create_date and ticket.close_date:
+                delta = ticket.close_date - ticket.create_date
+                ticket.resolution_time_hours = delta.total_seconds() / 3600.0
+            else:
+                ticket.resolution_time_hours = 0.0
+    
     @api.depends('create_date')
     def _compute_days_open(self):
         for ticket in self:
@@ -424,6 +467,12 @@ class HelpdeskTicket(models.Model):
         return tickets
     
     def write(self, vals):
+        # Track first assignment date
+        if 'user_id' in vals and vals.get('user_id'):
+            for ticket in self:
+                if not ticket.assign_date:
+                    vals['assign_date'] = fields.Datetime.now()
+        
         # Check write access: Only ticket owner can modify (except managers/team leaders)
         current_user = self.env.user
         is_manager = current_user.has_group('osool_helpdesk.group_helpdesk_manager')

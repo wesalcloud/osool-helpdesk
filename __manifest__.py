@@ -38,13 +38,13 @@
         'security/ir.model.access.csv',
         
         # Data
-        'data/helpdesk_stage_data.xml',
+        # 'data/helpdesk_stage_data.xml',
         'data/helpdesk_site_data.xml',
         'data/helpdesk_category_data.xml',
         'data/helpdesk_team_data.xml',
         'data/helpdesk_subcategory_data.xml',
-        # 'data/helpdesk_ticket_demo_simple.xml',
         'data/website_page_security.xml',
+        
         # 'data/helpdesk_sla_data.xml',  # TODO: Fix SLA data
         # 'data/mail_template_data.xml',  # TODO: Fix template data
         # 'data/survey_data.xml',  # TODO: Fix survey data
@@ -61,6 +61,7 @@
         'views/helpdesk_team_views.xml',
         # 'views/helpdesk_sla_views.xml',  # TODO: Fix view inheritance
         'views/helpdesk_audit_views.xml',
+        'views/helpdesk_dashboard_views.xml',
         'views/helpdesk_menu.xml',
         'views/res_config_settings_views.xml',
         
@@ -75,13 +76,14 @@
         'web.assets_backend': [
             'osool_helpdesk/static/src/js/helpdesk_dashboard.js',
             'osool_helpdesk/static/src/js/ticket_form_tabs.js',
+            'osool_helpdesk/static/src/js/helpdesk_analytics_dashboard.js',
+            'osool_helpdesk/static/src/css/helpdesk_analytics_dashboard.css',
+            'osool_helpdesk/static/src/xml/helpdesk_analytics_dashboard.xml',
         ],
         'web.assets_frontend': [
         ],
     },
-    'demo': [
-        'data/helpdesk_ticket_demo.xml',
-    ],
+ 
     'installable': True,
     'application': True,
     'auto_install': False,

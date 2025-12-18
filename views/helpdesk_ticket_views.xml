@@ -65,8 +65,9 @@
                 <field name="conversation_id" invisible="1"/>
                 <field name="department_notified" invisible="1"/>
                 
-                <!-- Team Department -->
-                <field name="team_department_id" readonly="is_stage_assigned"/>                
+                <!-- Site and Department -->
+                <field name="site_id"/>
+                <field name="team_department_id" domain="[('site_id', '=', site_id)]" readonly="is_stage_assigned"/>
                 <!-- Department Assignment - editable in New or In Progress -->
                 <field name="conversation_type" readonly="1"/>
                 <label for="conversation_type" string="Conversation Detail" invisible="not conversation_id"/>
@@ -113,7 +114,6 @@
             <field name="partner_id" position="after">
                 <field name="partner_phone" widget="phone" readonly="id"/>
                 <field name="partner_email" readonly="id"/>
-                <field name="site_id"/>
                 <field name="ticket_phone" widget="phone" readonly="id"/>
                 <field name="ticket_email" widget="email" readonly="id"/>
                 <label for="request_category_id" string="Category"/>

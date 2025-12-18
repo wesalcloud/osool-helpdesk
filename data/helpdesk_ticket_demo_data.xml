@@ -1,0 +1,511 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+        
+        <!-- 50 Comprehensive Demo Tickets -->
+        
+        <!-- High Priority Tickets (15 tickets) -->
+        <record id="ticket_demo_001" model="helpdesk.ticket">
+            <field name="name">Server Room Air Conditioning Failure</field>
+            <field name="description">Critical - Server room temperature exceeds 30°C. Immediate attention required to prevent hardware damage.</field>
+            <field name="request_category_id" ref="osool_helpdesk.category_complaint"/>
+            <field name="site_id" ref="osool_helpdesk.helpdesk_site_gm"/>
+            <field name="caller_source">voice</field>
+            <field name="priority">3</field>
+            <field name="team_id" ref="osool_helpdesk.team_technical"/>
+        </record>
+
+        <record id="ticket_demo_002" model="helpdesk.ticket">
+            <field name="name">Water Main Break in Basement</field>
+            <field name="description">Major water leak in basement level B2. Flooding several parking spaces.</field>
+            <field name="request_category_id" ref="osool_helpdesk.category_complaint"/>
+            <field name="site_id" ref="osool_helpdesk.helpdesk_site_ish"/>
+            <field name="caller_source">voice</field>
+            <field name="priority">3</field>
+            <field name="team_id" ref="osool_helpdesk.team_technical"/>
+        </record>
+
+        <record id="ticket_demo_003" model="helpdesk.ticket">
+            <field name="name">Fire Alarm System Not Responding</field>
+            <field name="description">Fire alarm control panel shows error code E421. System may not activate in emergency.</field>
+            <field name="request_category_id" ref="osool_helpdesk.category_complaint"/>
+            <field name="site_id" ref="osool_helpdesk.helpdesk_site_gbp"/>
+            <field name="caller_source">email</field>
+            <field name="priority">3</field>
+            <field name="team_id" ref="osool_helpdesk.team_technical"/>
+        </record>
+
+        <record id="ticket_demo_004" model="helpdesk.ticket">
+            <field name="name">Elevator Stuck Between Floors</field>
+            <field name="description">Elevator #2 stuck between floors 8 and 9 with 3 people inside. Emergency rescue needed.</field>
+            <field name="request_category_id" ref="osool_helpdesk.category_complaint"/>
+            <field name="site_id" ref="osool_helpdesk.helpdesk_site_gm"/>
+            <field name="caller_source">voice</field>
+            <field name="priority">3</field>
+            <field name="team_id" ref="osool_helpdesk.team_technical"/>
+        </record>
+
+        <record id="ticket_demo_005" model="helpdesk.ticket">
+            <field name="name">Network Outage Affecting 50+ Units</field>
+            <field name="description">Complete network failure in Tower A affecting internet and phone services for 50+ tenants.</field>
+            <field name="request_category_id" ref="osool_helpdesk.category_complaint"/>
+            <field name="site_id" ref="osool_helpdesk.helpdesk_site_ish"/>
+            <field name="caller_source">email</field>
+            <field name="priority">3</field>
+            <field name="team_id" ref="osool_helpdesk.team_technical"/>
+        </record>
+
+        <record id="ticket_demo_006" model="helpdesk.ticket">
+            <field name="name">Gas Smell Reported in Building C</field>
+            <field name="description">Multiple tenants report gas smell on floors 3-5 of Building C. Potential safety hazard.</field>
+            <field name="request_category_id" ref="osool_helpdesk.category_complaint"/>
+            <field name="site_id" ref="osool_helpdesk.helpdesk_site_gbp"/>
+            <field name="caller_source">voice</field>
+            <field name="priority">3</field>
+            <field name="team_id" ref="osool_helpdesk.team_technical"/>
+        </record>
+
+        <record id="ticket_demo_007" model="helpdesk.ticket">
+            <field name="name">Security Gate Malfunction</field>
+            <field name="description">Main entrance security gate stuck in open position. Security breach concern.</field>
+            <field name="request_category_id" ref="osool_helpdesk.category_complaint"/>
+            <field name="site_id" ref="osool_helpdesk.helpdesk_site_dc"/>
+            <field name="caller_source">walkin</field>
+            <field name="priority">3</field>
+            <field name="team_id" ref="osool_helpdesk.team_technical"/>
+        </record>
+
+        <record id="ticket_demo_008" model="helpdesk.ticket">
+            <field name="name">Electrical Short Circuit in Unit 12A</field>
+            <field name="description">Sparking from outlet in kitchen. Power tripped multiple times. Fire hazard.</field>
+            <field name="request_category_id" ref="osool_helpdesk.category_complaint"/>
+            <field name="site_id" ref="osool_helpdesk.helpdesk_site_gm"/>
+            <field name="caller_source">voice</field>
+            <field name="priority">3</field>
+            <field name="team_id" ref="osool_helpdesk.team_technical"/>
+        </record>
+
+        <record id="ticket_demo_009" model="helpdesk.ticket">
+            <field name="name">Unauthorized Access to Restricted Area</field>
+            <field name="description">CCTV shows unauthorized person entering mechanical room. Security investigation needed.</field>
+            <field name="request_category_id" ref="osool_helpdesk.category_complaint"/>
+            <field name="site_id" ref="osool_helpdesk.helpdesk_site_ish"/>
+            <field name="caller_source">email</field>
+            <field name="priority">3</field>
+            <field name="team_id" ref="osool_helpdesk.team_customer_service"/>
+        </record>
+
+        <record id="ticket_demo_010" model="helpdesk.ticket">
+            <field name="name">Backup Generator Failed During Test</field>
+            <field name="description">Weekly generator test failed. Backup power system not operational for emergencies.</field>
+            <field name="request_category_id" ref="osool_helpdesk.category_complaint"/>
+            <field name="site_id" ref="osool_helpdesk.helpdesk_site_da"/>
+            <field name="caller_source">selfservice</field>
+            <field name="priority">3</field>
+            <field name="team_id" ref="osool_helpdesk.team_technical"/>
+        </record>
+
+        <record id="ticket_demo_011" model="helpdesk.ticket">
+            <field name="name">Broken Window on 15th Floor</field>
+            <field name="description">Large window cracked and unstable. Safety concern - might fall.</field>
+            <field name="request_category_id" ref="osool_helpdesk.category_complaint"/>
+            <field name="site_id" ref="osool_helpdesk.helpdesk_site_gm"/>
+            <field name="caller_source">voice</field>
+            <field name="priority">3</field>
+            <field name="team_id" ref="osool_helpdesk.team_technical"/>
+        </record>
+
+        <record id="ticket_demo_012" model="helpdesk.ticket">
+            <field name="name">Sewage Backup in Ground Floor Restroom</field>
+            <field name="description">Sewage backing up in public restroom. Health hazard - immediate cleanup required.</field>
+            <field name="request_category_id" ref="osool_helpdesk.category_complaint"/>
+            <field name="site_id" ref="osool_helpdesk.helpdesk_site_gbp"/>
+            <field name="caller_source">walkin</field>
+            <field name="priority">3</field>
+            <field name="team_id" ref="osool_helpdesk.team_technical"/>
+        </record>
+
+        <record id="ticket_demo_013" model="helpdesk.ticket">
+            <field name="name">Missing Fire Extinguishers on Floor 7</field>
+            <field name="description">Fire safety inspection found 3 fire extinguishers missing from Floor 7. Code violation.</field>
+            <field name="request_category_id" ref="osool_helpdesk.category_complaint"/>
+            <field name="site_id" ref="osool_helpdesk.helpdesk_site_ish"/>
+            <field name="caller_source">email</field>
+            <field name="priority">3</field>
+            <field name="team_id" ref="osool_helpdesk.team_technical"/>
+        </record>
+
+        <record id="ticket_demo_014" model="helpdesk.ticket">
+            <field name="name">HVAC System Overheating in Offices</field>
+            <field name="description">Office area temperature at 35°C. HVAC system blowing hot air instead of cooling.</field>
+            <field name="request_category_id" ref="osool_helpdesk.category_complaint"/>
+            <field name="site_id" ref="osool_helpdesk.helpdesk_site_dc"/>
+            <field name="caller_source">selfservice</field>
+            <field name="priority">3</field>
+            <field name="team_id" ref="osool_helpdesk.team_technical"/>
+        </record>
+
+        <record id="ticket_demo_015" model="helpdesk.ticket">
+            <field name="name">Parking Barrier Damaged - Cars Exiting Without Payment</field>
+            <field name="description">Parking barrier stuck open after accident. Vehicles leaving without paying.</field>
+            <field name="request_category_id" ref="osool_helpdesk.category_complaint"/>
+            <field name="site_id" ref="osool_helpdesk.helpdesk_site_gm"/>
+            <field name="caller_source">voice</field>
+            <field name="priority">3</field>
+            <field name="team_id" ref="osool_helpdesk.team_technical"/>
+        </record>
+
+        <!-- Medium Priority Tickets (25 tickets) -->
+        <record id="ticket_demo_016" model="helpdesk.ticket">
+            <field name="name">Slow Elevator Response Time</field>
+            <field name="description">Elevator #3 takes 5+ minutes to arrive. Long wait times during peak hours.</field>
+            <field name="request_category_id" ref="osool_helpdesk.category_complaint"/>
+            <field name="site_id" ref="osool_helpdesk.helpdesk_site_gm"/>
+            <field name="caller_source">email</field>
+            <field name="priority">2</field>
+            <field name="team_id" ref="osool_helpdesk.team_technical"/>
+        </record>
+
+        <record id="ticket_demo_017" model="helpdesk.ticket">
+            <field name="name">Gym Equipment Needs Maintenance</field>
+            <field name="description">Treadmill #2 making unusual noise. Needs inspection before it breaks.</field>
+            <field name="request_category_id" ref="osool_helpdesk.category_complaint"/>
+            <field name="site_id" ref="osool_helpdesk.helpdesk_site_ish"/>
+            <field name="caller_source">selfservice</field>
+            <field name="priority">2</field>
+            <field name="team_id" ref="osool_helpdesk.team_technical"/>
+        </record>
+
+        <record id="ticket_demo_018" model="helpdesk.ticket">
+            <field name="name">Pool Water Quality Issues</field>
+            <field name="description">Pool water appears cloudy. Chemical balance may be off.</field>
+            <field name="request_category_id" ref="osool_helpdesk.category_complaint"/>
+            <field name="site_id" ref="osool_helpdesk.helpdesk_site_gbp"/>
+            <field name="caller_source">walkin</field>
+            <field name="priority">2</field>
+            <field name="team_id" ref="osool_helpdesk.team_technical"/>
+        </record>
+
+        <record id="ticket_demo_019" model="helpdesk.ticket">
+            <field name="name">Noise From Construction Next Door</field>
+            <field name="description">Excessive noise from neighboring construction site during business hours.</field>
+            <field name="request_category_id" ref="osool_helpdesk.category_complaint"/>
+            <field name="site_id" ref="osool_helpdesk.helpdesk_site_dc"/>
+            <field name="caller_source">email</field>
+            <field name="priority">2</field>
+            <field name="team_id" ref="osool_helpdesk.team_customer_service"/>
+        </record>
+
+        <record id="ticket_demo_020" model="helpdesk.ticket">
+            <field name="name">Parking Lot Lighting Insufficient</field>
+            <field name="description">Several lights in parking lot not working. Safety concern at night.</field>
+            <field name="request_category_id" ref="osool_helpdesk.category_complaint"/>
+            <field name="site_id" ref="osool_helpdesk.helpdesk_site_gm"/>
+            <field name="caller_source">voice</field>
+            <field name="priority">2</field>
+            <field name="team_id" ref="osool_helpdesk.team_technical"/>
+        </record>
+
+        <record id="ticket_demo_021" model="helpdesk.ticket">
+            <field name="name">Mailbox Lock Not Working</field>
+            <field name="description">Mailbox #456 lock is jammed. Cannot access mail.</field>
+            <field name="request_category_id" ref="osool_helpdesk.category_complaint"/>
+            <field name="site_id" ref="osool_helpdesk.helpdesk_site_ish"/>
+            <field name="caller_source">selfservice</field>
+            <field name="priority">2</field>
+            <field name="team_id" ref="osool_helpdesk.team_technical"/>
+        </record>
+
+        <record id="ticket_demo_022" model="helpdesk.ticket">
+            <field name="name">Lobby Temperature Too Cold</field>
+            <field name="description">Main lobby AC set too low. Temperature around 18°C - uncomfortable for visitors.</field>
+            <field name="request_category_id" ref="osool_helpdesk.category_complaint"/>
+            <field name="site_id" ref="osool_helpdesk.helpdesk_site_gbp"/>
+            <field name="caller_source">walkin</field>
+            <field name="priority">2</field>
+            <field name="team_id" ref="osool_helpdesk.team_technical"/>
+        </record>
+
+        <record id="ticket_demo_023" model="helpdesk.ticket">
+            <field name="name">Pest Control Needed in Storage Area</field>
+            <field name="description">Evidence of rodents in basement storage area. Droppings found.</field>
+            <field name="request_category_id" ref="osool_helpdesk.category_complaint"/>
+            <field name="site_id" ref="osool_helpdesk.helpdesk_site_da"/>
+            <field name="caller_source">email</field>
+            <field name="priority">2</field>
+            <field name="team_id" ref="osool_helpdesk.team_technical"/>
+        </record>
+
+        <record id="ticket_demo_024" model="helpdesk.ticket">
+            <field name="name">Wi-Fi Signal Weak in Conference Room</field>
+            <field name="description">Conference room B has very weak Wi-Fi. Cannot hold video meetings.</field>
+            <field name="request_category_id" ref="osool_helpdesk.category_complaint"/>
+            <field name="site_id" ref="osool_helpdesk.helpdesk_site_gm"/>
+            <field name="caller_source">selfservice</field>
+            <field name="priority">2</field>
+            <field name="team_id" ref="osool_helpdesk.team_technical"/>
+        </record>
+
+        <record id="ticket_demo_025" model="helpdesk.ticket">
+            <field name="name">Door Lock Malfunction Unit 8C</field>
+            <field name="description">Electronic door lock not responding to key card. Need manual override.</field>
+            <field name="request_category_id" ref="osool_helpdesk.category_complaint"/>
+            <field name="site_id" ref="osool_helpdesk.helpdesk_site_ish"/>
+            <field name="caller_source">voice</field>
+            <field name="priority">2</field>
+            <field name="team_id" ref="osool_helpdesk.team_technical"/>
+        </record>
+
+        <record id="ticket_demo_026" model="helpdesk.ticket">
+            <field name="name">Garbage Chute Clogged on Floor 5</field>
+            <field name="description">Garbage chute not working properly. Trash backing up on Floor 5.</field>
+            <field name="request_category_id" ref="osool_helpdesk.category_complaint"/>
+            <field name="site_id" ref="osool_helpdesk.helpdesk_site_gbp"/>
+            <field name="caller_source">email</field>
+            <field name="priority">2</field>
+            <field name="team_id" ref="osool_helpdesk.team_technical"/>
+        </record>
+
+        <record id="ticket_demo_027" model="helpdesk.ticket">
+            <field name="name">Intercom System Not Working</field>
+            <field name="description">Building intercom system not connecting calls to units. Visitors cannot call.</field>
+            <field name="request_category_id" ref="osool_helpdesk.category_complaint"/>
+            <field name="site_id" ref="osool_helpdesk.helpdesk_site_dc"/>
+            <field name="caller_source">walkin</field>
+            <field name="priority">2</field>
+            <field name="team_id" ref="osool_helpdesk.team_technical"/>
+        </record>
+
+        <record id="ticket_demo_028" model="helpdesk.ticket">
+            <field name="name">Stairwell Door Won't Close Properly</field>
+            <field name="description">Fire stairwell door on Floor 9 not closing fully. Fire safety issue.</field>
+            <field name="request_category_id" ref="osool_helpdesk.category_complaint"/>
+            <field name="site_id" ref="osool_helpdesk.helpdesk_site_gm"/>
+            <field name="caller_source">selfservice</field>
+            <field name="priority">2</field>
+            <field name="team_id" ref="osool_helpdesk.team_technical"/>
+        </record>
+
+        <record id="ticket_demo_029" model="helpdesk.ticket">
+            <field name="name">Vending Machine Not Accepting Payment</field>
+            <field name="description">Lobby vending machine not accepting card payments. Cash only.</field>
+            <field name="request_category_id" ref="osool_helpdesk.category_complaint"/>
+            <field name="site_id" ref="osool_helpdesk.helpdesk_site_ish"/>
+            <field name="caller_source">email</field>
+            <field name="priority">2</field>
+            <field name="team_id" ref="osool_helpdesk.team_technical"/>
+        </record>
+
+        <record id="ticket_demo_030" model="helpdesk.ticket">
+            <field name="name">Bicycle Rack Damaged</field>
+            <field name="description">Outdoor bicycle rack broken. Cannot secure bikes properly.</field>
+            <field name="request_category_id" ref="osool_helpdesk.category_complaint"/>
+            <field name="site_id" ref="osool_helpdesk.helpdesk_site_gbp"/>
+            <field name="caller_source">voice</field>
+            <field name="priority">2</field>
+            <field name="team_id" ref="osool_helpdesk.team_technical"/>
+        </record>
+
+        <record id="ticket_demo_031" model="helpdesk.ticket">
+            <field name="name">Drainage Problem in Parking Level</field>
+            <field name="description">Water pooling in B1 parking after rain. Drainage system needs clearing.</field>
+            <field name="request_category_id" ref="osool_helpdesk.category_complaint"/>
+            <field name="site_id" ref="osool_helpdesk.helpdesk_site_da"/>
+            <field name="caller_source">walkin</field>
+            <field name="priority">2</field>
+            <field name="team_id" ref="osool_helpdesk.team_technical"/>
+        </record>
+
+        <record id="ticket_demo_032" model="helpdesk.ticket">
+            <field name="name">Security Camera Out of Focus</field>
+            <field name="description">Camera #12 in parking area producing blurry footage. Needs adjustment.</field>
+            <field name="request_category_id" ref="osool_helpdesk.category_complaint"/>
+            <field name="site_id" ref="osool_helpdesk.helpdesk_site_gm"/>
+            <field name="caller_source">email</field>
+            <field name="priority">2</field>
+            <field name="team_id" ref="osool_helpdesk.team_technical"/>
+        </record>
+
+        <record id="ticket_demo_033" model="helpdesk.ticket">
+            <field name="name">Sauna Temperature Not Reaching Set Point</field>
+            <field name="description">Gym sauna not heating properly. Max temperature only 60°C instead of 80°C.</field>
+            <field name="request_category_id" ref="osool_helpdesk.category_complaint"/>
+            <field name="site_id" ref="osool_helpdesk.helpdesk_site_ish"/>
+            <field name="caller_source">selfservice</field>
+            <field name="priority">2</field>
+            <field name="team_id" ref="osool_helpdesk.team_technical"/>
+        </record>
+
+        <record id="ticket_demo_034" model="helpdesk.ticket">
+            <field name="name">Broken Tile in Lobby Floor</field>
+            <field name="description">Cracked tile near main entrance. Trip hazard.</field>
+            <field name="request_category_id" ref="osool_helpdesk.category_complaint"/>
+            <field name="site_id" ref="osool_helpdesk.helpdesk_site_gbp"/>
+            <field name="caller_source">walkin</field>
+            <field name="priority">2</field>
+            <field name="team_id" ref="osool_helpdesk.team_technical"/>
+        </record>
+
+        <record id="ticket_demo_035" model="helpdesk.ticket">
+            <field name="name">Delivery Elevator Making Strange Noise</field>
+            <field name="description">Service elevator has grinding noise when moving. May need servicing soon.</field>
+            <field name="request_category_id" ref="osool_helpdesk.category_complaint"/>
+            <field name="site_id" ref="osool_helpdesk.helpdesk_site_dc"/>
+            <field name="caller_source">voice</field>
+            <field name="priority">2</field>
+            <field name="team_id" ref="osool_helpdesk.team_technical"/>
+        </record>
+
+        <record id="ticket_demo_036" model="helpdesk.ticket">
+            <field name="name">Graffiti on Exterior Wall</field>
+            <field name="description">Spray paint graffiti on south side exterior wall. Needs removal.</field>
+            <field name="request_category_id" ref="osool_helpdesk.category_complaint"/>
+            <field name="site_id" ref="osool_helpdesk.helpdesk_site_gm"/>
+            <field name="caller_source">email</field>
+            <field name="priority">2</field>
+            <field name="team_id" ref="osool_helpdesk.team_technical"/>
+        </record>
+
+        <record id="ticket_demo_037" model="helpdesk.ticket">
+            <field name="name">Meeting Room Projector Not Working</field>
+            <field name="description">Projector in Meeting Room A won't turn on. Presentation scheduled for tomorrow.</field>
+            <field name="request_category_id" ref="osool_helpdesk.category_complaint"/>
+            <field name="site_id" ref="osool_helpdesk.helpdesk_site_ish"/>
+            <field name="caller_source">selfservice</field>
+            <field name="priority">2</field>
+            <field name="team_id" ref="osool_helpdesk.team_technical"/>
+        </record>
+
+        <record id="ticket_demo_038" model="helpdesk.ticket">
+            <field name="name">Landscape Sprinklers Broken</field>
+            <field name="description">3 sprinkler heads in front garden not working. Grass drying out.</field>
+            <field name="request_category_id" ref="osool_helpdesk.category_complaint"/>
+            <field name="site_id" ref="osool_helpdesk.helpdesk_site_gbp"/>
+            <field name="caller_source">walkin</field>
+            <field name="priority">2</field>
+            <field name="team_id" ref="osool_helpdesk.team_technical"/>
+        </record>
+
+        <record id="ticket_demo_039" model="helpdesk.ticket">
+            <field name="name">Playground Equipment Needs Repair</field>
+            <field name="description">Children's swing set has loose chains. Safety concern.</field>
+            <field name="request_category_id" ref="osool_helpdesk.category_complaint"/>
+            <field name="site_id" ref="osool_helpdesk.helpdesk_site_da"/>
+            <field name="caller_source">email</field>
+            <field name="priority">2</field>
+            <field name="team_id" ref="osool_helpdesk.team_technical"/>
+        </record>
+
+        <record id="ticket_demo_040" model="helpdesk.ticket">
+            <field name="name">Paint Peeling in Stairwell</field>
+            <field name="description">Paint peeling from walls in main stairwell floors 3-6. Looks unprofessional.</field>
+            <field name="request_category_id" ref="osool_helpdesk.category_complaint"/>
+            <field name="site_id" ref="osool_helpdesk.helpdesk_site_gm"/>
+            <field name="caller_source">selfservice</field>
+            <field name="priority">2</field>
+            <field name="team_id" ref="osool_helpdesk.team_technical"/>
+        </record>
+
+        <!-- Low Priority Tickets (10 tickets) -->
+        <record id="ticket_demo_041" model="helpdesk.ticket">
+            <field name="name">Request for Additional Parking Permit</field>
+            <field name="description">Would like to request a second parking permit for visitor parking.</field>
+            <field name="request_category_id" ref="osool_helpdesk.category_procurement"/>
+            <field name="site_id" ref="osool_helpdesk.helpdesk_site_ish"/>
+            <field name="caller_source">selfservice</field>
+            <field name="priority">1</field>
+            <field name="team_id" ref="osool_helpdesk.team_customer_service"/>
+        </record>
+
+        <record id="ticket_demo_042" model="helpdesk.ticket">
+            <field name="name">Inquiry About Gym Hours</field>
+            <field name="description">Question about gym opening hours during holidays.</field>
+            <field name="request_category_id" ref="osool_helpdesk.category_procurement"/>
+            <field name="site_id" ref="osool_helpdesk.helpdesk_site_gbp"/>
+            <field name="caller_source">email</field>
+            <field name="priority">1</field>
+            <field name="team_id" ref="osool_helpdesk.team_customer_service"/>
+        </record>
+
+        <record id="ticket_demo_043" model="helpdesk.ticket">
+            <field name="name">Request for Package Hold Service</field>
+            <field name="description">Going on vacation for 2 weeks. Request to hold packages at front desk.</field>
+            <field name="request_category_id" ref="osool_helpdesk.category_procurement"/>
+            <field name="site_id" ref="osool_helpdesk.helpdesk_site_dc"/>
+            <field name="caller_source">walkin</field>
+            <field name="priority">1</field>
+            <field name="team_id" ref="osool_helpdesk.team_customer_service"/>
+        </record>
+
+        <record id="ticket_demo_044" model="helpdesk.ticket">
+            <field name="name">Suggestion to Add More Bike Racks</field>
+            <field name="description">Current bike racks always full. Suggest adding more bicycle parking spaces.</field>
+            <field name="request_category_id" ref="osool_helpdesk.category_procurement"/>
+            <field name="site_id" ref="osool_helpdesk.helpdesk_site_gm"/>
+            <field name="caller_source">selfservice</field>
+            <field name="priority">1</field>
+            <field name="team_id" ref="osool_helpdesk.team_customer_service"/>
+        </record>
+
+        <record id="ticket_demo_045" model="helpdesk.ticket">
+            <field name="name">Question About Move-In Procedures</field>
+            <field name="description">New tenant asking about move-in procedures and elevator reservation.</field>
+            <field name="request_category_id" ref="osool_helpdesk.category_procurement"/>
+            <field name="site_id" ref="osool_helpdesk.helpdesk_site_ish"/>
+            <field name="caller_source">email</field>
+            <field name="priority">1</field>
+            <field name="team_id" ref="osool_helpdesk.team_customer_service"/>
+        </record>
+
+        <record id="ticket_demo_046" model="helpdesk.ticket">
+            <field name="name">Request to Install Additional Lighting</field>
+            <field name="description">Request to add motion sensor lights in parking level B3 for better visibility.</field>
+            <field name="request_category_id" ref="osool_helpdesk.category_procurement"/>
+            <field name="site_id" ref="osool_helpdesk.helpdesk_site_gbp"/>
+            <field name="caller_source">voice</field>
+            <field name="priority">1</field>
+            <field name="team_id" ref="osool_helpdesk.team_customer_service"/>
+        </record>
+
+        <record id="ticket_demo_047" model="helpdesk.ticket">
+            <field name="name">Inquiry About Pet Policy</field>
+            <field name="description">Question about building pet policy and registration requirements.</field>
+            <field name="request_category_id" ref="osool_helpdesk.category_procurement"/>
+            <field name="site_id" ref="osool_helpdesk.helpdesk_site_da"/>
+            <field name="caller_source">selfservice</field>
+            <field name="priority">1</field>
+            <field name="team_id" ref="osool_helpdesk.team_customer_service"/>
+        </record>
+
+        <record id="ticket_demo_048" model="helpdesk.ticket">
+            <field name="name">Request for Community Notice Board</field>
+            <field name="description">Suggestion to add community bulletin board in lobby for tenant announcements.</field>
+            <field name="request_category_id" ref="osool_helpdesk.category_procurement"/>
+            <field name="site_id" ref="osool_helpdesk.helpdesk_site_gm"/>
+            <field name="caller_source">walkin</field>
+            <field name="priority">1</field>
+            <field name="team_id" ref="osool_helpdesk.team_customer_service"/>
+        </record>
+
+        <record id="ticket_demo_049" model="helpdesk.ticket">
+            <field name="name">Question About Recycling Program</field>
+            <field name="description">Inquiry about building recycling program and bin locations.</field>
+            <field name="request_category_id" ref="osool_helpdesk.category_procurement"/>
+            <field name="site_id" ref="osool_helpdesk.helpdesk_site_ish"/>
+            <field name="caller_source">email</field>
+            <field name="priority">1</field>
+            <field name="team_id" ref="osool_helpdesk.team_customer_service"/>
+        </record>
+
+        <record id="ticket_demo_050" model="helpdesk.ticket">
+            <field name="name">Request for Copy of Building Rules</field>
+            <field name="description">New tenant requesting copy of building rules and regulations handbook.</field>
+            <field name="request_category_id" ref="osool_helpdesk.category_procurement"/>
+            <field name="site_id" ref="osool_helpdesk.helpdesk_site_gbp"/>
+            <field name="caller_source">selfservice</field>
+            <field name="priority">1</field>
+            <field name="team_id" ref="osool_helpdesk.team_customer_service"/>
+        </record>
+
+    </data>
+</odoo>

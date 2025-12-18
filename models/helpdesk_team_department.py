@@ -5,6 +5,7 @@ from odoo import models, fields, api
 class HelpdeskTeamDepartment(models.Model):
     _name = 'helpdesk.team.department'
     _description = 'Helpdesk Team Department'
+    _inherit = ['mail.thread']
     _order = 'name'
     
     name = fields.Char(string='Department Name', required=True, tracking=True)

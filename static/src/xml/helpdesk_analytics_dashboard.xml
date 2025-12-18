@@ -1,0 +1,326 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+
+    <t t-name="osool_helpdesk.HelpdeskAnalyticsDashboard">
+        <div class="o_helpdesk_analytics_dashboard">
+            <t t-if="state.loading">
+                <div class="d-flex justify-content-center align-items-center" style="height: 400px;">
+                    <div class="fa fa-3x fa-spin fa-spinner text-muted"/>
+                </div>
+            </t>
+            <t t-else="">
+                <!-- KPI Row -->
+                <div class="row mb-4">
+                    <!-- Total Tickets KPI -->
+                    <div class="col-md-3">
+                        <div class="card bg-primary text-white h-100">
+                            <div class="card-body">
+                                <h6 class="card-title">Total Tickets</h6>
+                                <h2 class="mb-0">
+                                    <t t-esc="state.totalTickets"/>
+                                </h2>
+                                <small>All time</small>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Avg Response Time KPI -->
+                    <div class="col-md-3">
+                        <div class="card bg-success text-white h-100">
+                            <div class="card-body">
+                                <h6 class="card-title">Avg Response Time</h6>
+                                <h2 class="mb-0">
+                                    <t t-esc="state.avgResponseTime"/> hrs
+                                </h2>
+                                <small>Time to first assignment</small>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Avg Resolution Time KPI -->
+                    <div class="col-md-3">
+                        <div class="card bg-warning text-white h-100">
+                            <div class="card-body">
+                                <h6 class="card-title">Avg Resolution Time</h6>
+                                <h2 class="mb-0">
+                                    <t t-esc="state.avgResolutionTime"/> hrs
+                                </h2>
+                                <small>Time to closure</small>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Open Tickets KPI -->
+                    <div class="col-md-3">
+                        <div class="card bg-info text-white h-100">
+                            <div class="card-body">
+                                <h6 class="card-title">Open / Closed</h6>
+                                <h2 class="mb-0">
+                                    <t t-esc="state.openTickets"/> / <t t-esc="state.closedTickets"/>
+                                </h2>
+                                <small>Active vs Completed</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Charts Row 1 -->
+                <div class="row mb-4">
+                    <!-- Tickets by Agent -->
+                    <div class="col-md-6">
+                        <div class="card h-100">
+                            <div class="card-header">
+                                <h5 class="mb-0">Tickets per Agent</h5>
+                            </div>
+                            <div class="card-body">
+                                <t t-if="state.ticketsByAgent.length">
+                                    <table class="table table-sm">
+                                        <thead>
+                                            <tr>
+                                                <th>Agent</th>
+                                                <th class="text-end">Count</th>
+                                                <th style="width: 50%">Distribution</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <t t-foreach="state.ticketsByAgent.slice(0, 10)" t-as="agent" t-key="agent.user_id[0]">
+                                                <tr>
+                                                    <td>
+                                                        <t t-esc="agent.user_id[1]"/>
+                                                    </td>
+                                                    <td class="text-end">
+                                                        <strong t-esc="agent.user_id_count"/>
+                                                    </td>
+                                                    <td>
+                                                        <div class="progress" style="height: 20px;">
+                                                            <div class="progress-bar" 
+                                                                 t-att-style="'width: ' + (agent.user_id_count / state.totalTickets * 100) + '%; background-color: ' + getChartColor(agent_index)"/>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            </t>
+                                        </tbody>
+                                    </table>
+                                </t>
+                                <t t-else="">
+                                    <div class="text-muted text-center py-5">No data available</div>
+                                </t>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Tickets by Site -->
+                    <div class="col-md-6">
+                        <div class="card h-100">
+                            <div class="card-header">
+                                <h5 class="mb-0">Tickets per Site</h5>
+                            </div>
+                            <div class="card-body">
+                                <t t-if="state.ticketsBySite.length">
+                                    <table class="table table-sm">
+                                        <thead>
+                                            <tr>
+                                                <th>Site</th>
+                                                <th class="text-end">Count</th>
+                                                <th style="width: 50%">Distribution</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <t t-foreach="state.ticketsBySite" t-as="site" t-key="site.site_id ? site.site_id[0] : 0">
+                                                <tr>
+                                                    <td>
+                                                        <t t-esc="site.site_id ? site.site_id[1] : 'Unassigned'"/>
+                                                    </td>
+                                                    <td class="text-end">
+                                                        <strong t-esc="site.site_id_count"/>
+                                                    </td>
+                                                    <td>
+                                                        <div class="progress" style="height: 20px;">
+                                                            <div class="progress-bar" 
+                                                                 t-att-style="'width: ' + (site.site_id_count / state.totalTickets * 100) + '%; background-color: ' + getChartColor(site_index)"/>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            </t>
+                                        </tbody>
+                                    </table>
+                                </t>
+                                <t t-else="">
+                                    <div class="text-muted text-center py-5">No data available</div>
+                                </t>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Charts Row 2 -->
+                <div class="row mb-4">
+                    <!-- Tickets by Department -->
+                    <div class="col-md-4">
+                        <div class="card h-100">
+                            <div class="card-header">
+                                <h5 class="mb-0">Tickets per Department</h5>
+                            </div>
+                            <div class="card-body">
+                                <t t-if="state.ticketsByDepartment.length">
+                                    <table class="table table-sm table-hover">
+                                        <thead>
+                                            <tr>
+                                                <th>Department</th>
+                                                <th class="text-end">Count</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <t t-foreach="state.ticketsByDepartment.slice(0, 8)" t-as="dept" t-key="dept.team_department_id[0]">
+                                                <tr>
+                                                    <td>
+                                                        <t t-esc="dept.team_department_id[1]"/>
+                                                    </td>
+                                                    <td class="text-end">
+                                                        <span class="badge bg-info" t-esc="dept.team_department_id_count"/>
+                                                    </td>
+                                                </tr>
+                                            </t>
+                                        </tbody>
+                                    </table>
+                                </t>
+                                <t t-else="">
+                                    <div class="text-muted text-center py-5">No data available</div>
+                                </t>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Tickets by Category -->
+                    <div class="col-md-4">
+                        <div class="card h-100">
+                            <div class="card-header">
+                                <h5 class="mb-0">Top Categories</h5>
+                            </div>
+                            <div class="card-body">
+                                <t t-if="state.ticketsByCategory.length">
+                                    <table class="table table-sm table-hover">
+                                        <thead>
+                                            <tr>
+                                                <th>Category</th>
+                                                <th class="text-end">Count</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <t t-foreach="state.ticketsByCategory" t-as="cat" t-key="cat.request_category_id[0]">
+                                                <tr>
+                                                    <td>
+                                                        <t t-esc="cat.request_category_id[1]"/>
+                                                    </td>
+                                                    <td class="text-end">
+                                                        <span class="badge bg-warning" t-esc="cat.request_category_id_count"/>
+                                                    </td>
+                                                </tr>
+                                            </t>
+                                        </tbody>
+                                    </table>
+                                </t>
+                                <t t-else="">
+                                    <div class="text-muted text-center py-5">No data available</div>
+                                </t>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Top 10 Ticket Owners -->
+                    <div class="col-md-4">
+                        <div class="card h-100">
+                            <div class="card-header">
+                                <h5 class="mb-0">Top 10 Ticket Owners</h5>
+                            </div>
+                            <div class="card-body">
+                                <t t-if="state.topOwners.length">
+                                    <table class="table table-sm table-hover">
+                                        <thead>
+                                            <tr>
+                                                <th>#</th>
+                                                <th>Owner</th>
+                                                <th class="text-end">Tickets</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <t t-foreach="state.topOwners" t-as="owner" t-key="owner.user_id[0]">
+                                                <tr>
+                                                    <td>
+                                                        <span class="badge bg-secondary" t-esc="owner_index + 1"/>
+                                                    </td>
+                                                    <td>
+                                                        <t t-esc="owner.user_id[1]"/>
+                                                    </td>
+                                                    <td class="text-end">
+                                                        <span class="badge bg-primary" t-esc="owner.user_id_count"/>
+                                                    </td>
+                                                </tr>
+                                            </t>
+                                        </tbody>
+                                    </table>
+                                </t>
+                                <t t-else="">
+                                    <div class="text-muted text-center py-5">No data available</div>
+                                </t>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Charts Row 3 -->
+                <div class="row mb-4">
+                    <!-- Tickets by Status -->
+                    <div class="col-md-12">
+                        <div class="card h-100">
+                            <div class="card-header">
+                                <h5 class="mb-0">Tickets by Stage</h5>
+                            </div>
+                            <div class="card-body">
+                                <t t-if="state.ticketsByStatus.length">
+                                    <div class="row">
+                                        <t t-foreach="state.ticketsByStatus" t-as="status" t-key="status.stage_id ? status.stage_id[0] : 0">
+                                            <div class="col-md-3 mb-3">
+                                                <div class="card text-center">
+                                                    <div class="card-body">
+                                                        <h3 class="text-primary" t-esc="status.stage_id_count"/>
+                                                        <p class="mb-0 text-muted">
+                                                            <t t-esc="status.stage_id ? status.stage_id[1] : 'Unknown'"/>
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </t>
+                                    </div>
+                                </t>
+                                <t t-else="">
+                                    <div class="text-muted text-center py-5">No data available</div>
+                                </t>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Action Buttons -->
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="card">
+                            <div class="card-body text-center">
+                                <button class="btn btn-primary me-2" t-on-click="() => this.openTickets([])">
+                                    <i class="fa fa-list"/> View All Tickets
+                                </button>
+                                <button class="btn btn-success me-2" t-on-click="() => this.openTickets([['stage_id.fold', '=', false]])">
+                                    <i class="fa fa-folder-open"/> View Open Tickets
+                                </button>
+                                <button class="btn btn-warning" t-on-click="() => this.loadDashboardData()">
+                                    <i class="fa fa-refresh"/> Refresh Dashboard
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </t>
+        </div>
+    </t>
+
+</templates>

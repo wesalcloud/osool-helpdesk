@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Raw Data Report View with all fields for export -->
+    <record id="helpdesk_ticket_raw_data_view_list" model="ir.ui.view">
+        <field name="name">helpdesk.ticket.raw.data.list</field>
+        <field name="model">helpdesk.ticket</field>
+        <field name="arch" type="xml">
+            <list string="Helpdesk Raw Data" export_xlsx="1" create="false" edit="false">
+                <field name="id" string="Ticket ID"/>
+                <field name="name" string="Subject"/>
+                <field name="create_date" string="Creation Date"/>
+                <field name="assign_date" string="First Assignment Date"/>
+                <field name="close_date" string="Closure Date"/>
+                <field name="partner_id" string="Customer"/>
+                <field name="partner_email" string="Email"/>
+                <field name="partner_phone" string="Phone"/>
+                <field name="site_id" string="Site"/>
+                <field name="user_id" string="Ticket Owner"/>
+                <field name="team_id" string="Team"/>
+                <field name="team_department_id" string="Department"/>
+                <field name="request_category_id" string="Category"/>
+                <field name="request_subcategory_id" string="Subcategory"/>
+                <field name="stage_id" string="Stage"/>
+                <field name="status" string="Status"/>
+                <field name="priority" string="Priority"/>
+                <field name="caller_source" string="Channel"/>
+                <field name="response_time_hours" string="Response Time (Hours)" sum="Total"/>
+                <field name="resolution_time_hours" string="Resolution Time (Hours)" sum="Total"/>
+                <field name="days_open" string="Days Open"/>
+                <field name="sla_deadline" string="SLA Deadline"/>
+                <field name="description" string="Description"/>
+            </list>
+        </field>
+    </record>
+
+</odoo>
