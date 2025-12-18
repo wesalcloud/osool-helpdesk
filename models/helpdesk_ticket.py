@@ -36,6 +36,9 @@ class HelpdeskTicket(models.Model):
     team_department_id = fields.Many2one('helpdesk.team.department', string='Assigned To', tracking=True)
     department_notified = fields.Boolean(string='Department Notified', default=False, tracking=True)
     
+    # Site
+    site_id = fields.Many2one('helpdesk.site', string='Site', tracking=True)
+    
     # Rejection tracking
     reject_by = fields.Many2one('res.users', string='Rejected By', tracking=True)
     
@@ -239,7 +242,7 @@ class HelpdeskTicket(models.Model):
     
     # Related Tenant Fields (for display in Tenant Details tab)
     tenant_brand_name = fields.Char(related='partner_id.brand_name', string='Brand Name', readonly=True)
-    tenant_site_code = fields.Selection(related='partner_id.site_code', string='Site', readonly=True)
+    tenant_site = fields.Many2one(related='partner_id.site', string='Tenant Site', readonly=True)
     tenant_building_name = fields.Char(related='partner_id.building_name', string='Building', readonly=True)
     tenant_unit_number = fields.Char(related='partner_id.unit_number', string='Unit Number', readonly=True)
     tenant_floor_number = fields.Char(related='partner_id.floor_number', string='Floor', readonly=True)

@@ -21,6 +21,7 @@
                         <group>
                             <field name="name"/>
                             <field name="code"/>
+                            <field name="site_id"/>
                             <field name="active" invisible="1"/>
                         </group>
                         <group>
@@ -39,9 +40,8 @@
         <field name="arch" type="xml">
             <list>
                 <field name="name"/>
-                <field name="code"/>
+                <field name="site_id"/>
                 <field name="team_count"/>
-                <field name="active" invisible="1"/>
             </list>
         </field>
     </record>
@@ -54,7 +54,9 @@
             <search>
                 <field name="name"/>
                 <field name="code"/>
+                <field name="site_id"/>
                 <filter string="Archived" name="inactive" domain="[('active', '=', False)]"/>
+                <filter string="Site" name="filter_site_id" domain="[]" context="{'group_by': 'site_id'}"/>
             </search>
         </field>
     </record>

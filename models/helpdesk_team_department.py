@@ -12,6 +12,9 @@ class HelpdeskTeamDepartment(models.Model):
     description = fields.Text(string='Description')
     active = fields.Boolean(string='Active', default=True)
     
+    # Site relationship
+    site_id = fields.Many2one('helpdesk.site', string='Site', tracking=True)
+    
     # Teams linked to this department
     team_ids = fields.One2many('helpdesk.team', 'team_department_id', string='Teams')
     team_count = fields.Integer(string='Team Count', compute='_compute_team_count')

@@ -11,6 +11,7 @@
             <xpath expr="//field[@name='company_id' and @groups='base.group_multi_company']" position="after">
                 <group>
                     <field name="team_department_id"/>
+                    <field name="department_site_id"/>
                 </group>
             </xpath>
             
@@ -18,7 +19,7 @@
             <xpath expr="//h2[text()='Visibility &amp; Assignment ']" position="before">
                 <h2>Notification Emails</h2>
                 <field name="notified_email_ids" widget="one2many" context="{'active_test': False}">
-                    <list editable="bottom" create="1" edit="1" delete="1" context="{'active_test': False}">
+                    <list editable="bottom" create="1" edit="1" delete="1" import="1" export="1" context="{'active_test': False}">
                         <field name="sequence" widget="handle"/>
                         <field name="name" required="1"/>
                         <field name="email" widget="email" required="1"/>

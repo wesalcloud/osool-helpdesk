@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+        <!-- Site Data -->
+        <record id="helpdesk_site_gm" model="helpdesk.site">
+            <field name="name">Grand Mall</field>
+            <field name="code">GM</field>
+            <field name="description">Grand Mall Site</field>
+        </record>
+        
+        <record id="helpdesk_site_ish" model="helpdesk.site">
+            <field name="name">Ishbiliyah</field>
+            <field name="code">ISH</field>
+            <field name="description">Ishbiliyah Site</field>
+        </record>
+        
+        <record id="helpdesk_site_ot" model="helpdesk.site">
+            <field name="name">Other</field>
+            <field name="code">OT</field>
+            <field name="description">Other Site</field>
+        </record>
+        
+        <record id="helpdesk_site_dc" model="helpdesk.site">
+            <field name="name">Distribution Center</field>
+            <field name="code">DC</field>
+            <field name="description">Distribution Center Site</field>
+        </record>
+        
+        <record id="helpdesk_site_da" model="helpdesk.site">
+            <field name="name">Distribution Area</field>
+            <field name="code">DA</field>
+            <field name="description">Distribution Area Site</field>
+        </record>
+        
+        <record id="helpdesk_site_dq" model="helpdesk.site">
+            <field name="name">Distribution Quarter</field>
+            <field name="code">DQ</field>
+            <field name="description">Distribution Quarter Site</field>
+        </record>
+        
+        <record id="helpdesk_site_gbp" model="helpdesk.site">
+            <field name="name">Grand Business Park</field>
+            <field name="code">GBP</field>
+            <field name="description">Grand Business Park Site</field>
+        </record>
+    </data>
+</odoo>

@@ -2,6 +2,7 @@
 from . import helpdesk_ticket
 from . import helpdesk_category
 from . import helpdesk_subcategory
+from . import helpdesk_site
 from . import helpdesk_team_department
 from . import helpdesk_team_notified_email
 from . import helpdesk_team

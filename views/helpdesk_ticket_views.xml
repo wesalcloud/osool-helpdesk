@@ -113,9 +113,10 @@
             <field name="partner_id" position="after">
                 <field name="partner_phone" widget="phone" readonly="id"/>
                 <field name="partner_email" readonly="id"/>
+                <field name="site_id"/>
                 <field name="ticket_phone" widget="phone" readonly="id"/>
                 <field name="ticket_email" widget="email" readonly="id"/>
-                <label for="request_category_id" string="Classification"/>
+                <label for="request_category_id" string="Category"/>
                 <div class="o_row">
                     <field name="request_category_id" options="{'no_create': True}" required="1" class="oe_inline" readonly="id"/>
                     <field name="request_subcategory_id" 
@@ -312,7 +313,7 @@
                     
                     <group>
                         <group string="Location Details">
-                            <field name="tenant_site_code"/>
+                            <field name="tenant_site"/>
                             <field name="tenant_building_name"/>
                             <field name="tenant_unit_number"/>
                             <field name="tenant_floor_number"/>

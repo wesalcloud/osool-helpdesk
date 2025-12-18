@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 {
     'name': 'Osool Helpdesk',
-    'version': '19.0.1.0.2',
+    'version': '19.0.1.0.3',
     'category': 'Services/Helpdesk',
     'summary': 'Custom Enterprise Helpdesk Extension for Case Management',
     'description': """
@@ -39,6 +39,7 @@
         
         # Data
         'data/helpdesk_stage_data.xml',
+        'data/helpdesk_site_data.xml',
         'data/helpdesk_category_data.xml',
         'data/helpdesk_team_data.xml',
         'data/helpdesk_subcategory_data.xml',
@@ -51,6 +52,7 @@
         
         # Views
         'views/res_partner_tenant_views.xml',
+        'views/helpdesk_site_views.xml',
         'views/helpdesk_ticket_views.xml',
         'views/helpdesk_category_views.xml',
         'views/helpdesk_subcategory_views.xml',

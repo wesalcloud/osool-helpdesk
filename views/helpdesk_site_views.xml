@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Helpdesk Site Form View -->
+    <record id="helpdesk_site_view_form" model="ir.ui.view">
+        <field name="name">helpdesk.site.form</field>
+        <field name="model">helpdesk.site</field>
+        <field name="arch" type="xml">
+            <form string="Site">
+                <sheet>
+                    <widget name="web_ribbon" title="Archived" bg_color="text-bg-danger" invisible="active"/>
+                    <group>
+                        <group>
+                            <field name="name" required="1"/>
+                            <field name="code"/>
+                            <field name="active" invisible="1"/>
+                        </group>
+                        <group>
+                            <field name="description"/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- Helpdesk Site List View -->
+    <record id="helpdesk_site_view_list" model="ir.ui.view">
+        <field name="name">helpdesk.site.list</field>
+        <field name="model">helpdesk.site</field>
+        <field name="arch" type="xml">
+            <list string="Sites">
+                <field name="name"/>
+                <field name="code"/>
+                <field name="department_count"/>
+                <field name="active"/>
+            </list>
+        </field>
+    </record>
+
+    <!-- Helpdesk Site Search View -->
+    <record id="helpdesk_site_view_search" model="ir.ui.view">
+        <field name="name">helpdesk.site.search</field>
+        <field name="model">helpdesk.site</field>
+        <field name="arch" type="xml">
+            <search string="Sites">
+                <field name="name"/>
+                <field name="code"/>
+                <filter string="Active" name="active" domain="[('active', '=', True)]"/>
+                <filter string="Archived" name="inactive" domain="[('active', '=', False)]"/>
+            </search>
+        </field>
+    </record>
+
+    <!-- Helpdesk Site Action -->
+    <record id="helpdesk_site_action" model="ir.actions.act_window">
+        <field name="name">Sites</field>
+        <field name="res_model">helpdesk.site</field>
+        <field name="view_mode">list,form</field>
+        <field name="context">{'search_default_active': 1}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create a new Site
+            </p>
+            <p>
+                Sites are locations where departments operate.
+            </p>
+        </field>
+    </record>
+
+    <!-- Menu Item -->
+    <menuitem id="helpdesk_site_menu"
+              name="Sites"
+              parent="helpdesk.helpdesk_menu_config"
+              action="helpdesk_site_action"
+              sequence="15"/>
+</odoo>

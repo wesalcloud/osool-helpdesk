@@ -17,20 +17,7 @@ class ResPartner(models.Model):
         help="Enable this option if this contact represents a tenant."
     )
 
-    site_code = fields.Selection(
-        selection=[
-            ('gm', 'GM - Grand Mall'),
-            ('ish', 'ISH - Ishbiliyah'),
-            ('ot', 'OT - Other'),
-            ('dc', 'DC - Distribution Center'),
-            ('da', 'DA - Distribution Area'),
-            ('dq', 'DQ - Distribution Quarter'),
-            ('gbp', 'GBP - Grand Business Park'),
-        ],
-        string="Site",
-        tracking=True,
-        help="Select the site this tenant belongs to."
-    )
+    site = fields.Many2one('helpdesk.site', string="Site", tracking=True, help="Select the site this tenant belongs to.")
 
     vip_status = fields.Selection(
         selection=[

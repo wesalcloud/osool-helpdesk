@@ -34,7 +34,7 @@
                             <field name="is_tenant" invisible="1"/>
                             <field name="tenant_type" widget="radio"/>
                             <field name="vip_status" widget="badge" decoration-success="vip_status == 'vvip'" decoration-info="vip_status == 'vip'"/>
-                            <field name="site_code" widget="selection"/>
+                            <field name="site"/>
                             <field name="business_category"/>
                         </group>
                         <group string="Location">
@@ -125,7 +125,7 @@
             <list string="Tenants" sample="1">
                 <field name="name" string="Tenant Name"/>
                 <field name="brand_name"/>
-                <field name="site_code"/>
+                <field name="site"/>
                 <field name="unit_number"/>
                 <field name="tenant_type"/>
                 <field name="vip_status" widget="badge" decoration-success="vip_status == 'vvip'" decoration-info="vip_status == 'vip'"/>
@@ -148,7 +148,7 @@
                 <field name="id"/>
                 <field name="name"/>
                 <field name="brand_name"/>
-                <field name="site_code"/>
+                <field name="site"/>
                 <field name="unit_number"/>
                 <field name="vip_status"/>
                 <field name="tenant_status"/>
@@ -171,7 +171,7 @@
                                 </div>
                                 <div t-if="record.unit_number.raw_value">
                                     <i class="fa fa-building"/> Unit: <field name="unit_number"/>
-                                    <t t-if="record.site_code.raw_value"> - <field name="site_code"/></t>
+                                    <t t-if="record.site.raw_value"> - <field name="site"/></t>
                                 </div>
                                 <div t-if="record.phone_primary.raw_value">
                                     <i class="fa fa-phone"/> <field name="phone_primary"/>
