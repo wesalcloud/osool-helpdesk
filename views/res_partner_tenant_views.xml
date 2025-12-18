@@ -33,7 +33,7 @@
                         <group string="Classification">
                             <field name="is_tenant" invisible="1"/>
                             <field name="tenant_type" widget="radio"/>
-                            <field name="vip_status" widget="badge" decoration-success="vip_status == 'vvip'" decoration-info="vip_status == 'vip'"/>
+                            <field name="vip_status" widget="radio"/>
                             <field name="site"/>
                             <field name="business_category"/>
                         </group>

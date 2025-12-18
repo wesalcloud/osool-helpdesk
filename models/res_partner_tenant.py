@@ -45,13 +45,15 @@ class ResPartner(models.Model):
 
     tenant_status = fields.Selection(
         selection=[
-            ('active', 'Active'),
-            ('inactive', 'Inactive'),
-            ('suspended', 'Suspended'),
             ('pending', 'Pending Approval'),
+            ('active', 'Active'),
+            ('on_hold', 'On Hold'),
+            ('suspended', 'Suspended'),
+            ('inactive', 'Inactive'),
+            ('terminated', 'Terminated'),
         ],
         string="Tenant Status",
-        default='active',
+        default='pending',
         tracking=True,
         help="Current status of the tenant."
     )

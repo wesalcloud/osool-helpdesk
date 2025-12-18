@@ -357,22 +357,47 @@
         <field name="model">helpdesk.ticket</field>
         <field name="inherit_id" ref="helpdesk.helpdesk_tickets_view_tree"/>
         <field name="arch" type="xml">
-            <!-- Change user_id label to 'Ticket Owner' -->
-            <field name="user_id" position="attributes">
+            <!-- Change column labels -->
+            <xpath expr="//field[@name='create_date']" position="attributes">
+                <attribute name="string">Date</attribute>
+            </xpath>
+            
+            <xpath expr="//field[@name='name']" position="attributes">
+                <attribute name="string">Subject</attribute>
+            </xpath>
+            
+            <xpath expr="//field[@name='user_id']" position="attributes">
                 <attribute name="string">Ticket Owner</attribute>
-            </field>
+            </xpath>
             
-            <!-- Add team_department_id after user_id -->
-            <field name="user_id" position="after">
-                <field name="team_department_id" string="Assigned To" optional="show"/>
-            </field>
+            <!-- Add new fields and reorder -->
+            <xpath expr="//field[@name='priority']" position="after">
+                <field name="site_id" optional="show"/>
+            </xpath>
             
-            <field name="name" position="after">
-                <field name="form_type" optional="show"/>
-                <field name="request_category_id" optional="show"/>
-                <field name="caller_source" optional="hide"/>
+            <xpath expr="//field[@name='partner_id']" position="replace"/>
+            
+            <xpath expr="//field[@name='site_id']" position="after">
+                <field name="partner_id" string="Customer" optional="show"/>
+            </xpath>
+            
+            <xpath expr="//field[@name='name']" position="after">
+                <field name="request_category_id" string="Category" optional="show"/>
+                <field name="caller_source" string="Channel" optional="show"/>
                 <field name="status" optional="hide"/>
-            </field>
+            </xpath>
+            
+            <xpath expr="//field[@name='user_id']" position="after">
+                <field name="team_department_id" string="Assigned To" optional="show"/>
+            </xpath>
+            
+            <xpath expr="//field[@name='activity_ids']" position="attributes">
+                <attribute name="optional">hide</attribute>
+            </xpath>
+            
+            <xpath expr="//field[@name='sla_deadline']" position="attributes">
+                <attribute name="optional">hide</attribute>
+            </xpath>
         </field>
     </record>
 
