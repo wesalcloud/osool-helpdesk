@@ -7,15 +7,6 @@
         <field name="arch" type="xml">
             <form>
                 <sheet>
-                    <div class="oe_button_box" name="button_box">
-                        <button name="%(helpdesk.helpdesk_team_action)d" 
-                                type="action" 
-                                class="oe_stat_button" 
-                                icon="fa-users"
-                                context="{'default_team_department_id': id}">
-                            <field name="team_count" widget="statinfo" string="Teams"/>
-                        </button>
-                    </div>
                     <widget name="web_ribbon" title="Archived" bg_color="bg-danger" invisible="active"/>
                     <group>
                         <group>
@@ -28,6 +19,19 @@
                             <field name="description"/>
                         </group>
                     </group>
+                    
+                    <notebook>
+                        <page string="Notification Emails" name="notification_emails">
+                            <field name="notified_email_ids" domain="[('department_id', '=', id)]" context="{'default_department_id': id, 'active_test': False}">
+                                <list editable="bottom">
+                                    <field name="sequence" widget="handle"/>
+                                    <field name="name"/>
+                                    <field name="email" widget="email"/>
+                                    <field name="active" widget="boolean_toggle"/>
+                                </list>
+                            </field>
+                        </page>
+                    </notebook>
                 </sheet>
             </form>
         </field>
@@ -41,7 +45,6 @@
             <list>
                 <field name="name"/>
                 <field name="site_id"/>
-                <field name="team_count"/>
             </list>
         </field>
     </record>
@@ -69,7 +72,6 @@
             <kanban class="o_kanban_mobile">
                 <field name="name"/>
                 <field name="ticket_count"/>
-                <field name="team_count"/>
                 <templates>
                     <t t-name="card">
                         <div class="oe_kanban_global_click o_kanban_record">
@@ -82,15 +84,10 @@
                             </div>
                             <div class="o_kanban_record_body">
                                 <div class="row">
-                                    <div class="col-6">
+                                    <div class="col-12">
                                         <button class="btn btn-primary" name="action_view_tickets" type="object">
                                             <field name="ticket_count"/> Tickets
                                         </button>
-                                    </div>
-                                    <div class="col-6 text-end">
-                                        <span class="badge bg-secondary">
-                                            <field name="team_count"/> Teams
-                                        </span>
                                     </div>
                                 </div>
                             </div>

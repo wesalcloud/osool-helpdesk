@@ -16,6 +16,14 @@ class HelpdeskSLA(models.Model):
         ('vvip', 'VVIP'),
     ], string='SLA Type', default='standard')
     
+    # Priority for tickets using this SLA
+    ticket_priority = fields.Selection([
+        ('0', 'Low'),
+        ('1', 'Medium'),
+        ('2', 'High'),
+        ('3', 'Urgent'),
+    ], string='Priority', default='1', help='Default priority for tickets using this SLA')
+    
     # Working hours consideration
     use_working_hours = fields.Boolean(string='Use Working Hours', default=True)
     

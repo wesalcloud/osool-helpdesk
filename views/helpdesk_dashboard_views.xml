@@ -1,5 +1,49 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
+    <!-- Dashboard Ticket List View with Quick Filters -->
+    <record id="helpdesk_ticket_dashboard_list_view" model="ir.ui.view">
+        <field name="name">helpdesk.ticket.dashboard.list</field>
+        <field name="model">helpdesk.ticket</field>
+        <field name="arch" type="xml">
+            <list string="Tickets Dashboard" create="false" delete="false" import="false" export_xlsx="1" open_form_view="false" multi_edit="false">
+                <field name="ticket_number" string="Ticket #"/>
+                <field name="priority" widget="priority" readonly="1"/>
+                <field name="name" string="Subject"/>
+                <field name="partner_id" string="Customer"/>
+                <field name="site_id" string="Site"/>
+                <field name="team_department_id" string="Department"/>
+                <field name="request_category_id" string="Category"/>
+                <field name="user_id" string="Owner"/>
+                <field name="stage_id" widget="badge"/>
+                <field name="create_date" string="Created"/>
+            </list>
+        </field>
+    </record>
+
+    <!-- Dashboard Action for Filtered Ticket List -->
+    <record id="helpdesk_ticket_dashboard_action" model="ir.actions.act_window">
+        <field name="name">Tickets List</field>
+        <field name="res_model">helpdesk.ticket</field>
+        <field name="view_mode">list</field>
+        <field name="view_id" ref="helpdesk_ticket_dashboard_list_view"/>
+        <field name="search_view_id" ref="helpdesk_ticket_view_search_inherit"/>
+        <field name="context">{
+            'search_default_filter_department': 1,
+            'create': False,
+            'edit': False,
+            'delete': False,
+            'duplicate': False,
+            'import_enabled': False,
+            'active_test': True,
+            'mail_mass_mailing_disabled': True,
+        }</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                No tickets found
+            </p>
+        </field>
+    </record>
+
     <!-- Raw Data Report View with all fields for export -->
     <record id="helpdesk_ticket_raw_data_view_list" model="ir.ui.view">
         <field name="name">helpdesk.ticket.raw.data.list</field>

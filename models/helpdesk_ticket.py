@@ -8,6 +8,45 @@ class HelpdeskTicket(models.Model):
     _inherit = 'helpdesk.ticket'
     _order = 'id desc'
     
+    def action_archive(self):
+        """Restrict archive action - only managers can archive from dashboard"""
+        if not self.env.user.has_group('osool_helpdesk.group_helpdesk_manager'):
+            raise UserError(_('Only Helpdesk Managers can archive tickets.'))
+        return super(HelpdeskTicket, self).action_archive()
+    
+    def action_unarchive(self):
+        """Restrict unarchive action - only managers can unarchive"""
+        if not self.env.user.has_group('osool_helpdesk.group_helpdesk_manager'):
+            raise UserError(_('Only Helpdesk Managers can unarchive tickets.'))
+        return super(HelpdeskTicket, self).action_unarchive()
+    
+    def action_send_sms(self):
+        """Restrict SMS action - only managers can send mass SMS"""
+        if not self.env.user.has_group('osool_helpdesk.group_helpdesk_manager'):
+            raise UserError(_('Only Helpdesk Managers can send mass SMS.'))
+        return super(HelpdeskTicket, self).action_send_sms()
+    
+    def message_post(self, **kwargs):
+        """Restrict mass email from action menu - only managers"""
+        if kwargs.get('message_type') == 'email' and len(self) > 1:
+            if not self.env.user.has_group('osool_helpdesk.group_helpdesk_manager'):
+                raise UserError(_('Only Helpdesk Managers can send mass emails.'))
+        return super(HelpdeskTicket, self).message_post(**kwargs)
+    
+    def message_subscribe(self, partner_ids=None, subtype_ids=None):
+        """Restrict adding followers - only managers"""
+        if len(self) > 1:  # Mass action
+            if not self.env.user.has_group('osool_helpdesk.group_helpdesk_manager'):
+                raise UserError(_('Only Helpdesk Managers can add followers to multiple tickets.'))
+        return super(HelpdeskTicket, self).message_subscribe(partner_ids=partner_ids, subtype_ids=subtype_ids)
+    
+    def message_unsubscribe(self, partner_ids=None):
+        """Restrict removing followers - only managers"""
+        if len(self) > 1:  # Mass action
+            if not self.env.user.has_group('osool_helpdesk.group_helpdesk_manager'):
+                raise UserError(_('Only Helpdesk Managers can remove followers from multiple tickets.'))
+        return super(HelpdeskTicket, self).message_unsubscribe(partner_ids=partner_ids)
+    
     # Caller Information
     interaction_mode = fields.Selection([
         ('internal', 'Internal'),
@@ -17,14 +56,17 @@ class HelpdeskTicket(models.Model):
     
     caller_source = fields.Selection([
         ('voice', 'Voice Call'),
-        ('email', 'Email'),
         ('whatsapp', 'WhatsApp'),
         ('chat', 'Chat'),
         ('walkin', 'Walk-in'),
         ('selfservice', 'Self-service'),
     ], string='Channel', required=True, default='selfservice', tracking=True)
     
-    ticket_phone = fields.Char(string='Ticket Phone', tracking=True)
+    # Location Information
+    ticket_building = fields.Char(string='Building', tracking=True)
+    ticket_floor = fields.Char(string='Floor', tracking=True)
+    
+    ticket_phone = fields.Char(string='Preferred Phone', tracking=True)
     ticket_email = fields.Char(string='Ticket Email', tracking=True)
     email_content = fields.Html(string='Email Content', tracking=True, help='Email content received from customer')
     
@@ -52,6 +94,9 @@ class HelpdeskTicket(models.Model):
     is_stage_new = fields.Boolean(string='Is New Stage', compute='_compute_stage_status', store=False)
     is_stage_assigned = fields.Boolean(string='Is Assigned Stage', compute='_compute_stage_status', store=False)
     is_stage_in_progress = fields.Boolean(string='Is In Progress Stage', compute='_compute_stage_status', store=False)
+    
+    # Check if current user can edit this ticket
+    can_edit_ticket = fields.Boolean(string='Can Edit Ticket', compute='_compute_can_edit_ticket', store=False)
     
     # Genesys Integration Fields
     conversation_type = fields.Char(string='Conversation Type', readonly=True, tracking=True)
@@ -95,6 +140,9 @@ class HelpdeskTicket(models.Model):
         ('announcement', 'Announcement'),
         ('maximo', 'Maximo'),
     ], string='Form Type', required=True, default='complaint', tracking=True)
+    
+    # Ticket Number Display
+    ticket_number = fields.Char(string='Ticket #', compute='_compute_ticket_number', store=False)
     
     # Complaint specific fields
     complaint_type = fields.Selection([
@@ -278,6 +326,20 @@ class HelpdeskTicket(models.Model):
         for ticket in self:
             ticket.is_partner_tenant = ticket.partner_id and ticket.partner_id.is_tenant
     
+    def _compute_ticket_number(self):
+        """Extract ticket number from display_name (e.g., #00061 from 'Lift booking (#00061)')"""
+        import re
+        for ticket in self:
+            if ticket.display_name:
+                # Extract number pattern like (#00061) or #00061 from display_name
+                match = re.search(r'#(\d+)', ticket.display_name)
+                if match:
+                    ticket.ticket_number = f'#{match.group(1)}'
+                else:
+                    ticket.ticket_number = ticket.display_name
+            else:
+                ticket.ticket_number = ''
+    
     @api.depends('source', 'create_uid')
     def _compute_created_via(self):
         """Compute the Created Via field based on source"""
@@ -295,6 +357,19 @@ class HelpdeskTicket(models.Model):
             ticket.is_stage_new = ticket.stage_id.is_new if ticket.stage_id else False
             ticket.is_stage_assigned = ticket.stage_id.is_assigned if ticket.stage_id else False
             ticket.is_stage_in_progress = ticket.stage_id.is_in_progress if ticket.stage_id else False
+    
+    def _compute_can_edit_ticket(self):
+        """Check if current user can edit this ticket"""
+        for ticket in self:
+            # Supervisors (Team Leader or Manager) can edit all tickets
+            is_supervisor = self.env.user.has_group('osool_helpdesk.group_helpdesk_team_leader') or \
+                           self.env.user.has_group('osool_helpdesk.group_helpdesk_manager')
+            
+            # Agent can only edit their own tickets (where they are the ticket owner)
+            is_ticket_owner = ticket.user_id and ticket.user_id.id == self.env.user.id
+            
+            # Can edit if supervisor OR if they own the ticket
+            ticket.can_edit_ticket = is_supervisor or is_ticket_owner
     
     @api.depends('stage_id', 'stage_id.fold')
     def _compute_close_date(self):
@@ -374,10 +449,16 @@ class HelpdeskTicket(models.Model):
             elif self.request_category_id and self.request_category_id.ticket_owner_id:
                 self.ticket_owner_id = self.request_category_id.ticket_owner_id
             
-            # Set SLA
+            # Set SLA and Priority
             if self.request_subcategory_id.sla_id:
                 self.sla_id = self.request_subcategory_id.sla_id
+                # Set priority from SLA policy
+                if self.sla_id.ticket_priority:
+                    self.priority = self.sla_id.ticket_priority
                 self._compute_sla_deadlines()
+            else:
+                # No SLA policy, set to no priority (low)
+                self.priority = '0'
     
     def _compute_sla_deadlines(self):
         for ticket in self:
@@ -723,47 +804,76 @@ class HelpdeskTicket(models.Model):
         if not self.team_department_id:
             raise UserError(_('No department assigned to this ticket.'))
         
-        # Get all teams that belong to this department
-        teams = self.env['helpdesk.team'].search([('team_department_id', '=', self.team_department_id.id)])
-        
-        if not teams:
-            raise UserError(_('No teams found under department: %s') % self.team_department_id.name)
-        
-        # Collect notification emails from all teams in this department
-        notification_emails = self.env['helpdesk.team.notified.email']
-        for team in teams:
-            notification_emails |= team.notified_email_ids.filtered(lambda e: e.active and e.email)
+        # Get notification emails directly from the department
+        notification_emails = self.team_department_id.notified_email_ids.filtered(lambda e: e.active and e.email)
         
         if not notification_emails:
-            raise UserError(_('No notification emails configured for teams under department: %s') % self.team_department_id.name)
+            raise UserError(_('No notification emails configured for department: %s') % self.team_department_id.name)
         
-        # Prepare email body
+        # Prepare email body with all ticket details
+        priority_display = dict(self._fields['priority'].selection).get(self.priority, 'N/A')
+        channel_display = dict(self._fields['caller_source'].selection).get(self.caller_source, 'N/A') if self.caller_source else 'N/A'
+        category_display = self.request_category_id.name if self.request_category_id else 'N/A'
+        subcategory_display = self.request_subcategory_id.name if self.request_subcategory_id else 'N/A'
+        
         body = _('''
             <div style="font-family: Arial, sans-serif; font-size: 14px;">
-                <h3 style="color: #875A7B;">Ticket Assigned to: %s</h3>
+                <h3 style="color: #875A7B;">New Ticket Assigned to: %s</h3>
                 <table style="width: 100%%; border-collapse: collapse; margin-top: 20px;">
                     <tr>
-                        <td style="padding: 8px; border: 1px solid #ddd; font-weight: bold; width: 30%%;">Ticket Number:</td>
+                        <td style="padding: 8px; border: 1px solid #ddd; font-weight: bold; width: 30%%; background-color: #f5f5f5;">Ticket Number:</td>
                         <td style="padding: 8px; border: 1px solid #ddd;">%s</td>
                     </tr>
                     <tr>
-                        <td style="padding: 8px; border: 1px solid #ddd; font-weight: bold;">Subject:</td>
+                        <td style="padding: 8px; border: 1px solid #ddd; font-weight: bold; background-color: #f5f5f5;">Subject:</td>
                         <td style="padding: 8px; border: 1px solid #ddd;">%s</td>
                     </tr>
                     <tr>
-                        <td style="padding: 8px; border: 1px solid #ddd; font-weight: bold;">Priority:</td>
+                        <td style="padding: 8px; border: 1px solid #ddd; font-weight: bold; background-color: #f5f5f5;">Site:</td>
                         <td style="padding: 8px; border: 1px solid #ddd;">%s</td>
                     </tr>
                     <tr>
-                        <td style="padding: 8px; border: 1px solid #ddd; font-weight: bold;">Customer:</td>
+                        <td style="padding: 8px; border: 1px solid #ddd; font-weight: bold; background-color: #f5f5f5;">Department:</td>
                         <td style="padding: 8px; border: 1px solid #ddd;">%s</td>
                     </tr>
                     <tr>
-                        <td style="padding: 8px; border: 1px solid #ddd; font-weight: bold;">Department:</td>
+                        <td style="padding: 8px; border: 1px solid #ddd; font-weight: bold; background-color: #f5f5f5;">Priority:</td>
                         <td style="padding: 8px; border: 1px solid #ddd;">%s</td>
                     </tr>
                     <tr>
-                        <td style="padding: 8px; border: 1px solid #ddd; font-weight: bold;">Ticket Owner:</td>
+                        <td style="padding: 8px; border: 1px solid #ddd; font-weight: bold; background-color: #f5f5f5;">Category:</td>
+                        <td style="padding: 8px; border: 1px solid #ddd;">%s</td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 8px; border: 1px solid #ddd; font-weight: bold; background-color: #f5f5f5;">Subcategory:</td>
+                        <td style="padding: 8px; border: 1px solid #ddd;">%s</td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 8px; border: 1px solid #ddd; font-weight: bold; background-color: #f5f5f5;">Channel:</td>
+                        <td style="padding: 8px; border: 1px solid #ddd;">%s</td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 8px; border: 1px solid #ddd; font-weight: bold; background-color: #f5f5f5;">Customer Name:</td>
+                        <td style="padding: 8px; border: 1px solid #ddd;">%s</td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 8px; border: 1px solid #ddd; font-weight: bold; background-color: #f5f5f5;">Customer Phone:</td>
+                        <td style="padding: 8px; border: 1px solid #ddd;">%s</td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 8px; border: 1px solid #ddd; font-weight: bold; background-color: #f5f5f5;">Customer Email:</td>
+                        <td style="padding: 8px; border: 1px solid #ddd;">%s</td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 8px; border: 1px solid #ddd; font-weight: bold; background-color: #f5f5f5;">Building:</td>
+                        <td style="padding: 8px; border: 1px solid #ddd;">%s</td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 8px; border: 1px solid #ddd; font-weight: bold; background-color: #f5f5f5;">Floor:</td>
+                        <td style="padding: 8px; border: 1px solid #ddd;">%s</td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 8px; border: 1px solid #ddd; font-weight: bold; background-color: #f5f5f5; vertical-align: top;">Description:</td>
                         <td style="padding: 8px; border: 1px solid #ddd;">%s</td>
                     </tr>
                 </table>
@@ -773,17 +883,36 @@ class HelpdeskTicket(models.Model):
                         View Ticket
                     </a>
                 </p>
+                <p style="margin-top: 20px; color: #666; font-size: 12px;">
+                    This is an automated notification from <strong>Osool Care</strong>.<br/>
+                    Please do not reply to this email.
+                </p>
             </div>
         ''') % (
             self.team_department_id.name if self.team_department_id else 'N/A',
             self.display_name or str(self.id),
             self.name or 'N/A',
-            dict(self._fields['priority'].selection).get(self.priority, 'N/A'),
-            self.partner_id.name if self.partner_id else 'N/A',
+            self.site_id.name if self.site_id else 'N/A',
             self.team_department_id.name if self.team_department_id else 'N/A',
-            self.user_id.name if self.user_id else 'Unassigned',
+            priority_display,
+            category_display,
+            subcategory_display,
+            channel_display,
+            self.partner_id.name if self.partner_id else 'N/A',
+            self.partner_phone or self.ticket_phone or 'N/A',
+            self.partner_email or self.ticket_email or 'N/A',
+            self.ticket_building or 'N/A',
+            self.ticket_floor or 'N/A',
+            self.description or 'No description provided',
             self.id
         )
+        
+        # Collect CC emails from site (Project Managers, etc.)
+        site_cc_emails = []
+        if self.site_id and self.site_id.notified_email_ids:
+            site_cc_emails = self.site_id.notified_email_ids.filtered(lambda e: e.active and e.email).mapped('email')
+        
+        cc_list = ', '.join(site_cc_emails) if site_cc_emails else False
         
         # Send email to each notification address
         mail_values_list = []
@@ -792,7 +921,9 @@ class HelpdeskTicket(models.Model):
                 'subject': _('Ticket %s - Assigned to %s') % (self.display_name or str(self.id), self.team_department_id.name if self.team_department_id else 'Department'),
                 'body_html': body,
                 'email_to': notif_email.email,
-                'email_from': self.env.user.email or self.env.company.email or 'noreply@example.com',
+                'email_cc': cc_list,
+                'email_from': '"Osool Care" <osoolcare@osool.com>',
+                'reply_to': 'osoolcare@osool.com',
                 'auto_delete': False,
                 'model': 'helpdesk.ticket',
                 'res_id': self.id,
@@ -810,6 +941,35 @@ class HelpdeskTicket(models.Model):
         # Log audit trail
         email_list = ', '.join(notification_emails.mapped('email'))
         self._log_audit_trail('notification', 'Email notification sent to: %s' % email_list)
+        
+        # Post message to chatter with email content
+        from markupsafe import Markup
+        
+        cc_display = f"<br/><strong>CC:</strong> {cc_list}" if cc_list else ""
+        
+        chatter_body = Markup(
+            '<div style="margin-bottom: 15px;">'
+            '<strong>Department Notification Sent</strong><br/>'
+            '<strong>Department:</strong> {}<br/>'
+            '<strong>Recipients:</strong> {}{}'
+            '</div>'
+            '<hr/>'
+            '<div style="margin-top: 15px; padding: 15px; border: 1px solid #ddd; background-color: #f9f9f9;">'
+            '{}'
+            '</div>'
+        ).format(
+            Markup(self.team_department_id.name),
+            Markup(email_list),
+            Markup(cc_display),
+            Markup(body)
+        )
+        
+        self.message_post(
+            body=chatter_body,
+            subject=_('Department Notification Sent'),
+            message_type='notification',
+            subtype_xmlid='mail.mt_note',
+        )
         
         return {
             'type': 'ir.actions.client',

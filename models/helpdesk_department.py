@@ -16,17 +16,19 @@ class HelpdeskTeamDepartment(models.Model):
     # Site relationship
     site_id = fields.Many2one('helpdesk.site', string='Site', tracking=True)
     
-    # Teams linked to this department
-    team_ids = fields.One2many('helpdesk.team', 'team_department_id', string='Teams')
-    team_count = fields.Integer(string='Team Count', compute='_compute_team_count')
     ticket_count = fields.Integer(string='Ticket Count', compute='_compute_ticket_count')
     open_ticket_count = fields.Integer(string='Open Tickets', compute='_compute_ticket_count')
     closed_ticket_count = fields.Integer(string='Closed Tickets', compute='_compute_ticket_count')
     
-    @api.depends('team_ids')
-    def _compute_team_count(self):
-        for dept in self:
-            dept.team_count = len(dept.team_ids)
+    # Notification emails for this department
+    notified_email_ids = fields.One2many(
+        'helpdesk.department.notified.email',
+        'department_id',
+        string='Notification Emails',
+        help='Email addresses to notify when tickets are assigned to this department',
+        context={'active_test': False}
+    )
+    
     
     def _compute_ticket_count(self):
         """Compute total tickets for all teams under this department"""

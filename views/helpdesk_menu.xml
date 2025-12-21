@@ -20,6 +20,13 @@
               action="helpdesk_audit_action" 
               sequence="52"/>
 
+    <!-- Dashboard Tickets List Menu -->
+    <menuitem id="menu_helpdesk_tickets_dashboard" 
+              name="Tickets List" 
+              parent="helpdesk.helpdesk_ticket_report_menu_main" 
+              action="helpdesk_ticket_dashboard_action" 
+              sequence="10"/>
+
     <!-- Site Kanban View for Overview -->
     <record id="helpdesk_site_overview_kanban" model="ir.ui.view">
         <field name="name">helpdesk.site.overview.kanban</field>

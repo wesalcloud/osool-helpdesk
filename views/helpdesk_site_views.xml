@@ -18,6 +18,19 @@
                             <field name="description"/>
                         </group>
                     </group>
+                    
+                    <notebook>
+                        <page string="CC Notification Emails" name="notification_emails">
+                            <field name="notified_email_ids" domain="[('site_id', '=', id)]" context="{'default_site_id': id, 'active_test': False}">
+                                <list editable="bottom">
+                                    <field name="sequence" widget="handle"/>
+                                    <field name="name"/>
+                                    <field name="email" widget="email"/>
+                                    <field name="active" widget="boolean_toggle"/>
+                                </list>
+                            </field>
+                        </page>
+                    </notebook>
                 </sheet>
             </form>
         </field>

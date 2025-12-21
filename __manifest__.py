@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 {
     'name': 'Osool Helpdesk',
-    'version': '19.0.1.0.3',
+    'version': '19.0.1.0.4',
     'category': 'Services/Helpdesk',
     'summary': 'Custom Enterprise Helpdesk Extension for Case Management',
     'description': """
@@ -56,9 +56,8 @@
         'views/helpdesk_ticket_views.xml',
         'views/helpdesk_category_views.xml',
         'views/helpdesk_subcategory_views.xml',
-        'views/helpdesk_team_department_views.xml',
+        'views/helpdesk_department_views.xml',
         'views/helpdesk_department_dashboard_views.xml',
-        'views/helpdesk_team_views.xml',
         # 'views/helpdesk_sla_views.xml',  # TODO: Fix view inheritance
         'views/helpdesk_audit_views.xml',
         'views/helpdesk_dashboard_views.xml',

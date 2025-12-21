@@ -20,6 +20,15 @@ class HelpdeskSite(models.Model):
     open_ticket_count = fields.Integer(string='Open Tickets', compute='_compute_ticket_count')
     closed_ticket_count = fields.Integer(string='Closed Tickets', compute='_compute_ticket_count')
     
+    # Notification emails for Project Managers
+    notified_email_ids = fields.One2many(
+        'helpdesk.site.notified.email', 
+        'site_id', 
+        string='CC Notification Emails',
+        help='Project Managers and other recipients to be CC\'d on department notifications',
+        context={'active_test': False}
+    )
+    
     @api.depends('department_ids')
     def _compute_department_count(self):
         for site in self:

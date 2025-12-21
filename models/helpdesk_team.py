@@ -5,20 +5,6 @@ from odoo import models, fields, api
 class HelpdeskTeam(models.Model):
     _inherit = 'helpdesk.team'
     
-    # Team Department
-    team_department_id = fields.Many2one('helpdesk.team.department', string='Team Department', tracking=True)
-    
-    # Department Site (related field)
-    department_site_id = fields.Many2one('helpdesk.site', string='Department Site', related='team_department_id.site_id', readonly=True, store=True)
-    
-    # Notified Emails List
-    notified_email_ids = fields.One2many('helpdesk.team.notified.email', 'team_id', string='Notified Emails', context={'active_test': False})
-    
-    # Contact Information
-    team_email = fields.Char(string='Team Email')
-    team_phone = fields.Char(string='Team Phone')
-    team_whatsapp = fields.Char(string='Team WhatsApp')
-    
     # Department Type
     department_type = fields.Selection([
         ('technical', 'Technical'),
