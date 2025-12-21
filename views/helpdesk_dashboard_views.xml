@@ -5,7 +5,7 @@
         <field name="name">helpdesk.ticket.dashboard.list</field>
         <field name="model">helpdesk.ticket</field>
         <field name="arch" type="xml">
-            <list string="Tickets Dashboard" create="false" delete="false" import="false" export_xlsx="1" open_form_view="false" multi_edit="false">
+            <list string="Tickets Dashboard" create="false" delete="false" import="false" export_xlsx="1" open_form_view="false" multi_edit="false" default_order="create_date desc">
                 <field name="ticket_number" string="Ticket #"/>
                 <field name="priority" widget="priority" readonly="1"/>
                 <field name="name" string="Subject"/>
@@ -36,6 +36,7 @@
             'import_enabled': False,
             'active_test': True,
             'mail_mass_mailing_disabled': True,
+            'orderedBy': [{'name': 'create_date', 'asc': false}],
         }</field>
         <field name="help" type="html">
             <p class="o_view_nocontent_smiling_face">

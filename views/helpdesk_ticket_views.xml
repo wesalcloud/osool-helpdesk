@@ -443,6 +443,11 @@
         <field name="model">helpdesk.ticket</field>
         <field name="inherit_id" ref="helpdesk.helpdesk_tickets_view_tree"/>
         <field name="arch" type="xml">
+            <!-- Set default order to newest first -->
+            <xpath expr="//list" position="attributes">
+                <attribute name="default_order">create_date desc</attribute>
+            </xpath>
+            
             <!-- Change column labels -->
             <xpath expr="//field[@name='create_date']" position="attributes">
                 <attribute name="string">Date</attribute>
