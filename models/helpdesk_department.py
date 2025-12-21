@@ -29,6 +29,16 @@ class HelpdeskTeamDepartment(models.Model):
         context={'active_test': False}
     )
     
+    def copy(self, default=None):
+        """Override copy to duplicate notification emails"""
+        default = dict(default or {})
+        new_dept = super(HelpdeskTeamDepartment, self).copy(default)
+        
+        # Copy notification emails
+        for email in self.notified_email_ids:
+            email.copy({'department_id': new_dept.id})
+        
+        return new_dept
     
     def _compute_ticket_count(self):
         """Compute total tickets for all teams under this department"""

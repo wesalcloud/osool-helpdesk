@@ -34,6 +34,17 @@ class HelpdeskSite(models.Model):
         for site in self:
             site.department_count = len(site.department_ids)
     
+    def copy(self, default=None):
+        """Override copy to duplicate notification emails"""
+        default = dict(default or {})
+        new_site = super(HelpdeskSite, self).copy(default)
+        
+        # Copy notification emails
+        for email in self.notified_email_ids:
+            email.copy({'site_id': new_site.id})
+        
+        return new_site
+    
     def _compute_ticket_count(self):
         """Compute total tickets for all departments under this site"""
         for site in self:
