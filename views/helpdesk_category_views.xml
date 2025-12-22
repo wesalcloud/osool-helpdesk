@@ -10,6 +10,7 @@
                 <field name="name"/>
                 <field name="code"/>
                 <field name="team_id"/>
+                <field name="team_department_id"/>
                 <field name="active"/>
             </list>
         </field>
@@ -29,6 +30,7 @@
                         </group>
                         <group>
                             <field name="team_id"/>
+                            <field name="team_department_id"/>
                             <field name="ticket_owner_id"/>
                             <field name="active"/>
                         </group>

@@ -78,6 +78,9 @@ class HelpdeskTicket(models.Model):
     team_department_id = fields.Many2one('helpdesk.team.department', string='Assigned To', tracking=True)
     department_notified = fields.Boolean(string='Department Notified', default=False, tracking=True)
     
+    # Computed field to get department's sites for domain filtering
+    department_site_ids = fields.Many2many('helpdesk.site', compute='_compute_department_site_ids', store=False)
+    
     # Site
     site_id = fields.Many2one('helpdesk.site', string='Site', tracking=True)
     
@@ -113,18 +116,34 @@ class HelpdeskTicket(models.Model):
     
     @api.onchange('request_category_id')
     def _onchange_request_category_id(self):
-        """Auto-set form_type based on category selection"""
-        if self.request_category_id and self.request_category_id.form_type:
-            self.form_type = self.request_category_id.form_type
+        """Auto-set form_type and department based on category selection"""
+        if self.request_category_id:
+            if self.request_category_id.form_type:
+                self.form_type = self.request_category_id.form_type
+            # Auto-assign department from category
+            if self.request_category_id.team_department_id:
+                self.team_department_id = self.request_category_id.team_department_id
         # Clear subcategory when category changes
         self.request_subcategory_id = False
     
-    @api.onchange('site_id')
-    def _onchange_site_id(self):
-        """Clear department if site changes and department doesn't belong to new site"""
-        if self.site_id and self.team_department_id:
+    @api.depends('team_department_id', 'team_department_id.site_ids')
+    def _compute_department_site_ids(self):
+        """Compute available sites based on selected department"""
+        for ticket in self:
+            if ticket.team_department_id:
+                ticket.department_site_ids = ticket.team_department_id.site_ids
+            else:
+                ticket.department_site_ids = False
+    
+    @api.onchange('team_department_id')
+    def _onchange_team_department_id(self):
+        """Clear site if it's not in the department's sites"""
+        if self.team_department_id and self.site_id:
             if self.site_id not in self.team_department_id.site_ids:
-                self.team_department_id = False
+                self.site_id = False
+        elif not self.team_department_id:
+            # Clear site when department is cleared
+            self.site_id = False
     
     # Caller Information
     
@@ -489,10 +508,14 @@ class HelpdeskTicket(models.Model):
             
             # Persist form_type from selected category if provided (server-side, works for portal and backend)
             cat_id = vals.get('request_category_id')
-            if cat_id and not vals.get('form_type'):
+            if cat_id:
                 cat = self.env['helpdesk.category'].browse(cat_id)
-                if cat.exists() and cat.form_type:
-                    vals['form_type'] = cat.form_type
+                if cat.exists():
+                    if cat.form_type and not vals.get('form_type'):
+                        vals['form_type'] = cat.form_type
+                    # Auto-assign department from category if not already set
+                    if cat.team_department_id and not vals.get('team_department_id'):
+                        vals['team_department_id'] = cat.team_department_id.id
 
             if vals.get('partner_id') and not vals.get('partner_name'):
                 partner = self.env['res.partner'].browse(vals['partner_id'])
@@ -574,14 +597,18 @@ class HelpdeskTicket(models.Model):
                     elif ticket.user_id and ticket.user_id != current_user:
                         raise UserError(_('Only the Ticket Owner can modify this ticket.'))
         
-        # If category changes, align form_type accordingly to keep correct tab after save
+        # If category changes, align form_type and department accordingly to keep correct tab after save
         if 'request_category_id' in vals:
             cat_id = vals.get('request_category_id')
             if cat_id:
                 cat = self.env['helpdesk.category'].browse(cat_id)
-                if cat.exists() and cat.form_type:
-                    # Align form_type to the category consistently when category changes
-                    vals['form_type'] = cat.form_type
+                if cat.exists():
+                    if cat.form_type:
+                        # Align form_type to the category consistently when category changes
+                        vals['form_type'] = cat.form_type
+                    # Auto-assign department from category if category has a department
+                    if cat.team_department_id and not vals.get('team_department_id'):
+                        vals['team_department_id'] = cat.team_department_id.id
 
         # Check if stage is being changed
         stage_is_rejected = False

@@ -29,6 +29,9 @@ class HelpdeskCategory(models.Model):
     # Default Team assignment
     team_id = fields.Many2one('helpdesk.team', string='Default Team')
     
+    # Department assignment
+    team_department_id = fields.Many2one('helpdesk.team.department', string='Department', help='Department that will be automatically assigned when this category is selected')
+    
     # Default Ticket Owner
     ticket_owner_id = fields.Many2one('res.users', string='Default Ticket Owner', help='Default owner for tickets in this category')
     

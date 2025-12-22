@@ -70,7 +70,7 @@
                 <attribute name="string">Ticket Owner</attribute>
             </field>
             
-            <!-- Add hidden fields and department after user_id -->
+            <!-- Add hidden fields and reorder fields after user_id -->
             <field name="user_id" position="after">
                 <!-- Hidden fields for stage conditions -->
                 <field name="is_stage_new" invisible="1"/>
@@ -82,9 +82,22 @@
                 <field name="department_notified" invisible="1"/>
                 <field name="can_edit_ticket" invisible="1"/>
                 
-                <!-- Site and Department -->
-                <field name="site_id"/>
-                <field name="team_department_id" domain="[('site_ids', 'in', site_id)]" readonly="is_stage_assigned"/>
+                <!-- 2. Category -->
+                <field name="request_category_id" string="Category"/>
+                
+                <!-- 3. Subcategory -->
+                <field name="request_subcategory_id" string="Subcategory" 
+                       domain="[('category_id', '=', request_category_id)]"
+                       context="{'default_category_id': request_category_id}"
+                       invisible="not request_category_id"/>
+                
+                <!-- 4. Assigned To (Department) - auto-filled from category -->
+                <field name="team_department_id"/>
+                
+                <!-- 5. Site - filtered by selected department's sites -->
+                <field name="site_id" domain="[('id', 'in', department_site_ids)]" invisible="not team_department_id"/>
+                <field name="department_site_ids" invisible="1"/>
+                
                 <!-- Department Assignment - editable in New or In Progress -->
                 <field name="conversation_type" readonly="1" invisible="1"/>
                 <label for="conversation_type" string="Conversation Detail" invisible="1"/>
@@ -137,15 +150,6 @@
             <!-- Tag field -->
             <field name="tag_ids" position="attributes">
                 <attribute name="invisible">1</attribute>
-            </field>
-            
-            <!-- Move Category, Subcategory, Form Type after Priority -->
-            <field name="priority" position="after">
-                <field name="request_category_id" options="{'no_create': True}" required="1"/>
-                <field name="request_subcategory_id" 
-                       domain="[('category_id', '=', request_category_id)]"
-                       options="{'no_create': True}"/>
-                <field name="form_type" readonly="1"/>
             </field>
             
             <!-- Reorder fields after partner_id -->
