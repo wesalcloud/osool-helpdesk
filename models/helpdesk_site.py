@@ -13,8 +13,7 @@ class HelpdeskSite(models.Model):
     description = fields.Text(string='Description')
     active = fields.Boolean(string='Active', default=True)
     
-    # Related counts
-    department_ids = fields.One2many('helpdesk.team.department', 'site_id', string='Departments')
+    # Related counts - computed from Many2many relationship
     department_count = fields.Integer(string='Department Count', compute='_compute_department_count')
     ticket_count = fields.Integer(string='Ticket Count', compute='_compute_ticket_count')
     open_ticket_count = fields.Integer(string='Open Tickets', compute='_compute_ticket_count')
@@ -29,10 +28,11 @@ class HelpdeskSite(models.Model):
         context={'active_test': False}
     )
     
-    @api.depends('department_ids')
+    @api.depends('name')
     def _compute_department_count(self):
+        """Count departments associated with this site via Many2many"""
         for site in self:
-            site.department_count = len(site.department_ids)
+            site.department_count = self.env['helpdesk.team.department'].search_count([('site_ids', 'in', site.id)])
     
     def copy(self, default=None):
         """Override copy to duplicate notification emails"""

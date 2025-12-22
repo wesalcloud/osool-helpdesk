@@ -12,7 +12,7 @@
                         <group>
                             <field name="name"/>
                             <field name="code"/>
-                            <field name="site_id"/>
+                            <field name="site_ids" widget="many2many_tags"/>
                             <field name="active" invisible="1"/>
                         </group>
                         <group>
@@ -44,7 +44,7 @@
         <field name="arch" type="xml">
             <list>
                 <field name="name"/>
-                <field name="site_id"/>
+                <field name="site_ids" widget="many2many_tags"/>
             </list>
         </field>
     </record>
@@ -57,9 +57,9 @@
             <search>
                 <field name="name"/>
                 <field name="code"/>
-                <field name="site_id"/>
+                <field name="site_ids"/>
                 <filter string="Archived" name="inactive" domain="[('active', '=', False)]"/>
-                <filter string="Site" name="filter_site_id" domain="[]" context="{'group_by': 'site_id'}"/>
+                <filter string="Sites" name="filter_site_ids" domain="[]" context="{'group_by': 'site_ids'}"/>
             </search>
         </field>
     </record>

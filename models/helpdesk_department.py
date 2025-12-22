@@ -14,7 +14,7 @@ class HelpdeskTeamDepartment(models.Model):
     active = fields.Boolean(string='Active', default=True)
     
     # Site relationship
-    site_id = fields.Many2one('helpdesk.site', string='Site', tracking=True)
+    site_ids = fields.Many2many('helpdesk.site', string='Sites', tracking=True)
     
     ticket_count = fields.Integer(string='Ticket Count', compute='_compute_ticket_count')
     open_ticket_count = fields.Integer(string='Open Tickets', compute='_compute_ticket_count')

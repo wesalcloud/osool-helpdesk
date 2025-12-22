@@ -123,7 +123,7 @@ class HelpdeskTicket(models.Model):
     def _onchange_site_id(self):
         """Clear department if site changes and department doesn't belong to new site"""
         if self.site_id and self.team_department_id:
-            if self.team_department_id.site_id != self.site_id:
+            if self.site_id not in self.team_department_id.site_ids:
                 self.team_department_id = False
     
     # Caller Information
@@ -554,17 +554,25 @@ class HelpdeskTicket(models.Model):
                 if not ticket.assign_date:
                     vals['assign_date'] = fields.Datetime.now()
         
-        # Check write access: Only ticket owner can modify (except managers/team leaders)
-        current_user = self.env.user
-        is_manager = current_user.has_group('osool_helpdesk.group_helpdesk_manager')
-        is_team_leader = current_user.has_group('osool_helpdesk.group_helpdesk_team_leader')
-        
-        # Allow managers and team leaders to edit any ticket
-        if not is_manager and not is_team_leader:
-            for ticket in self:
-                # Only the ticket owner (user_id) can edit
-                if ticket.user_id and ticket.user_id != current_user:
-                    raise UserError(_('Only the Ticket Owner can modify this ticket.'))
+        # Skip access checks if running in sudo mode
+        if not self.env.su:
+            # Check write access: Only ticket owner can modify (except managers/team leaders)
+            current_user = self.env.user
+            is_manager = current_user.has_group('osool_helpdesk.group_helpdesk_manager')
+            is_team_leader = current_user.has_group('osool_helpdesk.group_helpdesk_team_leader')
+            is_portal = current_user.has_group('base.group_portal')
+            
+            # Allow managers and team leaders to edit any ticket
+            # Also allow portal users to edit their own tickets (where they are the customer)
+            if not is_manager and not is_team_leader:
+                for ticket in self:
+                    # Portal users can edit tickets where they are the customer
+                    if is_portal:
+                        if ticket.partner_id != current_user.partner_id:
+                            raise UserError(_('You can only modify your own tickets.'))
+                    # Internal users: Only the ticket owner (user_id) can edit
+                    elif ticket.user_id and ticket.user_id != current_user:
+                        raise UserError(_('Only the Ticket Owner can modify this ticket.'))
         
         # If category changes, align form_type accordingly to keep correct tab after save
         if 'request_category_id' in vals:

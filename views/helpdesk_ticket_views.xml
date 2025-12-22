@@ -84,7 +84,7 @@
                 
                 <!-- Site and Department -->
                 <field name="site_id"/>
-                <field name="team_department_id" domain="[('site_id', '=', site_id)]" readonly="is_stage_assigned"/>
+                <field name="team_department_id" domain="[('site_ids', 'in', site_id)]" readonly="is_stage_assigned"/>
                 <!-- Department Assignment - editable in New or In Progress -->
                 <field name="conversation_type" readonly="1" invisible="1"/>
                 <label for="conversation_type" string="Conversation Detail" invisible="1"/>

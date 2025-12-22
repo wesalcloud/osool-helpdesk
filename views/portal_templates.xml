@@ -150,7 +150,7 @@
                                     <h4 class="mb-0">
                                         <i class="fa fa-ticket"/> Ticket #<t t-esc="ticket.id"/>
                                     </h4>
-                                    <span class="badge bg-light text-dark" t-esc="ticket.status"/>
+                                    <span class="badge bg-light text-dark" t-esc="ticket.stage_id.name"/>
                                 </div>
                             </div>
                             <div class="card-body">
@@ -179,7 +179,7 @@
                                         <dl class="row">
                                             <dt class="col-sm-4">Status:</dt>
                                             <dd class="col-sm-8">
-                                                <span class="badge bg-primary" t-esc="ticket.status"/>
+                                                <span class="badge bg-primary" t-esc="ticket.stage_id.name"/>
                                             </dd>
                                             
                                             <dt class="col-sm-4">Assigned To:</dt>
