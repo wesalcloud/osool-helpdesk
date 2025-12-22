@@ -77,6 +77,7 @@ class HelpdeskTicket(models.Model):
     # Team Department
     team_department_id = fields.Many2one('helpdesk.team.department', string='Assigned To', tracking=True)
     department_notified = fields.Boolean(string='Department Notified', default=False, tracking=True)
+    lift_booking_invitation_sent = fields.Boolean(string='Lift Booking Invitation Sent', default=False, tracking=True)
     
     # Computed field to get department's sites for domain filtering
     department_site_ids = fields.Many2many('helpdesk.site', compute='_compute_department_site_ids', store=False)
@@ -1016,6 +1017,199 @@ class HelpdeskTicket(models.Model):
                 'sticky': False,
             }
         }
+    
+    def action_send_lift_booking_invitation(self):
+        """Send lift booking calendar invitation via Microsoft Graph API"""
+        import requests
+        import json
+        from datetime import datetime, timedelta
+        
+        self.ensure_one()
+        
+        if self.lift_booking_invitation_sent:
+            raise UserError(_('Lift booking invitation has already been sent for this ticket.'))
+        
+        if self.form_type not in ['vvip_lift', 'regular_lift']:
+            raise UserError(_('This action is only available for lift booking tickets.'))
+        
+        if not self.lift_booking_date:
+            raise UserError(_('Please set the lift booking date and time before sending the invitation.'))
+        
+        if not self.partner_id or not self.partner_id.email:
+            raise UserError(_('Customer email is required to send the invitation.'))
+        
+        # Mark as sent immediately to prevent duplicate sends
+        self.lift_booking_invitation_sent = True
+        self.env.cr.commit()
+        
+        # Get Microsoft Graph API credentials from config
+        ICP = self.env['ir.config_parameter'].sudo()
+        tenant_id = ICP.get_param('helpdesk.ms_graph_tenant_id')
+        client_id = ICP.get_param('helpdesk.ms_graph_client_id')
+        client_secret = ICP.get_param('helpdesk.ms_graph_client_secret')
+        calendar_email = ICP.get_param('helpdesk.ms_graph_calendar_email', 'osoolcare@osoolre.com')
+        
+        if not all([tenant_id, client_id, client_secret]):
+            # Reset flag if configuration is missing
+            self.lift_booking_invitation_sent = False
+            raise UserError(_('Microsoft Graph API is not configured. Please go to Settings > Helpdesk > Microsoft Graph API Configuration.'))
+        
+        try:
+            # Step 1: Get Access Token
+            token_url = f'https://login.microsoftonline.com/{tenant_id}/oauth2/v2.0/token'
+            token_data = {
+                'client_id': client_id,
+                'client_secret': client_secret,
+                'scope': 'https://graph.microsoft.com/.default',
+                'grant_type': 'client_credentials'
+            }
+            
+            token_response = requests.post(token_url, data=token_data, timeout=10)
+            token_response.raise_for_status()
+            access_token = token_response.json().get('access_token')
+            
+            if not access_token:
+                raise UserError(_('Failed to obtain access token from Microsoft Graph API.'))
+            
+            # Step 2: Prepare event data
+            booking_start = self.lift_booking_date
+            # Default 1 hour duration if no specific end time
+            booking_end = booking_start + timedelta(hours=1)
+            
+            # Format location
+            location_parts = []
+            if self.site_id:
+                location_parts.append(self.site_id.name)
+            if self.ticket_building:
+                location_parts.append(f'Building {self.ticket_building}')
+            if self.lift_floor_from and self.lift_floor_to:
+                location_parts.append(f'Floor {self.lift_floor_from} to {self.lift_floor_to}')
+            location_display = ' - '.join(location_parts) if location_parts else 'Lift Booking'
+            
+            # Prepare event body content
+            body_content = f'''
+            <h3>Lift Booking Request</h3>
+            <p><strong>Ticket Number:</strong> {self.display_name or self.id}</p>
+            <p><strong>Customer:</strong> {self.partner_id.name}</p>
+            <p><strong>Site:</strong> {self.site_id.name if self.site_id else 'N/A'}</p>
+            <p><strong>Building:</strong> {self.ticket_building or 'N/A'}</p>
+            <p><strong>Floor:</strong> {self.lift_floor_from or 'N/A'} to {self.lift_floor_to or 'N/A'}</p>
+            <p><strong>Lift Size:</strong> {self.lift_size or 'N/A'}</p>
+            <p><strong>Items:</strong> {self.lift_items_description or 'N/A'}</p>
+            <p><strong>Description:</strong> {self.description or 'No description provided'}</p>
+            '''
+            
+            event_data = {
+                'subject': f'Lift Booking - {self.display_name or self.id}',
+                'body': {
+                    'contentType': 'HTML',
+                    'content': body_content
+                },
+                'start': {
+                    'dateTime': booking_start.strftime('%Y-%m-%dT%H:%M:%S'),
+                    'timeZone': 'UTC'
+                },
+                'end': {
+                    'dateTime': booking_end.strftime('%Y-%m-%dT%H:%M:%S'),
+                    'timeZone': 'UTC'
+                },
+                'location': {
+                    'displayName': location_display
+                },
+                'attendees': [
+                    {
+                        'emailAddress': {
+                            'address': self.partner_id.email,
+                            'name': self.partner_id.name
+                        },
+                        'type': 'required'
+                    }
+                ]
+            }
+            
+            # Step 3: Create calendar event
+            event_url = f'https://graph.microsoft.com/v1.0/users/{calendar_email}/events'
+            headers = {
+                'Authorization': f'Bearer {access_token}',
+                'Content-Type': 'application/json'
+            }
+            
+            event_response = requests.post(event_url, headers=headers, json=event_data, timeout=10)
+            event_response.raise_for_status()
+            event_result = event_response.json()
+            
+            # Log audit trail
+            self._log_audit_trail('lift_booking_invitation', f'Calendar invitation sent to {self.partner_id.email}')
+            
+            # Post message to chatter with full event details
+            from markupsafe import Markup
+            
+            chatter_body = Markup(
+                '<div style="margin-bottom: 15px;">'
+                '<strong>Lift Booking Calendar Invitation Sent</strong><br/>'
+                '<strong>Recipient:</strong> {} ({})<br/>'
+                '<strong>Calendar:</strong> {}'
+                '</div>'
+                '<hr/>'
+                '<div style="margin-top: 15px; padding: 15px; border: 1px solid #ddd; background-color: #f9f9f9;">'
+                '<h4 style="color: #875A7B; margin-top: 0;">Event Details</h4>'
+                '<table style="width: 100%%; border-collapse: collapse;">'
+                '<tr>'
+                '<td style="padding: 8px; font-weight: bold; width: 30%%;">Subject:</td>'
+                '<td style="padding: 8px;">{}</td>'
+                '</tr>'
+                '<tr>'
+                '<td style="padding: 8px; font-weight: bold;">Date/Time:</td>'
+                '<td style="padding: 8px;">{}</td>'
+                '</tr>'
+                '<tr>'
+                '<td style="padding: 8px; font-weight: bold;">Location:</td>'
+                '<td style="padding: 8px;">{}</td>'
+                '</tr>'
+                '<tr>'
+                '<td style="padding: 8px; font-weight: bold;">Event ID:</td>'
+                '<td style="padding: 8px; font-family: monospace; font-size: 11px;">{}</td>'
+                '</tr>'
+                '</table>'
+                '{}'
+                '</div>'
+            ).format(
+                Markup(self.partner_id.name),
+                Markup(self.partner_id.email),
+                Markup(calendar_email),
+                Markup(event_data['subject']),
+                Markup(booking_start.strftime('%Y-%m-%d %H:%M')),
+                Markup(location_display),
+                Markup(event_result.get('id', 'N/A')),
+                Markup(body_content)
+            )
+            
+            self.message_post(
+                body=chatter_body,
+                subject=_('Lift Booking Invitation Sent'),
+                message_type='notification',
+                subtype_xmlid='mail.mt_note',
+            )
+            
+            return {
+                'type': 'ir.actions.client',
+                'tag': 'display_notification',
+                'params': {
+                    'title': _('Invitation Sent'),
+                    'message': _('Lift booking calendar invitation sent to %s') % self.partner_id.email,
+                    'type': 'success',
+                    'sticky': False,
+                }
+            }
+            
+        except requests.exceptions.RequestException as e:
+            # Reset flag on API failure so user can retry
+            self.lift_booking_invitation_sent = False
+            raise UserError(_('Failed to send calendar invitation: %s') % str(e))
+        except Exception as e:
+            # Reset flag on any error so user can retry
+            self.lift_booking_invitation_sent = False
+            raise UserError(_('Error sending calendar invitation: %s') % str(e))
     
     def _send_survey(self):
         """Send satisfaction survey to customer"""

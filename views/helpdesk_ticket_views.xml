@@ -24,12 +24,21 @@
                         class="btn-primary"
                         invisible="not team_department_id or department_notified"
                         confirm="Are you sure you want to send email notification to this department?"/>
+                <button name="action_send_lift_booking_invitation" 
+                        string="Send Lift Booking Invitation" 
+                        type="object" 
+                        class="btn-success"
+                        invisible="form_type not in ['vvip_lift', 'regular_lift'] or lift_booking_invitation_sent"
+                        confirm="Are you sure you want to send the lift booking calendar invitation?"/>
             </xpath>
             
             <!-- Show notification success message -->
             <xpath expr="//header" position="after">
                 <div class="alert alert-success text-center" role="alert" invisible="not department_notified">
                     <strong>Department Notification Sent Successfully!</strong>
+                </div>
+                <div class="alert alert-success text-center" role="alert" invisible="not lift_booking_invitation_sent">
+                    <strong>Lift Booking Calendar Invitation Sent Successfully!</strong>
                 </div>
             </xpath>
             
@@ -80,6 +89,7 @@
                 <field name="reject_by" invisible="1"/>
                 <field name="conversation_id" invisible="1"/>
                 <field name="department_notified" invisible="1"/>
+                <field name="lift_booking_invitation_sent" invisible="1"/>
                 <field name="can_edit_ticket" invisible="1"/>
                 
                 <!-- 2. Category -->

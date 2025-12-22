@@ -14,6 +14,29 @@
                             <field name="genesys_environment" placeholder="e.g., mypurecloud.com"/>
                         </setting>
                     </block>
+                    
+                    <block title="Microsoft Graph API Configuration" name="ms_graph_api">
+                        <setting string="Microsoft Graph API" help="Configure Microsoft Graph API for calendar integration (lift booking invitations)">
+                            <div class="content-group">
+                                <div class="row mt16">
+                                    <label for="ms_graph_tenant_id" class="col-lg-3 o_light_label"/>
+                                    <field name="ms_graph_tenant_id" placeholder="Azure AD Tenant ID"/>
+                                </div>
+                                <div class="row">
+                                    <label for="ms_graph_client_id" class="col-lg-3 o_light_label"/>
+                                    <field name="ms_graph_client_id" placeholder="Application (Client) ID"/>
+                                </div>
+                                <div class="row">
+                                    <label for="ms_graph_client_secret" class="col-lg-3 o_light_label" password="True"/>
+                                    <field name="ms_graph_client_secret" password="True" placeholder="Client Secret Value"/>
+                                </div>
+                                <div class="row">
+                                    <label for="ms_graph_calendar_email" class="col-lg-3 o_light_label"/>
+                                    <field name="ms_graph_calendar_email" placeholder="osoolcare@osoolre.com"/>
+                                </div>
+                            </div>
+                        </setting>
+                    </block>
                 </app>
             </xpath>
         </field>
